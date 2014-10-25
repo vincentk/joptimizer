@@ -37,16 +37,9 @@ import com.joptimizer.util.ColtUtils;
  */
 public class BasicKKTSolver extends KKTSolver {
 
-	private boolean avoidScaling = false;
 	private Log log = LogFactory.getLog(this.getClass().getName());
 
-	public BasicKKTSolver(){
-		this(false);
-	}
-
-	public BasicKKTSolver(boolean avoidScaling) {
-		this.avoidScaling = avoidScaling;
-	}
+	public BasicKKTSolver(){ }
 
 	/**
 	 * Returns the two vectors v and w.

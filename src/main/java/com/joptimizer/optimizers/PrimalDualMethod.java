@@ -261,8 +261,7 @@ public class PrimalDualMethod extends OptimizationRequestHandler {
 			
 			// b) solving 11.55 system
 			if(this.kktSolver==null){
-				//this.kktSolver = new BasicKKTSolver();
-				this.kktSolver = new BasicKKTSolver(request.isRescalingDisabled());
+				this.kktSolver = new BasicKKTSolver();
 			}
 			//KKTSolver solver = new DiagonalKKTSolver();
 			if(isCheckKKTSolutionAccuracy()){
