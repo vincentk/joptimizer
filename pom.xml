@@ -9,7 +9,7 @@
 		License for the specific language governing permissions and * limitations 
 		under the License. */ -->
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>joptimizer</groupId>
+	<groupId>com.joptimizer</groupId>
 	<artifactId>joptimizer</artifactId>
 	<version>3.3.0</version>
 	<packaging>jar</packaging>
