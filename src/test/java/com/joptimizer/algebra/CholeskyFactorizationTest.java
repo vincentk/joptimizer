@@ -37,6 +37,7 @@ import cern.colt.matrix.impl.SparseDoubleMatrix2D;
 import cern.colt.matrix.linalg.Algebra;
 
 import com.joptimizer.util.ColtUtils;
+import com.joptimizer.util.TestUtils;
 import com.joptimizer.util.Utils;
 
 /**
@@ -153,7 +154,7 @@ public class CholeskyFactorizationTest extends TestCase {
 	 */
 	public void testScaledResidual() throws Exception {
 		log.debug("testScaledResidual");
-		double[][] G = Utils.loadDoubleMatrixFromFile("factorization" + File.separator	+ "matrix1.csv");
+		double[][] G = TestUtils.loadDoubleMatrixFromFile("factorization" + File.separator	+ "matrix1.csv");
 		RealMatrix Q = MatrixUtils.createRealMatrix(G);
 		int dim = Q.getRowDimension();
 	
@@ -181,7 +182,7 @@ public class CholeskyFactorizationTest extends TestCase {
 	 */
 	public void testInvertNotPositive() throws Exception {
 		log.debug("testInvertNotPositive");
-		double[][] G = Utils.loadDoubleMatrixFromFile("factorization" + File.separator	+ "matrix4.csv");
+		double[][] G = TestUtils.loadDoubleMatrixFromFile("factorization" + File.separator	+ "matrix4.csv");
 		DoubleMatrix2D QMatrix = DoubleFactory2D.sparse.make(G);
 		log.debug("QMatrix: " + ArrayUtils.toString(QMatrix.toArray()));//10x10 symm positive
 		log.debug("cardinality: " + QMatrix.cardinality());
@@ -215,7 +216,7 @@ public class CholeskyFactorizationTest extends TestCase {
 		Algebra ALG = Algebra.DEFAULT;
 		
 		String matrixId = "6";
-		double[][] A = Utils.loadDoubleMatrixFromFile("factorization" + File.separator + "matrix" + matrixId + ".txt", " ".charAt(0));
+		double[][] A = TestUtils.loadDoubleMatrixFromFile("factorization" + File.separator + "matrix" + matrixId + ".txt", " ".charAt(0));
 		SparseDoubleMatrix2D AMatrix = (SparseDoubleMatrix2D) F2.make(A);
 		int dim = AMatrix.rows();
 		

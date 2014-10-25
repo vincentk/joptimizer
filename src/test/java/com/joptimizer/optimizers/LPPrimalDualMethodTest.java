@@ -27,6 +27,7 @@ import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 
+import com.joptimizer.util.TestUtils;
 import com.joptimizer.util.Utils;
 
 /**
@@ -259,13 +260,13 @@ public class LPPrimalDualMethodTest extends TestCase {
 		String problemId = "1";
 		
 		//the original problem: ok until precision 1.E-7
-		double[] c = Utils.loadDoubleArrayFromFile("lp"+File.separator+"c"+problemId+".txt");
-		double[][] G = Utils.loadDoubleMatrixFromFile("lp"+File.separator+"G"+problemId+".txt", " ".charAt(0));
-		double[] h = Utils.loadDoubleArrayFromFile("lp"+File.separator+"h"+problemId+".txt");;
-		double[][] A = Utils.loadDoubleMatrixFromFile("lp"+File.separator+"A"+problemId+".txt", " ".charAt(0));
-		double[] b = Utils.loadDoubleArrayFromFile("lp"+File.separator+"b"+problemId+".txt");
-		double[] expectedSol = Utils.loadDoubleArrayFromFile("lp"+File.separator+"sol"+problemId+".txt");
-		double expectedvalue = Utils.loadDoubleArrayFromFile("lp"+File.separator+"value"+problemId+".txt")[0];
+		double[] c =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"c"+problemId+".txt");
+		double[][] G =TestUtils.loadDoubleMatrixFromFile("lp"+File.separator+"G"+problemId+".txt", " ".charAt(0));
+		double[] h =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"h"+problemId+".txt");;
+		double[][] A =TestUtils.loadDoubleMatrixFromFile("lp"+File.separator+"A"+problemId+".txt", " ".charAt(0));
+		double[] b =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"b"+problemId+".txt");
+		double[] expectedSol =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"sol"+problemId+".txt");
+		double expectedvalue =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"value"+problemId+".txt")[0];
 		
 		//double norm = MatrixUtils.createRealMatrix(A).operate(MatrixUtils.createRealVector(expectedSol)).subtract(MatrixUtils.createRealVector(b)).getNorm();
 		//assertTrue(norm < 1.e-10);
@@ -338,15 +339,15 @@ public class LPPrimalDualMethodTest extends TestCase {
 		String problemId = "2";
 		
 		log.debug("problemId: " + problemId);
-		double[] c = Utils.loadDoubleArrayFromFile("lp"+File.separator+"c"+problemId+".txt");
-		double[][] G = Utils.loadDoubleMatrixFromFile("lp"+File.separator+"G"+problemId+".txt", " ".charAt(0));
-		double[] h = Utils.loadDoubleArrayFromFile("lp"+File.separator+"h"+problemId+".txt");;
-		double[][] A = Utils.loadDoubleMatrixFromFile("lp"+File.separator+"A"+problemId+".txt", " ".charAt(0));
-		double[] b = Utils.loadDoubleArrayFromFile("lp"+File.separator+"b"+problemId+".txt");
-		double[] lb = Utils.loadDoubleArrayFromFile("lp"+File.separator+"lb"+problemId+".txt");
-		double[] ub = Utils.loadDoubleArrayFromFile("lp"+File.separator+"ub"+problemId+".txt");
-		double[] expectedSol = Utils.loadDoubleArrayFromFile("lp"+File.separator+"sol"+problemId+".txt");
-		double expectedvalue = Utils.loadDoubleArrayFromFile("lp"+File.separator+"value"+problemId+".txt")[0];
+		double[] c = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"c"+problemId+".txt");
+		double[][] G = TestUtils.loadDoubleMatrixFromFile("lp"+File.separator+"G"+problemId+".txt", " ".charAt(0));
+		double[] h = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"h"+problemId+".txt");;
+		double[][] A = TestUtils.loadDoubleMatrixFromFile("lp"+File.separator+"A"+problemId+".txt", " ".charAt(0));
+		double[] b = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"b"+problemId+".txt");
+		double[] lb = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"lb"+problemId+".txt");
+		double[] ub =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"ub"+problemId+".txt");
+		double[] expectedSol =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"sol"+problemId+".txt");
+		double expectedvalue =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"value"+problemId+".txt")[0];
 		double minLb = 0;
 		double maxUb = 1.0E15;//it is do high because of the very high values of the elements of h
 		
@@ -430,13 +431,13 @@ public class LPPrimalDualMethodTest extends TestCase {
 		String problemId = "3";
 		
 		log.debug("problemId: " + problemId);
-		double[] c = Utils.loadDoubleArrayFromFile("lp"+File.separator+"c"+problemId+".txt");
-		double[][] G = Utils.loadDoubleMatrixFromFile("lp"+File.separator+"G"+problemId+".txt", " ".charAt(0));
-		double[] h = Utils.loadDoubleArrayFromFile("lp"+File.separator+"h"+problemId+".txt");;
-		double[][] A = Utils.loadDoubleMatrixFromFile("lp"+File.separator+"A"+problemId+".txt", " ".charAt(0));
-		double[] b = Utils.loadDoubleArrayFromFile("lp"+File.separator+"b"+problemId+".txt");
-		double[] expectedSol = Utils.loadDoubleArrayFromFile("lp"+File.separator+"sol"+problemId+".txt");
-		double expectedvalue = Utils.loadDoubleArrayFromFile("lp"+File.separator+"value"+problemId+".txt")[0];
+		double[] c =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"c"+problemId+".txt");
+		double[][] G =TestUtils.loadDoubleMatrixFromFile("lp"+File.separator+"G"+problemId+".txt", " ".charAt(0));
+		double[] h =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"h"+problemId+".txt");;
+		double[][] A =TestUtils.loadDoubleMatrixFromFile("lp"+File.separator+"A"+problemId+".txt", " ".charAt(0));
+		double[] b =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"b"+problemId+".txt");
+		double[] expectedSol =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"sol"+problemId+".txt");
+		double expectedvalue =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"value"+problemId+".txt")[0];
 		double minLb = 0;
 		double maxUb = 1.0E15;//it is so high because of the very high values of the elements of h
 		
@@ -507,13 +508,13 @@ public class LPPrimalDualMethodTest extends TestCase {
 		String problemId = "5";
 		
 		log.debug("problemId: " + problemId);
-		double[] c = Utils.loadDoubleArrayFromFile("lp"+File.separator+"c"+problemId+".txt");
-		double[][] A = Utils.loadDoubleMatrixFromFile("lp"+File.separator+"A"+problemId+".txt", " ".charAt(0));
-		double[] b = Utils.loadDoubleArrayFromFile("lp"+File.separator+"b"+problemId+".txt");
-		double[] lb = Utils.loadDoubleArrayFromFile("lp"+File.separator+"lb"+problemId+".txt");
-		double[] ub = Utils.loadDoubleArrayFromFile("lp"+File.separator+"ub"+problemId+".txt");
-		double[] expectedSol = Utils.loadDoubleArrayFromFile("lp"+File.separator+"sol"+problemId+".txt");
-		double expectedvalue = Utils.loadDoubleArrayFromFile("lp"+File.separator+"value"+problemId+".txt")[0];
+		double[] c =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"c"+problemId+".txt");
+		double[][] A =TestUtils.loadDoubleMatrixFromFile("lp"+File.separator+"A"+problemId+".txt", " ".charAt(0));
+		double[] b =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"b"+problemId+".txt");
+		double[] lb =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"lb"+problemId+".txt");
+		double[] ub =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"ub"+problemId+".txt");
+		double[] expectedSol =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"sol"+problemId+".txt");
+		double expectedvalue =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"value"+problemId+".txt")[0];
 		
 		LPOptimizationRequest or = new LPOptimizationRequest();
 		or.setC(c);
@@ -581,13 +582,13 @@ public class LPPrimalDualMethodTest extends TestCase {
 		String problemId = "6";
 		
 		log.debug("problemId: " + problemId);
-		double[] c = Utils.loadDoubleArrayFromFile("lp"+File.separator+"c"+problemId+".txt");
-		double[][] A = Utils.loadDoubleMatrixFromFile("lp"+File.separator+"A"+problemId+".txt", " ".charAt(0));
-		double[] b = Utils.loadDoubleArrayFromFile("lp"+File.separator+"b"+problemId+".txt");
-		double[] lb = Utils.loadDoubleArrayFromFile("lp"+File.separator+"lb"+problemId+".txt");
-		double[] ub = Utils.loadDoubleArrayFromFile("lp"+File.separator+"ub"+problemId+".txt");
-		double[] expectedSol = Utils.loadDoubleArrayFromFile("lp"+File.separator+"sol"+problemId+".txt");
-		double expectedvalue = Utils.loadDoubleArrayFromFile("lp"+File.separator+"value"+problemId+".txt")[0];
+		double[] c =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"c"+problemId+".txt");
+		double[][] A =TestUtils.loadDoubleMatrixFromFile("lp"+File.separator+"A"+problemId+".txt", " ".charAt(0));
+		double[] b =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"b"+problemId+".txt");
+		double[] lb =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"lb"+problemId+".txt");
+		double[] ub =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"ub"+problemId+".txt");
+		double[] expectedSol =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"sol"+problemId+".txt");
+		double expectedvalue =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"value"+problemId+".txt")[0];
 		
 		LPOptimizationRequest or = new LPOptimizationRequest();
 		or.setC(c);
@@ -654,15 +655,15 @@ public class LPPrimalDualMethodTest extends TestCase {
 		String problemId = "7";
 		
 		log.debug("problemId: " + problemId);
-		double[] c = Utils.loadDoubleArrayFromFile("lp"+File.separator+"c"+problemId+".txt");
-		double[][] G = Utils.loadDoubleMatrixFromFile("lp"+File.separator+"G"+problemId+".txt", " ".charAt(0));
-		double[] h = Utils.loadDoubleArrayFromFile("lp"+File.separator+"h"+problemId+".txt");;
-		double[][] A = Utils.loadDoubleMatrixFromFile("lp"+File.separator+"A"+problemId+".txt", " ".charAt(0));
-		double[] b = Utils.loadDoubleArrayFromFile("lp"+File.separator+"b"+problemId+".txt");
-		double[] lb = Utils.loadDoubleArrayFromFile("lp"+File.separator+"lb"+problemId+".txt");
-		double[] ub = Utils.loadDoubleArrayFromFile("lp"+File.separator+"ub"+problemId+".txt");
-		double[] expectedSol = Utils.loadDoubleArrayFromFile("lp"+File.separator+"sol"+problemId+".txt");
-		double expectedvalue = Utils.loadDoubleArrayFromFile("lp"+File.separator+"value"+problemId+".txt")[0];
+		double[] c =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"c"+problemId+".txt");
+		double[][] G =TestUtils.loadDoubleMatrixFromFile("lp"+File.separator+"G"+problemId+".txt", " ".charAt(0));
+		double[] h =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"h"+problemId+".txt");;
+		double[][] A =TestUtils.loadDoubleMatrixFromFile("lp"+File.separator+"A"+problemId+".txt", " ".charAt(0));
+		double[] b =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"b"+problemId+".txt");
+		double[] lb =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"lb"+problemId+".txt");
+		double[] ub =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"ub"+problemId+".txt");
+		double[] expectedSol =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"sol"+problemId+".txt");
+		double expectedvalue =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"value"+problemId+".txt")[0];
 		
 		//the unbounded bounds are saved on the files with NaN values, so substitute them with acceptable values
 		lb = Utils.replaceValues(lb, Double.NaN, LPPrimalDualMethod.DEFAULT_MIN_LOWER_BOUND);
@@ -745,13 +746,13 @@ public class LPPrimalDualMethodTest extends TestCase {
 		String problemId = "8";
 		
 		log.debug("problemId: " + problemId);
-		double[] c = Utils.loadDoubleArrayFromFile("lp"+File.separator+"c"+problemId+".txt");
-		double[][] A = Utils.loadDoubleMatrixFromFile("lp"+File.separator+"A"+problemId+".txt", " ".charAt(0));
-		double[] b = Utils.loadDoubleArrayFromFile("lp"+File.separator+"b"+problemId+".txt");
-		double[] lb = Utils.loadDoubleArrayFromFile("lp"+File.separator+"lb"+problemId+".txt");
-		double[] ub = Utils.loadDoubleArrayFromFile("lp"+File.separator+"ub"+problemId+".txt");
-		double[] expectedSol = Utils.loadDoubleArrayFromFile("lp"+File.separator+"sol"+problemId+".txt");
-		double expectedvalue = Utils.loadDoubleArrayFromFile("lp"+File.separator+"value"+problemId+".txt")[0];
+		double[] c =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"c"+problemId+".txt");
+		double[][] A =TestUtils.loadDoubleMatrixFromFile("lp"+File.separator+"A"+problemId+".txt", " ".charAt(0));
+		double[] b =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"b"+problemId+".txt");
+		double[] lb =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"lb"+problemId+".txt");
+		double[] ub =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"ub"+problemId+".txt");
+		double[] expectedSol =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"sol"+problemId+".txt");
+		double expectedvalue =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"value"+problemId+".txt")[0];
 		
 		//the unbounded bounds are saved on the files with NaN values, so substitute them with acceptable values
 		lb = Utils.replaceValues(lb, Double.NaN, LPPrimalDualMethod.DEFAULT_MIN_LOWER_BOUND);
@@ -823,15 +824,15 @@ public class LPPrimalDualMethodTest extends TestCase {
 		String problemId = "10";
 		
 		log.debug("problemId: " + problemId);
-		double[] c = Utils.loadDoubleArrayFromFile("lp"+File.separator+"c"+problemId+".txt");
-		double[][] G = Utils.loadDoubleMatrixFromFile("lp"+File.separator+"G"+problemId+".txt", " ".charAt(0));
-		double[] h = Utils.loadDoubleArrayFromFile("lp"+File.separator+"h"+problemId+".txt");;
-		double[][] A = Utils.loadDoubleMatrixFromFile("lp"+File.separator+"A"+problemId+".txt", " ".charAt(0));
-		double[] b = Utils.loadDoubleArrayFromFile("lp"+File.separator+"b"+problemId+".txt");
-		double[] lb = Utils.loadDoubleArrayFromFile("lp"+File.separator+"lb"+problemId+".txt");
-		double[] ub = Utils.loadDoubleArrayFromFile("lp"+File.separator+"ub"+problemId+".txt");
-		double[] expectedSol = Utils.loadDoubleArrayFromFile("lp"+File.separator+"sol"+problemId+".txt");
-		double expectedvalue = Utils.loadDoubleArrayFromFile("lp"+File.separator+"value"+problemId+".txt")[0];
+		double[] c =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"c"+problemId+".txt");
+		double[][] G =TestUtils.loadDoubleMatrixFromFile("lp"+File.separator+"G"+problemId+".txt", " ".charAt(0));
+		double[] h =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"h"+problemId+".txt");;
+		double[][] A =TestUtils.loadDoubleMatrixFromFile("lp"+File.separator+"A"+problemId+".txt", " ".charAt(0));
+		double[] b =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"b"+problemId+".txt");
+		double[] lb =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"lb"+problemId+".txt");
+		double[] ub =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"ub"+problemId+".txt");
+		double[] expectedSol =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"sol"+problemId+".txt");
+		double expectedvalue =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"value"+problemId+".txt")[0];
 		
 		//the unbounded bounds are saved on the files with NaN values, so substitute them with acceptable values
 		lb = Utils.replaceValues(lb, Double.NaN, LPPrimalDualMethod.DEFAULT_MIN_LOWER_BOUND);

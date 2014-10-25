@@ -32,6 +32,7 @@ import cern.colt.matrix.impl.SparseDoubleMatrix2D;
 import cern.colt.matrix.linalg.Algebra;
 import cern.jet.math.Functions;
 
+import com.joptimizer.util.TestUtils;
 import com.joptimizer.util.Utils;
 
 public class QRSparseFactorizationTest extends TestCase {
@@ -124,8 +125,8 @@ public class QRSparseFactorizationTest extends TestCase {
 	
 	public void testSolve9() throws Exception {
 		log.debug("testSolve9");
-		double[][] A = Utils.loadDoubleMatrixFromFile("factorization" + File.separator	+ "matrix9.txt", " ".charAt(0));
-		double[] b = Utils.loadDoubleArrayFromFile("factorization" + File.separator	+ "vector9.txt");
+		double[][] A = TestUtils.loadDoubleMatrixFromFile("factorization" + File.separator	+ "matrix9.txt", " ".charAt(0));
+		double[] b = TestUtils.loadDoubleArrayFromFile("factorization" + File.separator	+ "vector9.txt");
 		
 		SparseDoubleMatrix2D AMatrix = new SparseDoubleMatrix2D(A);
 		DoubleMatrix1D bVector = new DenseDoubleMatrix1D(b);
@@ -145,8 +146,8 @@ public class QRSparseFactorizationTest extends TestCase {
 	 */
 	public void testSolve16() throws Exception {
 		log.debug("testSolve16");
-		double[][] A = Utils.loadDoubleMatrixFromFile("factorization" + File.separator	+ "matrix16.txt", " ".charAt(0));
-		double[] b = Utils.loadDoubleArrayFromFile("factorization" + File.separator	+ "vector16.txt");
+		double[][] A = TestUtils.loadDoubleMatrixFromFile("factorization" + File.separator	+ "matrix16.txt", " ".charAt(0));
+		double[] b = TestUtils.loadDoubleArrayFromFile("factorization" + File.separator	+ "vector16.txt");
 		
 		//JAMA
 //		Matrix M1 = new Matrix(A);
@@ -183,7 +184,7 @@ public class QRSparseFactorizationTest extends TestCase {
 	 */
 	public void testSolve16Transpose() throws Exception {
 		log.debug("testSolve16Transpose");
-		double[][] A = Utils.loadDoubleMatrixFromFile("factorization" + File.separator	+ "matrix16.txt", " ".charAt(0));
+		double[][] A = TestUtils.loadDoubleMatrixFromFile("factorization" + File.separator	+ "matrix16.txt", " ".charAt(0));
 		
 //		//COMMONS-MATH3-3.2
 //		RealMatrix M2 = MatrixUtils.createRealMatrix(A);

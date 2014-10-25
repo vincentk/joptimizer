@@ -34,9 +34,9 @@ import cern.colt.matrix.DoubleMatrix1D;
 import cern.colt.matrix.DoubleMatrix2D;
 import cern.colt.matrix.impl.SparseDoubleMatrix2D;
 import cern.colt.matrix.linalg.Algebra;
-import cern.jet.math.Functions;
 
 import com.joptimizer.util.ColtUtils;
+import com.joptimizer.util.TestUtils;
 import com.joptimizer.util.Utils;
 
 /**
@@ -169,7 +169,7 @@ public class CholeskySparseFactorizationTest extends TestCase {
 	 */
 	public void testScaledResidual() throws Exception{
 		log.debug("testScaledResidual");
-		double[][] A = Utils.loadDoubleMatrixFromFile("factorization" + File.separator	+ "matrix1.csv");
+		double[][] A = TestUtils.loadDoubleMatrixFromFile("factorization" + File.separator	+ "matrix1.csv");
 		RealMatrix Q = MatrixUtils.createRealMatrix(A);
 		int dim = Q.getRowDimension();
 	
@@ -198,7 +198,7 @@ public class CholeskySparseFactorizationTest extends TestCase {
 	public void testFromFile3() throws Exception{
 		log.debug("testFromFile3");
 		String matrixId = "3";
-		double[][] G = Utils.loadDoubleMatrixFromFile("factorization" + File.separator + "matrix" + matrixId + ".csv");
+		double[][] G = TestUtils.loadDoubleMatrixFromFile("factorization" + File.separator + "matrix" + matrixId + ".csv");
 		RealMatrix Q = MatrixUtils.createRealMatrix(G);
 		int dim = Q.getRowDimension();
 	
@@ -241,7 +241,7 @@ public class CholeskySparseFactorizationTest extends TestCase {
 		Algebra ALG = Algebra.DEFAULT;
 		
 		String matrixId = "6";
-		double[][] A = Utils.loadDoubleMatrixFromFile("factorization" + File.separator + "matrix" + matrixId + ".txt", " ".charAt(0));
+		double[][] A = TestUtils.loadDoubleMatrixFromFile("factorization" + File.separator + "matrix" + matrixId + ".txt", " ".charAt(0));
 		SparseDoubleMatrix2D AMatrix = (SparseDoubleMatrix2D) F2.make(A);
 		int dim = AMatrix.rows();
 		
@@ -289,7 +289,7 @@ public class CholeskySparseFactorizationTest extends TestCase {
 		Algebra ALG = Algebra.DEFAULT;
 		
 		String matrixId = "10";
-		double[][] A = Utils.loadDoubleMatrixFromFile("factorization" + File.separator + "matrix" + matrixId + ".txt", " ".charAt(0));
+		double[][] A = TestUtils.loadDoubleMatrixFromFile("factorization" + File.separator + "matrix" + matrixId + ".txt", " ".charAt(0));
 		SparseDoubleMatrix2D AMatrix = (SparseDoubleMatrix2D) F2.make(A);
 		int dim = AMatrix.rows();
 		

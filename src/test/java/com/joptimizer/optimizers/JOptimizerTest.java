@@ -45,7 +45,7 @@ import com.joptimizer.functions.LogTransformedPosynomial;
 import com.joptimizer.functions.PDQuadraticMultivariateRealFunction;
 import com.joptimizer.functions.PSDQuadraticMultivariateRealFunction;
 import com.joptimizer.functions.StrictlyConvexMultivariateRealFunction;
-import com.joptimizer.util.Utils;
+import com.joptimizer.util.TestUtils;
 
 /**
  * @author alberto trivellato (alberto.trivellato@gmail.com)
@@ -540,12 +540,12 @@ public class JOptimizerTest extends TestCase {
 		
 		String problemId = "1";
 		
-		double[][] P = Utils.loadDoubleMatrixFromFile("qp"+File.separator+"P"+problemId+".txt", " ".charAt(0));
-		double[] c = Utils.loadDoubleArrayFromFile("qp"+File.separator+"c"+problemId+".txt");
-		double[][] G = Utils.loadDoubleMatrixFromFile("qp"+File.separator+"G"+problemId+".txt", " ".charAt(0));
-		double[] h = Utils.loadDoubleArrayFromFile("qp"+File.separator+"h"+problemId+".txt");;
-		double[][] A = Utils.loadDoubleMatrixFromFile("qp"+File.separator+"A"+problemId+".txt", " ".charAt(0));
-		double[] b = Utils.loadDoubleArrayFromFile("qp"+File.separator+"b"+problemId+".txt");
+		double[][] P = TestUtils.loadDoubleMatrixFromFile("qp"+File.separator+"P"+problemId+".txt", " ".charAt(0));
+		double[] c = TestUtils.loadDoubleArrayFromFile("qp"+File.separator+"c"+problemId+".txt");
+		double[][] G = TestUtils.loadDoubleMatrixFromFile("qp"+File.separator+"G"+problemId+".txt", " ".charAt(0));
+		double[] h = TestUtils.loadDoubleArrayFromFile("qp"+File.separator+"h"+problemId+".txt");;
+		double[][] A = TestUtils.loadDoubleMatrixFromFile("qp"+File.separator+"A"+problemId+".txt", " ".charAt(0));
+		double[] b = TestUtils.loadDoubleArrayFromFile("qp"+File.separator+"b"+problemId+".txt");
 
 		// Objective function
 		PDQuadraticMultivariateRealFunction objectiveFunction = new PDQuadraticMultivariateRealFunction(P, null, 0);
@@ -1715,12 +1715,12 @@ public class JOptimizerTest extends TestCase {
 	 */
 	public void testLP26Dim() throws Exception {
 		log.debug("testLP26Dim");
-		double[] c = Utils.loadDoubleArrayFromFile("lp"+File.separator+"c1.txt");
-		double[][] G = Utils.loadDoubleMatrixFromFile("lp"+File.separator+"G1.txt", " ".charAt(0));
-		double[] h = Utils.loadDoubleArrayFromFile("lp"+File.separator+"h1.txt");;
-		double[][] A = Utils.loadDoubleMatrixFromFile("lp"+File.separator+"A1.txt", " ".charAt(0));
-		double[] b = Utils.loadDoubleArrayFromFile("lp"+File.separator+"b1.txt");
-		double expectedValue = Utils.loadDoubleArrayFromFile("lp"+File.separator+"value1.txt")[0];
+		double[] c = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"c1.txt");
+		double[][] G = TestUtils.loadDoubleMatrixFromFile("lp"+File.separator+"G1.txt", " ".charAt(0));
+		double[] h = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"h1.txt");;
+		double[][] A = TestUtils.loadDoubleMatrixFromFile("lp"+File.separator+"A1.txt", " ".charAt(0));
+		double[] b = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"b1.txt");
+		double expectedValue = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"value1.txt")[0];
 		
 		// Objective function
 		LinearMultivariateRealFunction objectiveFunction = new LinearMultivariateRealFunction(c, 0);

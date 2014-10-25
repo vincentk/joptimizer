@@ -23,7 +23,6 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import cern.colt.function.IntIntDoubleFunction;
 import cern.colt.matrix.DoubleFactory1D;
 import cern.colt.matrix.DoubleFactory2D;
 import cern.colt.matrix.DoubleMatrix1D;
@@ -31,6 +30,7 @@ import cern.colt.matrix.DoubleMatrix2D;
 import cern.colt.matrix.impl.SparseDoubleMatrix2D;
 import cern.colt.matrix.linalg.Algebra;
 
+import com.joptimizer.util.TestUtils;
 import com.joptimizer.util.Utils;
 
 /**
@@ -145,7 +145,7 @@ public class CholeskyUpperDiagonalFactorizationTest extends TestCase {
 	public void testFromFile10() throws Exception {
 		log.debug("testFromFile10");
 		String matrixId = "10";
-		double[][] A = Utils.loadDoubleMatrixFromFile("factorization" + File.separator	+ "matrix"+matrixId+".txt", " ".charAt(0));
+		double[][] A = TestUtils.loadDoubleMatrixFromFile("factorization" + File.separator	+ "matrix"+matrixId+".txt", " ".charAt(0));
 		SparseDoubleMatrix2D AMatrix = new SparseDoubleMatrix2D(A);
 		int dim = AMatrix.rows();
 		

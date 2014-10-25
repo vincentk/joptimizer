@@ -29,7 +29,7 @@ import cern.colt.matrix.DoubleMatrix2D;
 import cern.colt.matrix.linalg.Algebra;
 import cern.colt.matrix.linalg.Property;
 
-import com.joptimizer.util.Utils;
+import com.joptimizer.util.TestUtils;
 
 public class LDLTPermutedFactorizationTest extends TestCase {
 
@@ -462,7 +462,7 @@ public class LDLTPermutedFactorizationTest extends TestCase {
 		logger.debug("testPldltpt9BK");
 		DoubleFactory2D F2 = DoubleFactory2D.sparse;
 		Algebra ALG = Algebra.DEFAULT;
-		double[][] G = Utils.loadDoubleMatrixFromFile("factorization" + File.separator	+ "matrix6.txt", " ".charAt(0));
+		double[][] G = TestUtils.loadDoubleMatrixFromFile("factorization" + File.separator	+ "matrix6.txt", " ".charAt(0));
 		DoubleMatrix2D AMatrix = F2.make(G);
 		LDLTPermutedFactorization fact = new LDLTPermutedFactorization(AMatrix, LDLTPermutedFactorization.DIAGONAL_PIVOLTING_WITH_PARTIAL_PIVOTING);  
 		fact.factorize();

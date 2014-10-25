@@ -31,7 +31,7 @@ import cern.colt.matrix.linalg.Algebra;
 import cern.colt.matrix.linalg.Property;
 import cern.jet.math.Functions;
 
-import com.joptimizer.util.Utils;
+import com.joptimizer.util.TestUtils;
 
 /**
  * @author alberto trivellato (alberto.trivellato@gmail.com)
@@ -55,10 +55,10 @@ public class DiagonalHKKTSolverTest extends TestCase {
 	 */
 	public void xxxtestSolve() throws Exception {
 		log.debug("testSolve");
-		double[][] H = Utils.loadDoubleMatrixFromFile("lp" + File.separator	+ "H13.csv");
-		double[][] A = Utils.loadDoubleMatrixFromFile("lp" + File.separator	+ "A13.csv");
-		double[] g = Utils.loadDoubleArrayFromFile("lp" + File.separator	+ "g13.csv");
-		double[] h = Utils.loadDoubleArrayFromFile("lp" + File.separator	+ "hh13.csv");
+		double[][] H = TestUtils.loadDoubleMatrixFromFile("lp" + File.separator	+ "H13.csv");
+		double[][] A = TestUtils.loadDoubleMatrixFromFile("lp" + File.separator	+ "A13.csv");
+		double[] g = TestUtils.loadDoubleArrayFromFile("lp" + File.separator	+ "g13.csv");
+		double[] h = TestUtils.loadDoubleArrayFromFile("lp" + File.separator	+ "hh13.csv");
 		DoubleMatrix2D HMatrix = F2.make(H);
 		DoubleMatrix2D AMatrix = F2.make(A);
 		DoubleMatrix1D gVector = F1.make(g);

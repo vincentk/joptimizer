@@ -33,6 +33,7 @@ import cern.colt.matrix.linalg.Algebra;
 import cern.colt.matrix.linalg.SingularValueDecomposition;
 
 import com.joptimizer.util.ColtUtils;
+import com.joptimizer.util.TestUtils;
 import com.joptimizer.util.Utils;
 
 public class MatrixLogSumRescalerTest extends TestCase {
@@ -179,7 +180,7 @@ public class MatrixLogSumRescalerTest extends TestCase {
 		Algebra ALG = Algebra.DEFAULT;
 		
 		String matrixId = "7";
-		double[][] A = Utils.loadDoubleMatrixFromFile("factorization" + File.separator + "matrix" + matrixId + ".txt", " ".charAt(0));
+		double[][] A = TestUtils.loadDoubleMatrixFromFile("factorization" + File.separator + "matrix" + matrixId + ".txt", " ".charAt(0));
 		final DoubleMatrix2D AMatrix = F2.make(A);
 		
 		MatrixRescaler rescaler = new MatrixLogSumRescaler();
@@ -247,7 +248,7 @@ public class MatrixLogSumRescalerTest extends TestCase {
 		Algebra ALG = Algebra.DEFAULT;
 		
 		String matrixId = "7";
-		double[][] A = Utils.loadDoubleMatrixFromFile("factorization" + File.separator + "matrix" + matrixId + ".txt", " ".charAt(0));
+		double[][] A = TestUtils.loadDoubleMatrixFromFile("factorization" + File.separator + "matrix" + matrixId + ".txt", " ".charAt(0));
 		SparseDoubleMatrix2D AMatrix = (SparseDoubleMatrix2D)F2.make(A);
 
 		MatrixRescaler rescaler = new MatrixLogSumRescaler();
@@ -286,7 +287,7 @@ public class MatrixLogSumRescalerTest extends TestCase {
 		Algebra ALG = Algebra.DEFAULT;
 		
 		String matrixId = "13";
-		double[][] A = Utils.loadDoubleMatrixFromFile("factorization" + File.separator + "matrix" + matrixId + ".csv");
+		double[][] A = TestUtils.loadDoubleMatrixFromFile("factorization" + File.separator + "matrix" + matrixId + ".csv");
 		SparseDoubleMatrix2D AMatrix = (SparseDoubleMatrix2D)F2.make(A);
 
 		MatrixRescaler rescaler = new MatrixLogSumRescaler();

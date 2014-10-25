@@ -34,6 +34,7 @@ import cern.colt.matrix.impl.SparseDoubleMatrix2D;
 import cern.colt.matrix.linalg.Algebra;
 
 import com.joptimizer.util.ColtUtils;
+import com.joptimizer.util.TestUtils;
 import com.joptimizer.util.Utils;
 
 /**
@@ -121,7 +122,7 @@ public class LDLTFactorizationTest extends TestCase {
 		Algebra ALG = Algebra.DEFAULT;
 		
 		String matrixId = "6";
-		double[][] A = Utils.loadDoubleMatrixFromFile("factorization" + File.separator + "matrix" + matrixId + ".txt", " ".charAt(0));
+		double[][] A = TestUtils.loadDoubleMatrixFromFile("factorization" + File.separator + "matrix" + matrixId + ".txt", " ".charAt(0));
 		SparseDoubleMatrix2D AMatrix = (SparseDoubleMatrix2D) F2.make(A);
 		int dim = AMatrix.rows();
 		

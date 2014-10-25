@@ -27,8 +27,7 @@ import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 import org.apache.commons.math3.linear.SingularValueDecomposition;
 
-import com.joptimizer.optimizers.LPPresolver;
-import com.joptimizer.util.Utils;
+import com.joptimizer.util.TestUtils;
 
 /**
  * LP presolving test.
@@ -44,18 +43,18 @@ public class LPPresolverTest extends TestCase {
 		String problemId = "1";
 		
 		log.debug("problemId: " + problemId);
-		double[] c = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"c"+problemId+".txt");
-		double[][] A = Utils.loadDoubleMatrixFromFile("lp"+File.separator+"presolving"+File.separator+"A"+problemId+".txt", " ".charAt(0));
-		double[] b = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"b"+problemId+".txt");
-		double[] lb = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"lb"+problemId+".txt");
-		double[] ub = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"ub"+problemId+".txt");
+		double[] c = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"c"+problemId+".txt");
+		double[][] A = TestUtils.loadDoubleMatrixFromFile("lp"+File.separator+"presolving"+File.separator+"A"+problemId+".txt", " ".charAt(0));
+		double[] b = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"b"+problemId+".txt");
+		double[] lb = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"lb"+problemId+".txt");
+		double[] ub = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"ub"+problemId+".txt");
 		double s = 0;
 		try{
-			s = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"s"+problemId+".txt")[0];
+			s = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"s"+problemId+".txt")[0];
 		}catch(Exception e){}
-		double[] expectedSolution = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"sol"+problemId+".txt");
-		double expectedValue = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"value"+problemId+".txt")[0];
-		double expectedTolerance = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"tolerance"+problemId+".txt")[0];
+		double[] expectedSolution = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"sol"+problemId+".txt");
+		double expectedValue = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"value"+problemId+".txt")[0];
+		double expectedTolerance = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"tolerance"+problemId+".txt")[0];
 		
 		expectedTolerance = Math.max(expectedTolerance, MatrixUtils.createRealMatrix(A).operate(MatrixUtils.createRealVector(expectedSolution)).subtract(MatrixUtils.createRealVector(b)).getNorm()); 
 		doPresolving(c, A, b, lb, ub, s, expectedSolution, expectedValue,
@@ -70,17 +69,17 @@ public class LPPresolverTest extends TestCase {
 		
 		String problemId = "2";
 		
-		double[] c = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"c"+problemId+".txt");
-		double[][] A = Utils.loadDoubleMatrixFromFile("lp"+File.separator+"presolving"+File.separator+"A"+problemId+".txt", " ".charAt(0));
-		double[] b = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"b"+problemId+".txt");
-		double[] lb = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"lb"+problemId+".txt");
-		double[] ub = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"ub"+problemId+".txt");
+		double[] c = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"c"+problemId+".txt");
+		double[][] A = TestUtils.loadDoubleMatrixFromFile("lp"+File.separator+"presolving"+File.separator+"A"+problemId+".txt", " ".charAt(0));
+		double[] b = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"b"+problemId+".txt");
+		double[] lb = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"lb"+problemId+".txt");
+		double[] ub = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"ub"+problemId+".txt");
 		double s = 0;
 		try{
-			s = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"s"+problemId+".txt")[0];
+			s = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"s"+problemId+".txt")[0];
 		}catch(Exception e){}
-		double[] expectedSolution = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"sol"+problemId+".txt");
-		double expectedValue = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"value"+problemId+".txt")[0];
+		double[] expectedSolution = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"sol"+problemId+".txt");
+		double expectedValue = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"value"+problemId+".txt")[0];
 		double expectedTolerance = MatrixUtils.createRealMatrix(A).operate(MatrixUtils.createRealVector(expectedSolution)).subtract(MatrixUtils.createRealVector(b)).getNorm(); 
 		
 		//must be: A pXn with rank(A)=p < n
@@ -122,18 +121,18 @@ public class LPPresolverTest extends TestCase {
 		String problemId = "4";
 		
 		log.debug("problemId: " + problemId);
-		double[] c = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"c"+problemId+".txt");
-		double[][] A = Utils.loadDoubleMatrixFromFile("lp"+File.separator+"presolving"+File.separator+"A"+problemId+".txt", " ".charAt(0));
-		double[] b = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"b"+problemId+".txt");
-		double[] lb = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"lb"+problemId+".txt");
-		double[] ub = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"ub"+problemId+".txt");
+		double[] c = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"c"+problemId+".txt");
+		double[][] A = TestUtils.loadDoubleMatrixFromFile("lp"+File.separator+"presolving"+File.separator+"A"+problemId+".txt", " ".charAt(0));
+		double[] b = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"b"+problemId+".txt");
+		double[] lb = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"lb"+problemId+".txt");
+		double[] ub = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"ub"+problemId+".txt");
 		double s = 0;
 		try{
-			s = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"s"+problemId+".txt")[0];
+			s = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"s"+problemId+".txt")[0];
 		}catch(Exception e){}
-		double[] expectedSolution = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"sol"+problemId+".txt");
-		double expectedValue = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"value"+problemId+".txt")[0];
-		double expectedTolerance = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"tolerance"+problemId+".txt")[0];
+		double[] expectedSolution = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"sol"+problemId+".txt");
+		double expectedValue = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"value"+problemId+".txt")[0];
+		double expectedTolerance = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"tolerance"+problemId+".txt")[0];
 		
 		expectedTolerance = Math.max(expectedTolerance, MatrixUtils.createRealMatrix(A).operate(MatrixUtils.createRealVector(expectedSolution)).subtract(MatrixUtils.createRealVector(b)).getNorm()); 
 		doPresolving(c, A, b, lb, ub, s, expectedSolution, expectedValue,
@@ -149,18 +148,18 @@ public class LPPresolverTest extends TestCase {
 		String problemId = "5";
 		
 		log.debug("problemId: " + problemId);
-		double[] c = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"c"+problemId+".txt");
-		double[][] A = Utils.loadDoubleMatrixFromFile("lp"+File.separator+"presolving"+File.separator+"A"+problemId+".txt", " ".charAt(0));
-		double[] b = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"b"+problemId+".txt");
-		double[] lb = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"lb"+problemId+".txt");
-		double[] ub = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"ub"+problemId+".txt");
+		double[] c = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"c"+problemId+".txt");
+		double[][] A = TestUtils.loadDoubleMatrixFromFile("lp"+File.separator+"presolving"+File.separator+"A"+problemId+".txt", " ".charAt(0));
+		double[] b = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"b"+problemId+".txt");
+		double[] lb = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"lb"+problemId+".txt");
+		double[] ub = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"ub"+problemId+".txt");
 		double s = 0;
 		try{
-			s = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"s"+problemId+".txt")[0];
+			s = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"s"+problemId+".txt")[0];
 		}catch(Exception e){}
-		double[] expectedSolution = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"sol"+problemId+".txt");
-		double expectedValue = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"value"+problemId+".txt")[0];
-		double expectedTolerance = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"tolerance"+problemId+".txt")[0];
+		double[] expectedSolution = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"sol"+problemId+".txt");
+		double expectedValue = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"value"+problemId+".txt")[0];
+		double expectedTolerance = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"tolerance"+problemId+".txt")[0];
 		
 		expectedTolerance = Math.max(expectedTolerance, MatrixUtils.createRealMatrix(A).operate(MatrixUtils.createRealVector(expectedSolution)).subtract(MatrixUtils.createRealVector(b)).getNorm()); 
 		doPresolving(c, A, b, lb, ub, s, expectedSolution, expectedValue,
@@ -173,18 +172,18 @@ public class LPPresolverTest extends TestCase {
 		String problemId = "8";
 		
 		log.debug("problemId: " + problemId);
-		double[] c = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"c"+problemId+".txt");
-		double[][] A = Utils.loadDoubleMatrixFromFile("lp"+File.separator+"presolving"+File.separator+"A"+problemId+".txt", " ".charAt(0));
-		double[] b = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"b"+problemId+".txt");
-		double[] lb = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"lb"+problemId+".txt");
-		double[] ub = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"ub"+problemId+".txt");
+		double[] c = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"c"+problemId+".txt");
+		double[][] A = TestUtils.loadDoubleMatrixFromFile("lp"+File.separator+"presolving"+File.separator+"A"+problemId+".txt", " ".charAt(0));
+		double[] b = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"b"+problemId+".txt");
+		double[] lb = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"lb"+problemId+".txt");
+		double[] ub = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"ub"+problemId+".txt");
 		double s = 0;
 		try{
-			s = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"s"+problemId+".txt")[0];
+			s = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"s"+problemId+".txt")[0];
 		}catch(Exception e){}
-		double[] expectedSolution = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"sol"+problemId+".txt");
-		double expectedValue = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"value"+problemId+".txt")[0];
-		double expectedTolerance = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"tolerance"+problemId+".txt")[0];
+		double[] expectedSolution = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"sol"+problemId+".txt");
+		double expectedValue = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"value"+problemId+".txt")[0];
+		double expectedTolerance = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"tolerance"+problemId+".txt")[0];
 		
 		expectedTolerance = Math.max(expectedTolerance, MatrixUtils.createRealMatrix(A).operate(MatrixUtils.createRealVector(expectedSolution)).subtract(MatrixUtils.createRealVector(b)).getNorm());
 		expectedTolerance = 0.0005;
@@ -201,18 +200,18 @@ public class LPPresolverTest extends TestCase {
 		String problemId = "10";
 		
 		log.debug("problemId: " + problemId);
-		double[] c = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"c"+problemId+".txt");
-		double[][] A = Utils.loadDoubleMatrixFromFile("lp"+File.separator+"presolving"+File.separator+"A"+problemId+".txt", " ".charAt(0));
-		double[] b = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"b"+problemId+".txt");
-		double[] lb = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"lb"+problemId+".txt");
-		double[] ub = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"ub"+problemId+".txt");
+		double[] c = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"c"+problemId+".txt");
+		double[][] A = TestUtils.loadDoubleMatrixFromFile("lp"+File.separator+"presolving"+File.separator+"A"+problemId+".txt", " ".charAt(0));
+		double[] b = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"b"+problemId+".txt");
+		double[] lb = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"lb"+problemId+".txt");
+		double[] ub = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"ub"+problemId+".txt");
 		double s = 0;
 		try{
-			s = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"s"+problemId+".txt")[0];
+			s = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"s"+problemId+".txt")[0];
 		}catch(Exception e){}
-		double[] expectedSolution = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"sol"+problemId+".txt");
-		double expectedValue = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"value"+problemId+".txt")[0];
-		double expectedTolerance = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"tolerance"+problemId+".txt")[0];
+		double[] expectedSolution = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"sol"+problemId+".txt");
+		double expectedValue = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"value"+problemId+".txt")[0];
+		double expectedTolerance = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"tolerance"+problemId+".txt")[0];
 		
 		expectedTolerance = Math.max(expectedTolerance, MatrixUtils.createRealMatrix(A).operate(MatrixUtils.createRealVector(expectedSolution)).subtract(MatrixUtils.createRealVector(b)).getNorm()); 
 		doPresolving(c, A, b, lb, ub, s, expectedSolution, expectedValue,
@@ -228,18 +227,18 @@ public class LPPresolverTest extends TestCase {
 		String problemId = "11";
 		
 		log.debug("problemId: " + problemId);
-		double[] c = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"c"+problemId+".txt");
-		double[][] A = Utils.loadDoubleMatrixFromFile("lp"+File.separator+"presolving"+File.separator+"A"+problemId+".txt", " ".charAt(0));
-		double[] b = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"b"+problemId+".txt");
-		double[] lb = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"lb"+problemId+".txt");
-		double[] ub = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"ub"+problemId+".txt");
+		double[] c = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"c"+problemId+".txt");
+		double[][] A = TestUtils.loadDoubleMatrixFromFile("lp"+File.separator+"presolving"+File.separator+"A"+problemId+".txt", " ".charAt(0));
+		double[] b = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"b"+problemId+".txt");
+		double[] lb = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"lb"+problemId+".txt");
+		double[] ub = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"ub"+problemId+".txt");
 		double s = 0;
 		try{
-			s = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"s"+problemId+".txt")[0];
+			s = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"s"+problemId+".txt")[0];
 		}catch(Exception e){}
-		double[] expectedSolution = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"sol"+problemId+".txt");
-		double expectedValue = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"value"+problemId+".txt")[0];
-		double expectedTolerance = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"tolerance"+problemId+".txt")[0];
+		double[] expectedSolution = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"sol"+problemId+".txt");
+		double expectedValue = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"value"+problemId+".txt")[0];
+		double expectedTolerance = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"tolerance"+problemId+".txt")[0];
 		
 		expectedTolerance = Math.max(expectedTolerance, MatrixUtils.createRealMatrix(A).operate(MatrixUtils.createRealVector(expectedSolution)).subtract(MatrixUtils.createRealVector(b)).getNorm());
 		expectedTolerance = 1.e-9;
@@ -256,18 +255,18 @@ public class LPPresolverTest extends TestCase {
 		String problemId = "12";
 		
 		log.debug("problemId: " + problemId);
-		double[] c = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"c"+problemId+".txt");
-		double[][] A = Utils.loadDoubleMatrixFromFile("lp"+File.separator+"presolving"+File.separator+"A"+problemId+".txt", " ".charAt(0));
-		double[] b = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"b"+problemId+".txt");
-		double[] lb = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"lb"+problemId+".txt");
-		double[] ub = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"ub"+problemId+".txt");
+		double[] c = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"c"+problemId+".txt");
+		double[][] A = TestUtils.loadDoubleMatrixFromFile("lp"+File.separator+"presolving"+File.separator+"A"+problemId+".txt", " ".charAt(0));
+		double[] b = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"b"+problemId+".txt");
+		double[] lb = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"lb"+problemId+".txt");
+		double[] ub = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"ub"+problemId+".txt");
 		double s = 0;
 		try{
-			s = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"s"+problemId+".txt")[0];
+			s = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"s"+problemId+".txt")[0];
 		}catch(Exception e){}
-		double[] expectedSolution = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"sol"+problemId+".txt");
-		double expectedValue = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"value"+problemId+".txt")[0];
-		double expectedTolerance = Utils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"tolerance"+problemId+".txt")[0];
+		double[] expectedSolution = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"sol"+problemId+".txt");
+		double expectedValue = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"value"+problemId+".txt")[0];
+		double expectedTolerance = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"tolerance"+problemId+".txt")[0];
 		
 		expectedTolerance = Math.max(expectedTolerance, MatrixUtils.createRealMatrix(A).operate(MatrixUtils.createRealVector(expectedSolution)).subtract(MatrixUtils.createRealVector(b)).getNorm()); 
 		doPresolving(c, A, b, lb, ub, s, expectedSolution, expectedValue,
