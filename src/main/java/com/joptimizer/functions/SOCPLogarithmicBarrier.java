@@ -180,7 +180,7 @@ public class SOCPLogarithmicBarrier implements BarrierFunction {
 	 * @param X evaluation point
 	 * @return t = c.x + d
 	 */
-	private double buildT(SOCPConstraintParameters param, RealVector X){
+	private static double buildT(SOCPConstraintParameters param, RealVector X){
 		return param.getC().dotProduct(X) + param.getD();
 	}
 	
@@ -190,7 +190,7 @@ public class SOCPLogarithmicBarrier implements BarrierFunction {
 	 * @param X evaluation point
 	 * @return u = A.x + b
 	 */
-	private RealVector buildU(SOCPConstraintParameters param, RealVector X){
+	private static RealVector buildU(SOCPConstraintParameters param, RealVector X){
 		return param.getA().operate(X).add(param.getB());
 	}
 	

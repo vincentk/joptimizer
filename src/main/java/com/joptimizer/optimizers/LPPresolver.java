@@ -552,7 +552,7 @@ public class LPPresolver {
 		if(x.length != originalN){
 			throw new IllegalArgumentException("wrong array dimension: " + x.length);
 		}
-		double[] presolvedX = duplicateArray(x);
+		double[] presolvedX = Arrays.copyOf(x, x.length);
 		for(int i=0; i<presolvingStack.size(); i++){
 			presolvingStack.get(i).preSolve(presolvedX);
 		}
@@ -1977,14 +1977,14 @@ public class LPPresolver {
 	 * Removes the first occurrence of the specified element from the
    * specified array. All subsequent elements are shifted to the left.
 	 */
-	private int[] removeElementFromSortedArray(int[] array, int element){
+	private static int[] removeElementFromSortedArray(int[] array, int element){
 		if(array.length < 2){
 			return new int[]{};
 		}
 		return ArrayUtils.removeElement(array, element);
 	}
 	
-	private short[] addToSortedArray(short[] array, short element){
+	private static short[] addToSortedArray(short[] array, short element){
 		short[] ret = new short[array.length+1];
 		short cnt = 0;
 		boolean goStraight = false;
@@ -2018,7 +2018,7 @@ public class LPPresolver {
 		return ret;
 	}
 	
-	private int[] addToSortedArray(int[] array, int element){
+	private static int[] addToSortedArray(int[] array, int element){
 		int[] ret = new int[array.length+1];
 		short cnt = 0;
 		boolean goStraight = false;
@@ -2052,7 +2052,7 @@ public class LPPresolver {
 		return ret;
 	}
 	
-	private boolean isSubsetSparsityPattern(short[] subset, short[] superset) {
+	private static boolean isSubsetSparsityPattern(short[] subset, short[] superset) {
 		short position = 0;
 		for(short i=0; i<subset.length; i++){
 			short s = subset[i];
@@ -2071,7 +2071,7 @@ public class LPPresolver {
 		return true;
 	}
 	
-	private boolean isSameSparsityPattern(short[] sp1, short[] sp2) {
+	private static boolean isSameSparsityPattern(short[] sp1, short[] sp2) {
 		if(sp1.length == sp2.length){
 			for(int k=0; k<sp1.length; k++){
 				if(sp1[k] != sp2[k]){
@@ -2290,12 +2290,6 @@ public class LPPresolver {
 		presolvingStack.add(presolvingStack.size(), duplicatedColumn);
 	}
 	
-	private double[] duplicateArray(double[] v){
-		double[] vv = new double[v.length];
-		System.arraycopy(v, 0, vv, 0, v.length);
-		return vv;
-	}
-	
 	/**
 	 * This method is just for testing scope.
 	 */
@@ -2420,15 +2414,8 @@ public class LPPresolver {
 	 * Just for testing porpose
 	 */
 	public void setExpectedSolution(double sol[]){
-		this.expectedSolution = duplicateArray(sol);
+		this.expectedSolution = Arrays.copyOf(sol, sol.length);
 	}
-	
-//	/**
-//	 * Just for testing porpose
-//	 */
-//	public double getExpectedTolerance() {
-//		return expectedTolerance;
-//	}
 
 	public double getMinRescaledLB() {
 		return minRescaledLB;

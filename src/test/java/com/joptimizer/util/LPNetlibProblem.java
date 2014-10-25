@@ -67,6 +67,7 @@ public class LPNetlibProblem {
 			problem.optimalValue = Double.parseDouble(st.nextToken()); 
 			problemsMap.put(problem.name, problem);
 		}
+		in.close();
 		return problemsMap;
 	}
 	

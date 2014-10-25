@@ -43,7 +43,6 @@ import cern.jet.math.Mult;
 public class LogTransformedPosynomial implements ConvexMultivariateRealFunction {
 	
 	private DoubleMatrix2D A = null;
-	private DoubleMatrix2D AT = null;
 	private DoubleMatrix1D b = null;
 	private int dim = -1;
 	private Algebra ALG = Algebra.DEFAULT;
@@ -59,7 +58,7 @@ public class LogTransformedPosynomial implements ConvexMultivariateRealFunction 
 		if(A.rows() != b.size()){
 			throw new IllegalArgumentException("Impossible to create the function");
 		}
-		this.AT = ALG.transpose(A);
+		ALG.transpose(A);
 		this.dim = A.columns();
 	}
 

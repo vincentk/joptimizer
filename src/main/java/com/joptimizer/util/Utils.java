@@ -21,7 +21,6 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URI;
-import java.text.DecimalFormat;
 import java.util.Random;
 
 import org.apache.commons.logging.Log;
@@ -37,9 +36,6 @@ import cern.colt.matrix.DoubleMatrix1D;
 import cern.colt.matrix.DoubleMatrix2D;
 import cern.colt.matrix.linalg.Algebra;
 import cern.jet.math.Functions;
-
-import com.Ostermiller.util.CSVParser;
-import com.Ostermiller.util.CSVPrinter;
 
 /**
  * @author alberto trivellato (alberto.trivellato@gmail.com)
@@ -454,6 +450,7 @@ public class Utils {
 		FileOutputStream fout = new FileOutputStream(filename, true);
 	  ObjectOutputStream oos = new ObjectOutputStream(fout);
 	  oos.writeObject(obj);
+	  oos.close();
 	}
 	
 	public static final Object deserializeObject(String classpathFileName) throws Exception{

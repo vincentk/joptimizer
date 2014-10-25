@@ -25,7 +25,6 @@ import cern.jet.math.Functions;
 import cern.jet.math.Mult;
 
 import com.joptimizer.algebra.CholeskyFactorization;
-import com.joptimizer.algebra.MatrixRescaler;
 import com.joptimizer.algebra.Matrix1NornRescaler;
 import com.joptimizer.util.ColtUtils;
 
