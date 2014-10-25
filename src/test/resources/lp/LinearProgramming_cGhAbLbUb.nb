@@ -1,0 +1,410 @@
+(************** Content-type: application/mathematica **************
+                     CreatedBy='Mathematica 5.0'
+
+                    Mathematica-Compatible Notebook
+
+This notebook can be used with any Mathematica-compatible
+application, such as Mathematica, MathReader or Publicon. The data
+for the notebook starts with the line containing stars above.
+
+To get the notebook into a Mathematica-compatible application, do
+one of the following:
+
+* Save the data starting with the line of stars above into a file
+  with a name ending in .nb, then open the file inside the
+  application;
+
+* Copy the data starting with the line of stars above to the
+  clipboard, then use the Paste menu command inside the application.
+
+Data for notebooks contains only printable 7-bit ASCII and can be
+sent directly in email or through ftp in text mode.  Newlines can be
+CR, LF or CRLF (Unix, Macintosh or MS-DOS style).
+
+NOTE: If you modify the data for this notebook not in a Mathematica-
+compatible application, you must delete the line below containing
+the word CacheID, otherwise Mathematica-compatible applications may
+try to use invalid cache data.
+
+For more information on notebooks and Mathematica-compatible 
+applications, contact Wolfram Research:
+  web: http://www.wolfram.com
+  email: info@wolfram.com
+  phone: +1-217-398-0700 (U.S.)
+
+Notebook reader applications are available free of charge from 
+Wolfram Research.
+*******************************************************************)
+
+(*CacheID: 232*)
+
+
+(*NotebookFileLineBreakTest
+NotebookFileLineBreakTest*)
+(*NotebookOptionsPosition[     11259,        351]*)
+(*NotebookOutlinePosition[     11903,        373]*)
+(*  CellTagsIndexPosition[     11859,        369]*)
+(*WindowFrame->Normal*)
+
+
+
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["\<\
+Solves the LP problem defined by:
+min(c) s.t.
+G.x < h
+A.x = b
+lb <= x <= ub\
+\>", "Subtitle"],
+
+Cell[BoxData[{
+    \(\(rootDir\  = \ \
+"\<C:\\DATADIR\Programmazione\java\joptimizer\\src\\test\\resources\\lp\\\>";\
+\)\), "\[IndentingNewLine]", 
+    \(\(problemId\  = \ "\<11\>";\)\)}], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    RowBox[{
+      RowBox[{
+        StyleBox["c",
+          "MR"], 
+        StyleBox["=",
+          "MR"], 
+        RowBox[{
+          StyleBox["Import",
+            "MR"], 
+          StyleBox["[",
+            "MR"], 
+          RowBox[{
+            RowBox[{"rootDir", " ", "<>", 
+              StyleBox["\"\<c\>\"",
+                "MR"], 
+              StyleBox[" ",
+                "MR"], 
+              StyleBox["<>",
+                "MR"], "problemId", "<>", " ", 
+              StyleBox["\"\<.txt\>\"",
+                "MR"]}], 
+            StyleBox[",",
+              "MR"], " ", Cell[BoxData[
+                FormBox[
+                  StyleBox["\"\<List\>\"",
+                    "MR"], TraditionalForm]]]}], 
+          StyleBox["]",
+            "MR"]}]}], 
+      StyleBox[";",
+        "MR"]}], "\[IndentingNewLine]", \(n = 
+        Length[c];\), "\[IndentingNewLine]", 
+    RowBox[{
+      RowBox[{"G", "=", 
+        RowBox[{"ReadList", "[", 
+          RowBox[{
+            RowBox[{"rootDir", " ", "<>", " ", 
+              StyleBox["\"\<G\>\"",
+                "MR"], 
+              StyleBox["<>",
+                "MR"], 
+              StyleBox["problemId",
+                "MR"], 
+              StyleBox["<>",
+                "MR"], 
+              StyleBox["\"\<.txt\>\"",
+                "MR"]}], ",", \(Table[Number, {n}]\)}], "]"}]}], 
+      ";"}], "\[IndentingNewLine]", 
+    RowBox[{
+      RowBox[{
+        StyleBox["h",
+          "MR"], 
+        StyleBox["=",
+          "MR"], 
+        RowBox[{"ReadList", "[", 
+          RowBox[{
+            RowBox[{"rootDir", " ", "<>", " ", 
+              StyleBox["\"\<h\>\"",
+                "MR"], 
+              StyleBox["<>",
+                "MR"], 
+              StyleBox["problemId",
+                "MR"], 
+              StyleBox["<>",
+                "MR"], 
+              StyleBox["\"\<.txt\>\"",
+                "MR"]}], ",", "Number"}], "]"}]}], 
+      ";"}], "\[IndentingNewLine]", \(hCoeff\  = \ 
+        Table[{h[\([i]\)], \(-1\)}, \ {i, 
+            Length[h]}];\), "\[IndentingNewLine]", 
+    RowBox[{
+      RowBox[{"A", "=", 
+        RowBox[{"ReadList", "[", 
+          RowBox[{
+            RowBox[{"rootDir", " ", "<>", " ", 
+              StyleBox["\"\<A\>\"",
+                "MR"], 
+              StyleBox["<>",
+                "MR"], 
+              StyleBox["problemId",
+                "MR"], 
+              StyleBox["<>",
+                "MR"], 
+              StyleBox["\"\<.txt\>\"",
+                "MR"]}], ",", \(Table[Number, {n}]\)}], "]"}]}], 
+      ";"}], "\[IndentingNewLine]", 
+    RowBox[{
+      RowBox[{
+        StyleBox["b",
+          "MR"], 
+        StyleBox["=",
+          "MR"], 
+        RowBox[{"ReadList", "[", 
+          RowBox[{
+            RowBox[{"rootDir", " ", "<>", " ", 
+              StyleBox["\"\<b\>\"",
+                "MR"], 
+              StyleBox["<>",
+                "MR"], 
+              StyleBox["problemId",
+                "MR"], 
+              StyleBox["<>",
+                "MR"], 
+              StyleBox["\"\<.txt\>\"",
+                "MR"]}], ",", "Number"}], "]"}]}], 
+      ";"}], "\[IndentingNewLine]", \(bCoeff\  = \ 
+        Table[{b[\([i]\)], 0}, \ {i, 
+            Length[b]}];\), "\[IndentingNewLine]", \(GA\  = \ 
+        Join[G, \ A];\), "\[IndentingNewLine]", \(hbCoeff\  = \ 
+        Join[hCoeff, \ bCoeff];\), "\[IndentingNewLine]", 
+    RowBox[{
+      RowBox[{
+        StyleBox["lb",
+          "MR"], 
+        StyleBox["=",
+          "MR"], 
+        RowBox[{
+          RowBox[{
+            StyleBox["Import",
+              "MR"], 
+            StyleBox["[",
+              "MR"], 
+            RowBox[{
+              RowBox[{"rootDir", " ", "<>", " ", 
+                StyleBox["\"\<lb\>\"",
+                  "MR"], 
+                StyleBox["<>",
+                  "MR"], 
+                StyleBox["problemId",
+                  "MR"], 
+                StyleBox["<>",
+                  "MR"], 
+                StyleBox["\"\<.txt\>\"",
+                  "MR"]}], 
+              StyleBox[",",
+                "MR"], " ", Cell[BoxData[
+                  FormBox[
+                    StyleBox["\"\<List\>\"",
+                      "MR"], TraditionalForm]]]}], 
+            StyleBox["]",
+              "MR"]}], "/.", \({"\<NaN\>" \[Rule] 0}\)}]}], 
+      StyleBox[";",
+        "MR"]}], "\[IndentingNewLine]", 
+    RowBox[{
+      RowBox[{
+        StyleBox["ub",
+          "MR"], 
+        StyleBox["=",
+          "MR"], 
+        RowBox[{
+          RowBox[{
+            StyleBox["Import",
+              "MR"], 
+            StyleBox["[",
+              "MR"], 
+            RowBox[{
+              RowBox[{"rootDir", " ", "<>", " ", 
+                StyleBox["\"\<ub\>\"",
+                  "MR"], 
+                StyleBox["<>",
+                  "MR"], 
+                StyleBox["problemId",
+                  "MR"], 
+                StyleBox["<>",
+                  "MR"], 
+                StyleBox["\"\<.txt\>\"",
+                  "MR"]}], 
+              StyleBox[",",
+                "MR"], " ", Cell[BoxData[
+                  FormBox[
+                    StyleBox["\"\<List\>\"",
+                      "MR"], TraditionalForm]]]}], 
+            StyleBox["]",
+              "MR"]}], "/.", 
+          RowBox[{"{", 
+            RowBox[{"\"\<NaN\>\"", "\[Rule]", 
+              RowBox[{"+", 
+                StyleBox["99999999",
+                  "MR"]}]}], "}"}]}]}], 
+      ";"}], "\[IndentingNewLine]", \(variablesBounds\  = \ 
+        Table[{lb[\([i]\)], \ ub[\([i]\)]}, \ {i, 
+            n}];\), "\[IndentingNewLine]", "n"}], "Input"],
+
+Cell[BoxData[
+    \(71\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    RowBox[{"mySol", "=", 
+      RowBox[{"LinearProgramming", "[", 
+        RowBox[{
+        "c", ",", "GA", ",", "hbCoeff", ",", " ", "variablesBounds", ",", " ",
+           
+          StyleBox[\(Method -> "\<InteriorPoint\>"\),
+            "MR"]}], "]"}]}], "\[IndentingNewLine]", \(myValue\  = \ 
+      c . mySol\)}], "Input"],
+
+Cell[BoxData[
+    \({1.7019932694982043`*^6, 997132.3968172421`, 368491.66377422743`, 
+      949471.1558337016`, 520374.8281916278`, 662410.7141308179`, 
+      1.0253605303565417`*^6, 468799.3947723851`, 72696.56309735731`, 
+      2.780914651561907`*^6, 1.5835094693538009`*^6, 961024.8801273868`, 
+      575023.540927799`, 1.119861635850366`*^6, 838552.2323034285`, 
+      851390.4370204221`, 1.2245788257043676`*^6, 841781.00815979`, 
+      81246.49277253315`, 1.6783619504820863`*^6, 1.6690880366796055`*^6, 
+      996794.9841003658`, 427348.8179621035`, 1.0371774646141828`*^6, 
+      613181.1739377067`, 743332.5406585515`, 1.1805873561970368`*^6, 
+      577741.9844798318`, 77231.97413522335`, 2.3234698151330166`*^6, 
+      19.999999999989118`, 19.99999999998905`, 19.999999999989026`, 
+      19.99999999998921`, 19.99999999997796`, 6.574911831476395`*^-8, 
+      2.355334386185679`*^-8, 2.5946477242684226`*^-8, 8.15906192478869`*^-9, 
+      2.000000010576554`, 14.999999999988926`, 19.99999993424`, 
+      19.999999976435706`, 19.99999997404255`, 19.99999999183015`, 
+      17.999999989401406`, 19.999999999989`, 9.547645168034013`*^6, 
+      9.75533047270198`*^6, 5.000000022465108`, 5.000000008936594`, 
+      12.00000002639229`, 19.99999999998912`, 19.99999999998905`, 
+      19.99999999998903`, 14.999999977524103`, 14.999999991041365`, 
+      7.999999973596639`, 19.999999999989`, 5.000000022465107`, 
+      12.000000026392286`, 19.999999999989125`, 19.999999999989047`, 
+      19.999999999989022`, 14.999999977524103`, 19.99999999997796`, 
+      7.999999973596639`, 19.999999999989`, 19.999999999989207`, 
+      19.999999999988926`, 9.645954147897623`*^6}\)], "Output"],
+
+Cell[BoxData[
+    \(\(-256.60599999887035`\)\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    RowBox[{"Export", "[", 
+      RowBox[{
+        RowBox[{"rootDir", " ", "<>", 
+          StyleBox["\"\<sol\>\"",
+            "MR"], 
+          StyleBox[" ",
+            "MR"], 
+          StyleBox["<>",
+            "MR"], "problemId", "<>", " ", 
+          StyleBox["\"\<.txt\>\"",
+            "MR"]}], 
+        StyleBox[",",
+          "MR"], " ", Cell[BoxData[
+            FormBox[
+              StyleBox["mySol",
+                "MR"], TraditionalForm]]], ",", " ", "\"\<Lines\>\""}], 
+      "]"}]], "Input"],
+
+Cell[BoxData[
+    \("C:\\DATADIR\\Programmazione\\java\\joptimizer\\src\\test\\resources\\\
+lp\\sol11.txt"\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    RowBox[{"Export", "[", 
+      RowBox[{
+        RowBox[{"rootDir", " ", "<>", 
+          StyleBox["\"\<value\>\"",
+            "MR"], 
+          StyleBox[" ",
+            "MR"], 
+          StyleBox["<>",
+            "MR"], "problemId", "<>", " ", 
+          StyleBox["\"\<.txt\>\"",
+            "MR"]}], 
+        StyleBox[",",
+          "MR"], " ", Cell[BoxData[
+            FormBox[
+              StyleBox["myValue",
+                "MR"], TraditionalForm]]], ",", " ", "\"\<Lines\>\""}], 
+      "]"}]], "Input"],
+
+Cell[BoxData[
+    \("C:\\DATADIR\\Programmazione\\java\\joptimizer\\src\\test\\resources\\\
+lp\\value11.txt"\)], "Output"]
+}, Open  ]]
+}, Open  ]]
+},
+FrontEndVersion->"5.0 for Microsoft Windows",
+ScreenRectangle->{{0, 1280}, {0, 919}},
+WindowSize->{1270, 880},
+WindowMargins->{{0, Automatic}, {Automatic, 0}}
+]
+
+(*******************************************************************
+Cached data follows.  If you edit this Notebook file directly, not
+using Mathematica, you must remove the line containing CacheID at
+the top of  the file.  The cache data will then be recreated when
+you save this file from within Mathematica.
+*******************************************************************)
+
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+
+(*NotebookFileOutline
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[1776, 53, 103, 6, 167, "Subtitle"],
+Cell[1882, 61, 197, 4, 61, "Input"],
+
+Cell[CellGroupData[{
+Cell[2104, 69, 5581, 181, 373, "Input"],
+Cell[7688, 252, 36, 1, 34, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[7761, 258, 344, 8, 61, "Input"],
+Cell[8108, 268, 1684, 24, 160, "Output"],
+Cell[9795, 294, 58, 1, 34, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[9890, 300, 526, 17, 35, "Input"],
+Cell[10419, 319, 120, 2, 34, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[10576, 326, 530, 17, 35, "Input"],
+Cell[11109, 345, 122, 2, 34, "Output"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+
+
+(*******************************************************************
+End of Mathematica Notebook file.
+*******************************************************************)
+

@@ -1,0 +1,215 @@
+(************** Content-type: application/mathematica **************
+                     CreatedBy='Mathematica 5.0'
+
+                    Mathematica-Compatible Notebook
+
+This notebook can be used with any Mathematica-compatible
+application, such as Mathematica, MathReader or Publicon. The data
+for the notebook starts with the line containing stars above.
+
+To get the notebook into a Mathematica-compatible application, do
+one of the following:
+
+* Save the data starting with the line of stars above into a file
+  with a name ending in .nb, then open the file inside the
+  application;
+
+* Copy the data starting with the line of stars above to the
+  clipboard, then use the Paste menu command inside the application.
+
+Data for notebooks contains only printable 7-bit ASCII and can be
+sent directly in email or through ftp in text mode.  Newlines can be
+CR, LF or CRLF (Unix, Macintosh or MS-DOS style).
+
+NOTE: If you modify the data for this notebook not in a Mathematica-
+compatible application, you must delete the line below containing
+the word CacheID, otherwise Mathematica-compatible applications may
+try to use invalid cache data.
+
+For more information on notebooks and Mathematica-compatible 
+applications, contact Wolfram Research:
+  web: http://www.wolfram.com
+  email: info@wolfram.com
+  phone: +1-217-398-0700 (U.S.)
+
+Notebook reader applications are available free of charge from 
+Wolfram Research.
+*******************************************************************)
+
+(*CacheID: 232*)
+
+
+(*NotebookFileLineBreakTest
+NotebookFileLineBreakTest*)
+(*NotebookOptionsPosition[      4267,        155]*)
+(*NotebookOutlinePosition[      4911,        177]*)
+(*  CellTagsIndexPosition[      4867,        173]*)
+(*WindowFrame->Normal*)
+
+
+
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["\<\
+QR decomposition of the matrix m: 
+A = Transpose[Q].R\
+\>", "Subtitle"],
+
+Cell[BoxData[{
+    \(\(rootDir\  = \ \
+"\<D:\\DATADIR\Programmazione\java\joptimizer\\src\\test\\resources\\\
+factorization\\\>";\)\), "\[IndentingNewLine]", 
+    \(\(problemId\  = \ "\<16\>";\)\)}], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    StyleBox[
+      RowBox[{"n", "=", 
+        RowBox[{
+          RowBox[{"Import", "[", 
+            
+            RowBox[{\(rootDir\  <> \ "\<n\>" <> problemId <> "\<.txt\>"\), 
+              ",", Cell[BoxData[
+                  FormBox[
+                    StyleBox["\"\<List\>\"",
+                      "MR"], TraditionalForm]]]}], "]"}], "[", \([1]\), 
+          "]"}]}],
+      "MR"], "\[IndentingNewLine]", 
+    RowBox[{
+      RowBox[{"A", "=", 
+        RowBox[{"ReadList", "[", 
+          RowBox[{
+            RowBox[{"rootDir", " ", "<>", " ", 
+              StyleBox["\"\<matrix\>\"",
+                "MR"], 
+              StyleBox["<>",
+                "MR"], 
+              StyleBox["problemId",
+                "MR"], 
+              StyleBox["<>",
+                "MR"], 
+              StyleBox["\"\<.txt\>\"",
+                "MR"]}], ",", \(Table[Number, {n}]\)}], "]"}]}], 
+      ";"}], "\[IndentingNewLine]", \(Length[A]\)}], "Input"],
+
+Cell[BoxData[
+    \(694\)], "Output"],
+
+Cell[BoxData[
+    \(381\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    RowBox[{
+      RowBox[{\({Q, R}\), "=", 
+        RowBox[{
+          StyleBox["QRDecomposition",
+            "MR"], "[", "A", "]"}]}], ";"}], "\[IndentingNewLine]", 
+    RowBox[{"Norm", 
+      StyleBox["[",
+        "MR"], 
+      RowBox[{\(Transpose[Q] . R\), 
+        StyleBox[" ",
+          "MR"], 
+        StyleBox["-",
+          "MR"], 
+        StyleBox[" ",
+          "MR"], 
+        StyleBox["A",
+          "MR"]}], 
+      StyleBox["]",
+        "MR"]}]}], "Input"],
+
+Cell[BoxData[
+    \(2.7947495540407443`*^-15\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(MatrixRank[A]\), "\[IndentingNewLine]", 
+    \(MatrixRank[Transpose[A]]\)}], "Input"],
+
+Cell[BoxData[
+    \(379\)], "Output"],
+
+Cell[BoxData[
+    \(379\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Export[rootDir\  <> \ "\<R\>"\  <> \ problemId\  <> \ "\<.txt\>", \ 
+      R, \ "\<Table\>"]\)], "Input"],
+
+Cell[BoxData[
+    \("D:\\DATADIR\\Programmazione\\java\\joptimizer\\src\\test\\resources\\\
+factorization\\R16.txt"\)], "Output"]
+}, Open  ]]
+}, Open  ]]
+},
+FrontEndVersion->"5.0 for Microsoft Windows",
+ScreenRectangle->{{0, 1920}, {0, 991}},
+WindowSize->{1912, 958},
+WindowMargins->{{0, Automatic}, {Automatic, 0}}
+]
+
+(*******************************************************************
+Cached data follows.  If you edit this Notebook file directly, not
+using Mathematica, you must remove the line containing CacheID at
+the top of  the file.  The cache data will then be recreated when
+you save this file from within Mathematica.
+*******************************************************************)
+
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+
+(*NotebookFileOutline
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[1776, 53, 81, 3, 80, "Subtitle"],
+Cell[1860, 58, 208, 4, 50, "Input"],
+
+Cell[CellGroupData[{
+Cell[2093, 66, 964, 28, 71, "Input"],
+Cell[3060, 96, 37, 1, 29, "Output"],
+Cell[3100, 99, 37, 1, 29, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[3174, 105, 487, 19, 50, "Input"],
+Cell[3664, 126, 58, 1, 29, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[3759, 132, 106, 2, 50, "Input"],
+Cell[3868, 136, 37, 1, 29, "Output"],
+Cell[3908, 139, 37, 1, 29, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[3982, 145, 125, 2, 30, "Input"],
+Cell[4110, 149, 129, 2, 29, "Output"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+
+
+(*******************************************************************
+End of Mathematica Notebook file.
+*******************************************************************)
+

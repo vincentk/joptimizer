@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * Copyright 2011-2014 JOptimizer
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+ -->
+<!-- For more information visit http://72miles.com/ and http://architecturerules.googlecode.com/ -->
+
+<architecture>
+
+	<configuration>
+
+		<sources no-packages="exception">
+			<source not-found="exception">target\classes</source>
+		</sources>
+
+		<cyclicalDependency test="true" />
+
+		<listeners>
+			<!--include> <listener>org.architecturerules.listeners.ExampleListener</listener> 
+				</include -->
+			<include>
+				<listener>org.architecturerules.listeners.LoggerListener</listener>
+			</include>
+		</listeners>
+
+		<properties>
+			<property key="report.output.directory" value="target" />
+			<property key="report.output.format" value="xml" />
+		</properties>
+
+	</configuration>
+
+	<rules>
+		<rule id="1">
+			<comment>The util package should rely on nothing.</comment>
+			<packages>
+				<package>com.joptimizer.util..*</package>
+			</packages>
+			<violations>
+				<violation>com.joptimizer.algebra..*</violation>
+				<violation>com.joptimizer.functions..*</violation>
+				<violation>com.joptimizer.optimizers..*</violation>
+				<violation>com.joptimizer.solvers..*</violation>
+			</violations>
+		</rule>
+		<rule id="2">
+			<comment>The functions package indipendences.</comment>
+			<packages>
+				<package>com.joptimizer.functions..*</package>
+			</packages>
+			<violations>
+				<violation>com.joptimizer.algebra..*</violation>
+				<violation>com.joptimizer.optimizers..*</violation>
+				<violation>com.joptimizer.solvers..*</violation>
+			</violations>
+		</rule>
+		<rule id="3">
+			<comment>The algebra package indipendences.</comment>
+			<packages>
+				<package>com.joptimizer.algebra..*</package>
+			</packages>
+			<violations>
+				<violation>com.joptimizer.optimizers..*</violation>
+				<violation>com.joptimizer.solvers..*</violation>
+			</violations>
+		</rule>
+		<rule id="4">
+			<comment>The solvers package indipendences.</comment>
+			<packages>
+				<package>com.joptimizer.solvers..*</package>
+			</packages>
+			<violations>
+				<violation>com.joptimizer.optimizers..*</violation>
+			</violations>
+		</rule>
+	</rules>
+
+</architecture>
