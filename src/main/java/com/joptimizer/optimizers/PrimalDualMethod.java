@@ -104,7 +104,6 @@ public class PrimalDualMethod extends OptimizationRequestHandler {
 				}
 			}
 		}else{
-			//L0 = F1.make(getFi().length, 1.);// must be >0
 			L0 = F1.make(getMieq(), Math.min(1,(double)getDim()/getMieq()));// must be >0
 		}
 		if(log.isDebugEnabled()){
@@ -118,18 +117,7 @@ public class PrimalDualMethod extends OptimizationRequestHandler {
 		DoubleMatrix1D X = X0;
 		DoubleMatrix1D V = V0;
 		DoubleMatrix1D L = L0;
-		//double F0X;
-		//DoubleMatrix1D gradF0X = null;
-		//DoubleMatrix1D fiX = null;
-		//DoubleMatrix2D GradFiX = null;
-		//DoubleMatrix1D rPriX = null;
-		//DoubleMatrix1D rCentXLt = null;
-		//DoubleMatrix1D rDualXLV = null;
-		//double rPriXNorm = Double.NaN;
-		//double rCentXLtNorm = Double.NaN;
-		//double rDualXLVNorm = Double.NaN;
-		//double normRXLVt = Double.NaN;
-		double previousF0X = Double.NaN;
+
 		double previousRPriXNorm = Double.NaN;
 		double previousRDualXLVNorm = Double.NaN;
 		double previousSurrDG = Double.NaN;
@@ -284,15 +272,7 @@ public class PrimalDualMethod extends OptimizationRequestHandler {
 
 			// c) solving for L
 			DoubleMatrix1D stepL = null;
-//			DoubleMatrix2D diagFInv = F2.diagonal(fiX.copy().assign(Functions.inv));
-//			DoubleMatrix2D diagL = F2.diagonal(L);
-//			DoubleMatrix1D a1 = ColtUtils.diagonalMatrixMult(diagFInv, rCentXLt);
-//			DoubleMatrix1D b1 = ColtUtils.diagonalMatrixMult(diagL, ALG.mult(GradFiX, stepX));
-//			DoubleMatrix1D c1 = ColtUtils.diagonalMatrixMult(diagFInv, b1);
-//			stepL = a1.assign(c1, Functions.minus);
-			
-			//DoubleMatrix1D diagFInvElements = fiX.copy().assign(Functions.inv);
-			//DoubleMatrix1D diagLElements = L.copy();
+
 			DoubleMatrix1D a2 = rCentXLt.copy().assign(fiX, Functions.div);
 			DoubleMatrix1D b2 = ALG.mult(GradFiX, stepX).assign(L, Functions.mult);
 			DoubleMatrix1D c2 = b2.assign(fiX, Functions.div);
