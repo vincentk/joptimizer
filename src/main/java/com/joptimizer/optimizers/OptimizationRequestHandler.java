@@ -131,9 +131,6 @@ public abstract class OptimizationRequestHandler {
 	}
 	
 	protected final DoubleMatrix1D getB() {
-//		if(request.getB()==null){
-//			request.setB(new double[1]);
-//		}
 		return request.getB();
 	}
 	
@@ -339,10 +336,7 @@ public abstract class OptimizationRequestHandler {
 			throw new RuntimeException("Equalities matrix A must have full rank: " + rankAT + " < " + p);
 		}
 		
-		QRDecomposition dFact = new QRDecomposition(AT);
-//		if(!dFact.getSolver().isNonSingular()){
-//			throw new RuntimeException("Equalities matrix A must have full rank");
-//		}
+		final QRDecomposition dFact = new QRDecomposition(AT);
 		
 		//A = QR
 		RealMatrix Q1Q2 = dFact.getQ();
@@ -373,46 +367,6 @@ public abstract class OptimizationRequestHandler {
 		if(getA()==null){
 			return F1.make(0);
 		}
-		//return getA().zMult(X, getB().copy(), 1., -1., false);
 		return ColtUtils.zMult(getA(), X, getB(), -1);
 	}
-	
-//	protected String dumpLPRequest(){
-//		try{
-//			LinearMultivariateRealFunction F0L = (LinearMultivariateRealFunction) getF0();
-//			double[] c = F0L.getQ().toArray();
-//			double[][] G = null;
-//			double[] h = null;
-//			if(getFi()!=null && getFi().length > 0){
-//				G = new double[getFi().length][];
-//				h = new double[getFi().length];
-//				for(int i=0; i<getFi().length; i++){
-//					LinearMultivariateRealFunction FiL = (LinearMultivariateRealFunction) getFi()[i];
-//					G[i] = FiL.getQ().toArray();
-//					h[i] = -FiL.getR();
-//				}
-//			}
-//			StringBuffer sb = new StringBuffer();
-//			sb.append("LP problem dump:");
-//			sb.append("\nmin(c) s.t.");
-//			if(G != null){
-//				sb.append("\nG.x < h");
-//			}
-//			if(getA()!=null){
-//				sb.append("\nA.x = b");
-//			}
-//			sb.append("\nc: " + Utils.toString(c));
-//			if(G != null){
-//				sb.append("\nG: " + Utils.toString(G));
-//				sb.append("\nh: " + Utils.toString(h));
-//			}
-//			if(getA()!=null){
-//				sb.append("\nA: " + Utils.toString(getA().toArray()));
-//				sb.append("\nb: " + Utils.toString(getB().toArray()));
-//			}
-//			return sb.toString();
-//		}catch(Exception e){
-//			return "";
-//		}
-//	}
 }

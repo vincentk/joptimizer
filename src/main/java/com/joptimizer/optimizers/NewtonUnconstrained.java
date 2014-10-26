@@ -34,13 +34,13 @@ import com.joptimizer.util.ColtUtils;
 public class NewtonUnconstrained extends OptimizationRequestHandler {
 
 	private Log log = LogFactory.getLog(this.getClass().getName());
-	
+
 	public NewtonUnconstrained(boolean activateChain){
 		if(activateChain){
 			this.successor = new NewtonLEConstrainedFSP(true);
 		}
 	}
-	
+
 	public NewtonUnconstrained(){
 		this(false);
 	}
@@ -48,9 +48,9 @@ public class NewtonUnconstrained extends OptimizationRequestHandler {
 	@Override
 	public int optimize() throws Exception {
 		log.debug("optimize");
-		OptimizationResponse response = new OptimizationResponse();
+		final OptimizationResponse response = new OptimizationResponse();
 
-    // checking responsibility
+		// checking responsibility
 		if (getA() != null || getFi() != null) {
 			// forward to the chain
 			return forwardOptimizationRequest();
@@ -81,13 +81,13 @@ public class NewtonUnconstrained extends OptimizationRequestHandler {
 				log.debug("X=" + ArrayUtils.toString(X.toArray()));
 				log.debug("f(X)=" + F0X);
 			}
-			
+
 			// custom exit condition
 			if(checkCustomExitConditions(X)){
 				response.setReturnCode(OptimizationResponse.SUCCESS);
 				break;
 			}
-			
+
 			DoubleMatrix1D gradX = getGradF0(X);
 			DoubleMatrix2D hessX = getHessF0(X);
 
@@ -105,14 +105,14 @@ public class NewtonUnconstrained extends OptimizationRequestHandler {
 				response.setReturnCode(OptimizationResponse.SUCCESS);
 				break;
 			}
-			
+
 			// iteration limit condition
 			if (iteration == getMaxIteration()) {
 				response.setReturnCode(OptimizationResponse.FAILED);
 				log.error("Max iterations limit reached");
 				throw new Exception("Max iterations limit reached");
 			}
-			
+
 			// progress conditions
 			if(isCheckProgressConditions()){
 				log.debug("previous: " + previousLambda);
@@ -123,14 +123,14 @@ public class NewtonUnconstrained extends OptimizationRequestHandler {
 				} 
 			}
 			previousLambda = lambda;
-			
+
 			// backtracking line search
 			double s = 1d;
 			DoubleMatrix1D X1 = null;
 			int cnt = 0;
 			while (cnt < 25) {
-              cnt++;
-				// @TODO: can we use semplification 9.7.1 (Pre-computation for line searches)?
+				cnt++;
+				// @TODO: can we use simplification 9.7.1 (Pre-computation for line searches)?
 				//X1 = X.copy().assign(step.copy().assign(Mult.mult(s)), Functions.plus);// x + t*step
 				X1 = ColtUtils.add(X, step, s);
 				double condSX = getF0(X1);
@@ -154,12 +154,11 @@ public class NewtonUnconstrained extends OptimizationRequestHandler {
 		return response.getReturnCode();
 	}
 
-  //@TODO: can we use semplification 9.7.2 ??
+	//@TODO: can we use simplification 9.7.2 ??
 	//NB: the matrix hessX is square
 	//Hess.step = -Grad
 	private DoubleMatrix1D calculateNewtonStep(DoubleMatrix2D hessX, DoubleMatrix1D gradX) throws Exception {
-		//KKTSolver kktSolver = new BasicKKTSolver();
-		KKTSolver kktSolver = new BasicKKTSolver();
+		final KKTSolver kktSolver = new BasicKKTSolver();
 		if(isCheckKKTSolutionAccuracy()){
 			kktSolver.setCheckKKTSolutionAccuracy(isCheckKKTSolutionAccuracy());
 			kktSolver.setToleranceKKT(getToleranceKKT());
@@ -170,5 +169,5 @@ public class NewtonUnconstrained extends OptimizationRequestHandler {
 		DoubleMatrix1D step = sol[0];
 		return step;
 	}
-	
+
 }

@@ -36,7 +36,7 @@ import com.joptimizer.util.Utils;
 public class NewtonLEConstrainedFSP extends OptimizationRequestHandler {
 
 	private KKTSolver kktSolver;
-	private Log log = LogFactory.getLog(this.getClass().getName());
+	private static final Log log = LogFactory.getLog(NewtonLEConstrainedFSP.class.getName());
 	
 	public NewtonLEConstrainedFSP(boolean activateChain){
 		if(activateChain){
@@ -59,13 +59,11 @@ public class NewtonLEConstrainedFSP extends OptimizationRequestHandler {
 			return forwardOptimizationRequest();
 		}
 		
-		long tStart = System.currentTimeMillis();
+		final long tStart = System.currentTimeMillis();
 		
 		//initial point must be feasible (i.e., satisfy x in domF and Ax = b).
-		DoubleMatrix1D X0 = getInitialPoint();
-		double rPriX0Norm = (X0 != null)? Math.sqrt(ALG.norm2(rPri(X0))) : 0d;
-		//if (X0 == null	|| (getA()!=null && Double.compare(ALG.norm2(getA().zMult(X0, getB().copy(), 1., -1., false)), 0d) != 0)) {
-		//if (X0 == null	|| rPriX0Norm > Utils.getDoubleMachineEpsilon()) {	
+		final DoubleMatrix1D X0 = getInitialPoint();
+		final double rPriX0Norm = (X0 != null)? Math.sqrt(ALG.norm2(rPri(X0))) : 0d;
 		if (X0 == null	|| rPriX0Norm > getTolerance()) {	
 			// infeasible starting point, forward to the chain
 			return forwardOptimizationRequest();
@@ -87,13 +85,6 @@ public class NewtonLEConstrainedFSP extends OptimizationRequestHandler {
 				log.debug("X=" + ArrayUtils.toString(X.toArray()));
 				log.debug("f(X)=" + F0X);
 			}
-			
-//			if(!Double.isNaN(previousF0X)){
-//				if (previousF0X < F0X) {
-//					throw new Exception("critical minimization problem");
-//				}
-//			}
-//			previousF0X = F0X;
 			
 			// custom exit condition
 			if(checkCustomExitConditions(X)){
@@ -166,9 +157,7 @@ public class NewtonLEConstrainedFSP extends OptimizationRequestHandler {
 				// @TODO: can we use simplification 9.7.1 ??
 				
 				// x + s*step
-				//X1 = X.copy().assign(step.copy().assign(Mult.mult(s)), Functions.plus);
 				X1 = ColtUtils.add(X, step, s);
-				//log.debug("X1: "+ArrayUtils.toString(X1.toArray()));
 				
 				if (isInDomainF0(X1)) {
 					double condSX = getF0(X1);

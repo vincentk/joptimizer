@@ -26,7 +26,7 @@ package com.joptimizer.optimizers;
  * @see "S.Boyd and L.Vandenberghe, Convex Optimization"
  * @author <a href="mailto:alberto.trivellato@gmail.com">alberto trivellato</a>
  */
-public class JOptimizer {
+public final class JOptimizer {
 
 	public static final int DEFAULT_MAX_ITERATION = 500;
 	public static final double DEFAULT_FEASIBILITY_TOLERANCE = 1.E-6;
@@ -42,7 +42,7 @@ public class JOptimizer {
 	
 	private OptimizationRequest request = null;
 	private OptimizationResponse response = null;
-	
+
 	public int optimize() throws Exception {
 		//start with the first step in the chain.
 		OptimizationRequestHandler handler = new NewtonUnconstrained(true);
