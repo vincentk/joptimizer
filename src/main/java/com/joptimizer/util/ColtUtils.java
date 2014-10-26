@@ -258,9 +258,15 @@ public class ColtUtils {
 	 * Useful in avoiding the need of the copy() in the colt api.
 	 */
 	public static final DoubleMatrix1D zMult(final DoubleMatrix2D A, final DoubleMatrix1D a, final DoubleMatrix1D b, final double beta){
-		if(A.columns()!=a.size() || A.rows()!=b.size()){
-			throw new IllegalArgumentException("wrong matrices dimensions");
+		
+		if(A.columns()!=a.size()){
+			throw new IllegalArgumentException("Wrong matrix dimensions. Number of columns must be " + a.size() + ", found: " + A.columns());
 		}
+		
+		if(A.rows()!=b.size()){
+			throw new IllegalArgumentException("Wrong matrix dimensions. Number of rows must be " + b.size() + ", found: " + A.rows());
+		}
+		
 		final DoubleMatrix1D ret = DoubleFactory1D.dense.make(A.rows());
 		
 		if(A instanceof SparseDoubleMatrix2D){
