@@ -224,13 +224,16 @@ public abstract class OptimizationRequestHandler {
 	 * Inequality functions values at X.
 	 */
 	protected DoubleMatrix1D getFi(DoubleMatrix1D X){
-		if(request.getFi()==null){
+		final ConvexMultivariateRealFunction[] fis = request.getFi();
+		if(fis==null){
 			return null;
 		}
-		double[] ret = new double[request.getFi().length];
-		double[] x = X.toArray();
-		for(int i=0; i<request.getFi().length; i++){
-			ret[i] = request.getFi()[i].value(x);
+		final double[] ret = new double[fis.length];
+		final double[] x = X.toArray();
+		for(int i=0; i<fis.length; i++){
+			final ConvexMultivariateRealFunction fi = fis[i];
+			final double fix = fi.value(x);
+			ret[i] = fix;
 		}
 		return F1.make(ret);
 	}

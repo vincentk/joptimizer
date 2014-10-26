@@ -33,7 +33,7 @@ import com.joptimizer.util.ColtUtils;
  */
 public class NewtonUnconstrained extends OptimizationRequestHandler {
 
-	private Log log = LogFactory.getLog(this.getClass().getName());
+	private static final Log log = LogFactory.getLog(NewtonUnconstrained.class.getName());
 
 	public NewtonUnconstrained(boolean activateChain){
 		if(activateChain){

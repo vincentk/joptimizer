@@ -40,13 +40,13 @@ import com.joptimizer.util.Utils;
 public class PrimalDualMethod extends OptimizationRequestHandler {
 
 	private KKTSolver kktSolver;
-	private Log log = LogFactory.getLog(this.getClass().getName());
+	private static final Log log = LogFactory.getLog(PrimalDualMethod.class.getName());
 
 	@Override
 	public int optimize() throws Exception {
 		log.info("optimize");
-		long tStart = System.currentTimeMillis();
-		OptimizationResponse response = new OptimizationResponse();
+		final long tStart = System.currentTimeMillis();
+		final OptimizationResponse response = new OptimizationResponse();
 
 		// @TODO: check assumptions!!!
 //		if(getA()!=null){
@@ -81,15 +81,20 @@ public class PrimalDualMethod extends OptimizationRequestHandler {
 		}
 		
 		//check X0 feasibility
-		DoubleMatrix1D fiX0 = getFi(X0);
-		int maxIndex = Utils.getMaxIndex(fiX0);
-		double maxValue = fiX0.get(maxIndex);
-		double rPriX0Norm = Math.sqrt(ALG.norm2(rPri(X0)));
-		if(maxValue >= 0 || rPriX0Norm > getToleranceFeas()){
-			log.debug("rPriX0Norm  : " + rPriX0Norm);
-			log.debug("ineqX0      : " + ArrayUtils.toString(fiX0.toArray()));
+		final DoubleMatrix1D fiX0 = getFi(X0);
+		final int maxIndex = Utils.getMaxIndex(fiX0);
+		final double maxValue = fiX0.get(maxIndex);
+		if(maxValue >= 0){
 			log.debug("max ineq index: " + maxIndex);
 			log.debug("max ineq value: " + maxValue);
+			throw new Exception("Initial point must be strictly feasible. Found maxValue: " + maxValue);
+		}
+		
+		final double rPriX0Norm = Math.sqrt(ALG.norm2(rPri(X0)));
+		if(rPriX0Norm > getToleranceFeas()){
+			log.debug("rPriX0Norm  : " + rPriX0Norm);
+			log.debug("ineqX0      : " + ArrayUtils.toString(fiX0.toArray()));
+
 			throw new Exception("initial point must be strictly feasible");
 		}
 
