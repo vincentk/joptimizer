@@ -25,7 +25,7 @@ public class OptimizationResponse {
 	public static final int FAILED = 2;
 
 	/**
-	 * The optimization retun code. In the case of WARN, you are given a result
+	 * The optimization return code. In the case of WARN, you are given a result
 	 * by the optimizer but you must manually check if this is appropriate for
 	 * you (i.e. you have to manually check if constraints are satisfied within
 	 * an acceptable tolerance). It can happen, for example, when the algorithm
@@ -34,8 +34,6 @@ public class OptimizationResponse {
 	private int returnCode;
 
 	private double[] solution;
-	
-	private double f0;
 
 	public void setReturnCode(int returnCode) {
 		this.returnCode = returnCode;
