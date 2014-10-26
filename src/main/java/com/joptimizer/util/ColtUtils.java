@@ -19,8 +19,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.commons.math3.linear.RealMatrix;
 
 import cern.colt.function.IntIntDoubleFunction;
@@ -39,24 +37,7 @@ import edu.emory.mathcs.csparsej.tdouble.Dcs_common;
  * @author alberto trivellato (alberto.trivellato@gmail.com)
  */
 public class ColtUtils {
-	
-	public static Log log = LogFactory.getLog(ColtUtils.class);
-	
-	/**
-	 * Matrix-vector multiplication with diagonal matrix.
-	 * @param diagonalM diagonal matrix M
-	 * @param vector
-	 * @return M.x
-	 */
-//	public static final DoubleMatrix1D diagonalMatrixMult(DoubleMatrix2D diagonalM, DoubleMatrix1D vector){
-//		int n = diagonalM.rows();
-//		DoubleMatrix1D ret = DoubleFactory1D.dense.make(n);
-//		for(int i=0; i<n; i++){
-//			ret.setQuick(i, diagonalM.getQuick(i, i) * vector.getQuick(i));
-//		}
-//		return ret;
-//	}
-	
+
 	/**
 	 * Matrix-vector multiplication with diagonal matrix.
 	 * @param diagonalM diagonal matrix M, in the form of a vector of its diagonal elements
@@ -71,7 +52,7 @@ public class ColtUtils {
 		}
 		return ret;
 	}
-	
+
 	/**
 	 * Return diagonalU.A with diagonalU diagonal.
 	 * @param diagonal matrix U, in the form of a vector of its diagonal elements
@@ -100,7 +81,7 @@ public class ColtUtils {
 
 		return ret;
 	}
-	
+
 	/**
 	 * Return A.diagonalU with diagonalU diagonal.
 	 * @param diagonal matrix U, in the form of a vector of its diagonal elements
@@ -129,7 +110,7 @@ public class ColtUtils {
 
 		return ret;
 	}
-	
+
 	/**
 	 * Return diagonalU.A.diagonalV with diagonalU and diagonalV diagonal.
 	 * @param diagonalU diagonal matrix U, in the form of a vector of its diagonal elements
@@ -159,7 +140,7 @@ public class ColtUtils {
 
 		return ret;
 	}
-	
+
 	/**
 	 * Return the sub-diagonal result of the multiplication.
 	 * If A is sparse, returns a sparse matrix (even if, generally speaking, 
@@ -170,37 +151,27 @@ public class ColtUtils {
 		final int r = A.rows();
 		final int rc = A.columns();
 		final int c = B.columns();
-		
+
 		if(r != c){
 			throw new IllegalArgumentException("The result must be square");
 		}
-		
+
 		boolean useSparsity = A instanceof SparseDoubleMatrix2D;
 		DoubleFactory2D F2 = (useSparsity)? DoubleFactory2D.sparse : DoubleFactory2D.dense; 
 		final DoubleMatrix2D ret = F2.make(r, c);
-		
+
 		if(useSparsity){
-			//final int[] currentRowIndexHolder = new int[] { -1 };
-			
 			IntIntDoubleFunction myFunct = new IntIntDoubleFunction() {
 				public double apply(int t, int s, double pts) {
-					//int i = currentRowIndexHolder[0];
 					int i = t;
-					//log.debug("-->i:" + i);
 					for (int j = 0; j < i + 1; j++) {
-						//log.debug("->j:" + j);
 						ret.setQuick(i, j, ret.getQuick(i, j) + pts * B.getQuick(s, j));
 					}
 					return pts;
 				}
 			};
-			
+
 			//view A row by row
-//			for (int currentRow = 0; currentRow < r; currentRow++) {
-//				DoubleMatrix2D P = A.viewPart(currentRow, 0, 1, rc);
-//				currentRowIndexHolder[0] = currentRow;
-//				P.forEachNonZero(myFunct);
-//			}
 			A.forEachNonZero(myFunct);
 		}else{
 			for (int i = 0; i < r; i++) {
@@ -213,10 +184,10 @@ public class ColtUtils {
 				}
 			}
 		}
-		
+
 		return ret;
 	}
-	
+
 	/**
 	 * Returns v = beta * A.b.
 	 * Useful in avoiding the need of the copy() in the colt api.
@@ -226,9 +197,9 @@ public class ColtUtils {
 			throw new IllegalArgumentException("wrong matrices dimensions");
 		}
 		final DoubleMatrix1D ret = DoubleFactory1D.dense.make(A.rows());
-		
+
 		if(A instanceof SparseDoubleMatrix2D){
-	    //if(1==2){	
+			//if(1==2){	
 			//sparse matrix
 			A.forEachNonZero(new IntIntDoubleFunction() {
 				public double apply(int i, int j, double Aij) {
@@ -249,28 +220,27 @@ public class ColtUtils {
 				ret.setQuick(i, beta * vi);
 			}
 		}
-		
+
 		return ret;
 	}
-	
+
 	/**
 	 * Returns v = A.a + beta*b.
 	 * Useful in avoiding the need of the copy() in the colt api.
 	 */
 	public static final DoubleMatrix1D zMult(final DoubleMatrix2D A, final DoubleMatrix1D a, final DoubleMatrix1D b, final double beta){
-		
+
 		if(A.columns()!=a.size()){
 			throw new IllegalArgumentException("Wrong matrix dimensions. Number of columns must be " + a.size() + ", found: " + A.columns());
 		}
-		
+
 		if(A.rows()!=b.size()){
 			throw new IllegalArgumentException("Wrong matrix dimensions. Number of rows must be " + b.size() + ", found: " + A.rows());
 		}
-		
+
 		final DoubleMatrix1D ret = DoubleFactory1D.dense.make(A.rows());
-		
+
 		if(A instanceof SparseDoubleMatrix2D){
-		//if(1==2){	
 			//sparse matrix
 			A.forEachNonZero(new IntIntDoubleFunction() {
 				public double apply(int i, int j, double Aij) {
@@ -282,9 +252,8 @@ public class ColtUtils {
 				ret.setQuick(i, ret.getQuick(i) + beta * b.getQuick(i));
 			}
 		}else{
-		  //dense matrix
+			//dense matrix
 			for(int i=0; i<A.rows(); i++){
-				//DoubleMatrix1D AI = A.viewRow(i);
 				double vi = beta * b.getQuick(i);
 				for(int j=0; j<A.columns(); j++){
 					vi += A.getQuick(i, j) * a.getQuick(j);
@@ -292,10 +261,10 @@ public class ColtUtils {
 				ret.setQuick(i, vi);
 			}
 		}
-		
+
 		return ret;
 	}
-	
+
 	/**
 	 * Returns v = A[T].a + beta*b.
 	 * Useful in avoiding the need of the copy() in the colt api.
@@ -305,9 +274,9 @@ public class ColtUtils {
 			throw new IllegalArgumentException("wrong matrices dimensions");
 		}
 		final DoubleMatrix1D ret = DoubleFactory1D.dense.make(A.columns());
-		
+
 		if(A instanceof SparseDoubleMatrix2D){
-		//if(1==2){	
+			//if(1==2){	
 			A.forEachNonZero(new IntIntDoubleFunction() {
 				public double apply(int i, int j, double Aij) {
 					//log.debug(i + "," + j + ": " + Aij + ", "+ret.getQuick(j)+", "+a.getQuick(i));
@@ -329,10 +298,10 @@ public class ColtUtils {
 				ret.setQuick(i, vi);
 			}
 		}
-		
+
 		return ret;
 	}
-	
+
 	/**
 	 * Returns C = A + B.
 	 * Useful in avoiding the need of the copy() in the colt api.
@@ -350,10 +319,10 @@ public class ColtUtils {
 				ret.setQuick(i, j, A.getQuick(i, j) + B.getQuick(i, j));
 			}
 		}
-		
+
 		return ret;
 	}
-	
+
 	/**
 	 * Returns C = A + beta*B.
 	 * Useful in avoiding the need of the copy() in the colt api.
@@ -371,10 +340,10 @@ public class ColtUtils {
 				ret.setQuick(i, j, A.getQuick(i, j) + beta*B.getQuick(i, j));
 			}
 		}
-		
+
 		return ret;
 	}
-	
+
 	/**
 	 * Returns v = v1 + v2.
 	 * Useful in avoiding the need of the copy() in the colt api.
@@ -387,10 +356,10 @@ public class ColtUtils {
 		for(int i=0; i<ret.size(); i++){
 			ret.setQuick(i, v1.getQuick(i) + v2.getQuick(i));
 		}
-		
+
 		return ret;
 	}
-	
+
 	/**
 	 * Returns v = v1 + c*v2.
 	 * Useful in avoiding the need of the copy() in the colt api.
@@ -403,10 +372,10 @@ public class ColtUtils {
 		for(int i=0; i<ret.size(); i++){
 			ret.setQuick(i, v1.getQuick(i) + c*v2.getQuick(i));
 		}
-		
+
 		return ret;
 	}
-	
+
 	/**
 	 * Returns v = c * v1.
 	 * Useful in avoiding the need of the copy() in the colt api.
@@ -416,13 +385,13 @@ public class ColtUtils {
 		for(int i=0; i<ret.size(); i++){
 			ret.setQuick(i, c * v1.getQuick(i));
 		}
-		
+
 		return ret;
 	}
 
 	/**
-		 * @see http://en.wikipedia.org/wiki/Machine_epsilon#Approximation_using_Java
-		 */
+	 * @see http://en.wikipedia.org/wiki/Machine_epsilon#Approximation_using_Java
+	 */
 	//	public static final float calculateFloatMachineEpsilon() {
 	//		float eps = 1.0f;
 	//		do {
@@ -431,82 +400,82 @@ public class ColtUtils {
 	//		log.debug("Calculated float machine epsilon: " + eps);
 	//		return eps;
 	//	}
-		
-	
-//	/**
-//	 * @deprecated use the factorization of the matrix and the solve() methods instead
-//	 */
-//	@Deprecated
-//	public static RealMatrix squareMatrixInverse(RealMatrix M) throws SingularMatrixException{
-//		if(!M.isSquare()){
-//			throw new IllegalArgumentException("Not square matrix!");
-//		}
-//		
-//		// try commons-math cholesky
-//		try {
-//			CholeskyDecomposition cd = new CholeskyDecomposition(M);
-//			return cd.getSolver().getInverse();
-//		} catch (SingularMatrixException e) {
-//			throw e;
-//		} catch (Exception e) {
-//			log.debug(e.getMessage());
-//		}
-//		
-//		// try joptimizer cholesky
-//		try {
-//			CholeskyFactorization cd = new CholeskyFactorization(DoubleFactory2D.dense.make(M.getData()));
-//			cd.factorize();
-//			double[][] MInv = cd.getInverse().toArray();
-//			return MatrixUtils.createRealMatrix(MInv);
-//		} catch (Exception e) {
-//			log.debug(e.getMessage());
-//		}
-//		
-//		// try LU
-//		try{
-//			LUDecomposition ld = new LUDecomposition(M);
-//			return ld.getSolver().getInverse();
-//		} catch (SingularMatrixException e) {
-//			throw e;
-//		} catch (Exception e) {
-//			log.debug(e.getMessage());
-//		}
-//
-//		// try QR
-//		try {
-//			QRDecomposition qr = new org.apache.commons.math3.linear.QRDecomposition(M);
-//			return qr.getSolver().getInverse();
-//		} catch (SingularMatrixException e) {
-//			throw e;
-//		} catch (Exception e) {
-//			log.debug(e.getMessage());
-//		}
-//		
-//		return null;
-//	}
-	
-//	/**
-//	 * This method list the non zero elements of a sparse matrix orderer by column and row ascending.
-//	 * @param Q sparse matrix
-//	 */
-//	public static final void dumpSparseMatrix(SparseCCDoubleMatrix2D Q){
-//		final int[] rowIndexes = Q.getRowIndexes();
-//        final int[] columnPointers = Q.getColumnPointers();
-//        //for example
-//        //rowIndexes      2,0,2,3,1,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-//        //columnPointers  0,  2,3,  5,  7
-//        for (int j = 0; j < Q.columns(); j++) {
-//        	int colStartIndex = columnPointers[j];//example 5
-//        	int colEndIndex = columnPointers[j+1];//example 7
-//			for (int pointer = colEndIndex - 1; pointer >= colStartIndex; pointer--) {
-//				int i = rowIndexes[pointer];
-//				log.info("Q[" + i + "," + j + "]=" + Q.getQuick(i, j));
-//			}
-//        }
-//	}
-	
+
+
+	//	/**
+	//	 * @deprecated use the factorization of the matrix and the solve() methods instead
+	//	 */
+	//	@Deprecated
+	//	public static RealMatrix squareMatrixInverse(RealMatrix M) throws SingularMatrixException{
+	//		if(!M.isSquare()){
+	//			throw new IllegalArgumentException("Not square matrix!");
+	//		}
+	//		
+	//		// try commons-math cholesky
+	//		try {
+	//			CholeskyDecomposition cd = new CholeskyDecomposition(M);
+	//			return cd.getSolver().getInverse();
+	//		} catch (SingularMatrixException e) {
+	//			throw e;
+	//		} catch (Exception e) {
+	//			log.debug(e.getMessage());
+	//		}
+	//		
+	//		// try joptimizer cholesky
+	//		try {
+	//			CholeskyFactorization cd = new CholeskyFactorization(DoubleFactory2D.dense.make(M.getData()));
+	//			cd.factorize();
+	//			double[][] MInv = cd.getInverse().toArray();
+	//			return MatrixUtils.createRealMatrix(MInv);
+	//		} catch (Exception e) {
+	//			log.debug(e.getMessage());
+	//		}
+	//		
+	//		// try LU
+	//		try{
+	//			LUDecomposition ld = new LUDecomposition(M);
+	//			return ld.getSolver().getInverse();
+	//		} catch (SingularMatrixException e) {
+	//			throw e;
+	//		} catch (Exception e) {
+	//			log.debug(e.getMessage());
+	//		}
+	//
+	//		// try QR
+	//		try {
+	//			QRDecomposition qr = new org.apache.commons.math3.linear.QRDecomposition(M);
+	//			return qr.getSolver().getInverse();
+	//		} catch (SingularMatrixException e) {
+	//			throw e;
+	//		} catch (Exception e) {
+	//			log.debug(e.getMessage());
+	//		}
+	//		
+	//		return null;
+	//	}
+
+	//	/**
+	//	 * This method list the non zero elements of a sparse matrix orderer by column and row ascending.
+	//	 * @param Q sparse matrix
+	//	 */
+	//	public static final void dumpSparseMatrix(SparseCCDoubleMatrix2D Q){
+	//		final int[] rowIndexes = Q.getRowIndexes();
+	//        final int[] columnPointers = Q.getColumnPointers();
+	//        //for example
+	//        //rowIndexes      2,0,2,3,1,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+	//        //columnPointers  0,  2,3,  5,  7
+	//        for (int j = 0; j < Q.columns(); j++) {
+	//        	int colStartIndex = columnPointers[j];//example 5
+	//        	int colEndIndex = columnPointers[j+1];//example 7
+	//			for (int pointer = colEndIndex - 1; pointer >= colStartIndex; pointer--) {
+	//				int i = rowIndexes[pointer];
+	//				log.info("Q[" + i + "," + j + "]=" + Q.getQuick(i, j));
+	//			}
+	//        }
+	//	}
+
 	public static final Dcs_common.Dcs matrixToDcs(SparseDoubleMatrix2D A) {
-		
+
 		//m (number of rows):
 		int m = A.rows();
 		//n (number of columns) 
@@ -521,25 +490,25 @@ public class ColtUtils {
 		final int[] i = new int[nzmax];
 		//x (numerical values, size nzmax)
 		final double[] x = new double[nzmax];
-		
+
 		final int[] currentColumnIndexHolder = new int[]{-1};
-		
+
 		IntIntDoubleFunction myFunct = new IntIntDoubleFunction() {
 			int nzCounter = 0;
 			public double apply(int r, int c, double prc) {
 				//log.debug("r:" + r + ", c:" + currentColumnIndexHolder[0] + ": " + prc);
-				
+
 				i[nzCounter] = r;
 				x[nzCounter] = prc;
 				nzCounter++;
-				
+
 				p[currentColumnIndexHolder[0]+1] = p[currentColumnIndexHolder[0]+1] + 1;
 				//log.debug("p: " + ArrayUtils.toString(p));
-				
+
 				return prc;
 			}
 		};
-		
+
 		//view A column by column
 		for (int c = 0; c < n; c++) {
 			//log.debug("column:" + c);
@@ -548,7 +517,7 @@ public class ColtUtils {
 			p[currentColumnIndexHolder[0]+1] = p[currentColumnIndexHolder[0]];
 			P.forEachNonZero(myFunct);
 		}
-		
+
 		Dcs_common.Dcs dcs = new Dcs_common.Dcs();
 		dcs.m = m;
 		dcs.n = n;
@@ -560,31 +529,31 @@ public class ColtUtils {
 		//log.debug("dcs.p: " + ArrayUtils.toString(dcs.p));
 		return dcs;
 	}
-	
+
 	public static final SparseDoubleMatrix2D dcsToMatrix(Dcs_common.Dcs dcs) {
 		SparseDoubleMatrix2D A = new SparseDoubleMatrix2D(dcs.m, dcs.n);
 		final int[] rowIndexes = dcs.i;
-        final int[] columnPointers = dcs.p;
-        final double values[] = dcs.x;
-        //for example
-        //rowIndexes      2, 0, 2, 3, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        //columnPointers  0,    2, 3,    5,    7
-        //values          2.0, 1.0, 3.0, 4.0, 2.0, 4.0, 2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
-        int cnt =0;
-        for (int j = 0; j < dcs.n; j++) {
-        	int colStartIndex = columnPointers[j];//example 5
-        	int colEndIndex = columnPointers[j+1];//example 7
+		final int[] columnPointers = dcs.p;
+		final double values[] = dcs.x;
+		//for example
+		//rowIndexes      2, 0, 2, 3, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+		//columnPointers  0,    2, 3,    5,    7
+		//values          2.0, 1.0, 3.0, 4.0, 2.0, 4.0, 2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+		int cnt =0;
+		for (int j = 0; j < dcs.n; j++) {
+			int colStartIndex = columnPointers[j];//example 5
+			int colEndIndex = columnPointers[j+1];//example 7
 			for (int pointer = colStartIndex; pointer < colEndIndex; pointer++) {
 				int i = rowIndexes[pointer];
 				A.setQuick(i, j, values[cnt]);
 				cnt++;
 			}
-        }
-        
-        //log.debug("A: " + ArrayUtils.toString(A.toArray()));
-        return A;
+		}
+
+		//log.debug("A: " + ArrayUtils.toString(A.toArray()));
+		return A;
 	}
-	
+
 	/**
 	 * Return a new array with all the occurences of oldValue replaced by newValue.
 	 */
@@ -605,7 +574,7 @@ public class ColtUtils {
 		}
 		return ret;
 	}
-	
+
 	/**
 	 * inversion of {{a, b},{c, d}}
 	 * @param A
@@ -627,75 +596,75 @@ public class ColtUtils {
 		ret.setQuick(1, 0, A.getQuick(0, 1) / s);
 		return ret;
 	}
-	
+
 	public static final DoubleMatrix2D symmPermutation(DoubleMatrix2D A, int from, int to){
 		int n = A.rows();
 		int[] rowIndexes = new int[n];
-    int[] columnIndexes = new int[n];
-    for(int i=0; i<n; i++){
-    	rowIndexes[i] = i;
-    	columnIndexes[i] = i;
-    }
-    rowIndexes[from] = to;
-    rowIndexes[to] = from;
-    columnIndexes[from] = to;
-    columnIndexes[to] = from;
-    return Algebra.DEFAULT.permute(A, rowIndexes, columnIndexes);
+		int[] columnIndexes = new int[n];
+		for(int i=0; i<n; i++){
+			rowIndexes[i] = i;
+			columnIndexes[i] = i;
+		}
+		rowIndexes[from] = to;
+		rowIndexes[to] = from;
+		columnIndexes[from] = to;
+		columnIndexes[to] = from;
+		return Algebra.DEFAULT.permute(A, rowIndexes, columnIndexes);
 	}
-	
-//	/**
-//	 * @see Daniel Ruiz, "A scaling algorithm to equilibrate both rows and columns norms in matrices"
-//	 */
-//	public static DoubleMatrix2D[] getMatrixNormScalingFactors(DoubleMatrix2D A, double eps){
-//		DoubleFactory2D F2 = DoubleFactory2D.sparse;
-//		Algebra ALG = Algebra.DEFAULT;
-//		int r = A.rows();
-//		int c = A.columns();
-//		DoubleMatrix2D D1 = F2.identity(r);
-//		DoubleMatrix2D D2 = F2.identity(c);
-//		DoubleMatrix2D AK = A.copy();
-//		DoubleMatrix2D DR = F2.identity(r);
-//		DoubleMatrix2D DC = F2.identity(c);
-//		DoubleMatrix2D DRInv = F2.make(r, r);
-//		DoubleMatrix2D DCInv = F2.make(c, c);
-//		log.debug("eps  : " + eps);
-//		for(int k=0; k<5; k++){
-//			double normR = -Double.MAX_VALUE;
-//			double normC = -Double.MAX_VALUE;
-//			for(int i=0; i<r; i++){
-//				double dri = ALG.normInfinity(AK.viewRow(i));
-//				DR.setQuick(i, i, Math.sqrt(dri));
-//				DRInv.setQuick(i, i, 1./Math.sqrt(dri));
-//				normR = Math.max(normR, Math.abs(1-dri));
-//			}
-//			for(int j=0; j<c; j++){
-//				double dci = ALG.normInfinity(AK.viewColumn(j));
-//				DC.setQuick(j, j, Math.sqrt(dci));
-//				DCInv.setQuick(j, j, 1./Math.sqrt(dci));
-//				normC = Math.max(normC, Math.abs(1-dci));
-//			}
-//			
-//			log.debug("normR: " + normR);
-//			log.debug("normC: " + normC);
-//			if(normR < eps && normC < eps){
-//				break;
-//			}
-//			
-//			D1 = ALG.mult(D1, DRInv);
-//			D2 = ALG.mult(D2, DCInv);
-//			log.debug("D1: " + ArrayUtils.toString(D1.toArray()));
-//			log.debug("D2: " + ArrayUtils.toString(D2.toArray()));
-//			
-//			if(k==4){
-//				log.warn("iterazioni esaurite");
-//			}
-//			
-//			AK = ALG.mult(DRInv, ALG.mult(AK, DCInv));
-//		}
-//		
-//		return new DoubleMatrix2D[]{D1, D2};
-//	}
-	
+
+	//	/**
+	//	 * @see Daniel Ruiz, "A scaling algorithm to equilibrate both rows and columns norms in matrices"
+	//	 */
+	//	public static DoubleMatrix2D[] getMatrixNormScalingFactors(DoubleMatrix2D A, double eps){
+	//		DoubleFactory2D F2 = DoubleFactory2D.sparse;
+	//		Algebra ALG = Algebra.DEFAULT;
+	//		int r = A.rows();
+	//		int c = A.columns();
+	//		DoubleMatrix2D D1 = F2.identity(r);
+	//		DoubleMatrix2D D2 = F2.identity(c);
+	//		DoubleMatrix2D AK = A.copy();
+	//		DoubleMatrix2D DR = F2.identity(r);
+	//		DoubleMatrix2D DC = F2.identity(c);
+	//		DoubleMatrix2D DRInv = F2.make(r, r);
+	//		DoubleMatrix2D DCInv = F2.make(c, c);
+	//		log.debug("eps  : " + eps);
+	//		for(int k=0; k<5; k++){
+	//			double normR = -Double.MAX_VALUE;
+	//			double normC = -Double.MAX_VALUE;
+	//			for(int i=0; i<r; i++){
+	//				double dri = ALG.normInfinity(AK.viewRow(i));
+	//				DR.setQuick(i, i, Math.sqrt(dri));
+	//				DRInv.setQuick(i, i, 1./Math.sqrt(dri));
+	//				normR = Math.max(normR, Math.abs(1-dri));
+	//			}
+	//			for(int j=0; j<c; j++){
+	//				double dci = ALG.normInfinity(AK.viewColumn(j));
+	//				DC.setQuick(j, j, Math.sqrt(dci));
+	//				DCInv.setQuick(j, j, 1./Math.sqrt(dci));
+	//				normC = Math.max(normC, Math.abs(1-dci));
+	//			}
+	//			
+	//			log.debug("normR: " + normR);
+	//			log.debug("normC: " + normC);
+	//			if(normR < eps && normC < eps){
+	//				break;
+	//			}
+	//			
+	//			D1 = ALG.mult(D1, DRInv);
+	//			D2 = ALG.mult(D2, DCInv);
+	//			log.debug("D1: " + ArrayUtils.toString(D1.toArray()));
+	//			log.debug("D2: " + ArrayUtils.toString(D2.toArray()));
+	//			
+	//			if(k==4){
+	//				log.warn("iterazioni esaurite");
+	//			}
+	//			
+	//			AK = ALG.mult(DRInv, ALG.mult(AK, DCInv));
+	//		}
+	//		
+	//		return new DoubleMatrix2D[]{D1, D2};
+	//	}
+
 	/**
 	 * Gauss-Seidel scaling for a sparse matrix: 
 	 * <br>AScaled = U.A.V, with A mxn matrix, U, V diagonal.
@@ -705,178 +674,178 @@ public class ColtUtils {
 	 * 
 	 * @see Gajulapalli, Lasdon "Scaling Sparse Matrices for Optimization Algorithms"
 	 */
-//	public static DoubleMatrix1D[] getMatrixScalingFactors(SparseDoubleMatrix2D A, double base) {
-//		int m = A.rows();
-//		int n = A.columns();
-//		final double log10_b = Math.log10(base);
-//
-//		//Setup for Gauss-Seidel Iterations
-//		final int[] R = new int[m];
-//		final int[] C = new int[n];
-//		final double[] t = new double[1];
-//		final double[] a = new double[m];
-//		final double[] b = new double[n];
-//		final boolean[][] Z = new boolean[m][n];
-//		A.forEachNonZero(new IntIntDoubleFunction() {
-//			public double apply(int i, int j, double aij) {
-//				R[i] = R[i] + 1;
-//				C[j] = C[j] + 1;
-//				Z[i][j] = true;
-//				t[0] = -(Math.log10(Math.abs(aij)) / log10_b + 0.5);// log(b, x) = log(k, x) / log(k, b)
-//				a[i] = a[i] + t[0];
-//				b[j] = b[j] + t[0];
-//				return aij;
-//			}
-//		});
-//		
-//		for(int i=0; i<m; i++){
-//			a[i] = a[i] / R[i];
-//		}
-//		for(int j=0; j<n; j++){
-//			b[j] = b[j] / C[j];
-//		}
-//		
-////		log.debug("a: " + ArrayUtils.toString(a));
-////		log.debug("b: " + ArrayUtils.toString(b));
-////		log.debug("R: " + ArrayUtils.toString(R));
-////		log.debug("C: " + ArrayUtils.toString(C));
-//		
-//		int[] xx = new int[m];
-//		int[] yy = new int[n];
-//		int[] previousXX = null;
-//		int[] previousYY = null;
-//		boolean stopX = false;
-//		boolean stopY = false;
-//		int maxIteration = 3;
-//		int l=0;
-//		for(l=0; l<=maxIteration && !(stopX && stopY); l++){
-//			double[] tt = new double[m];
-//			System.arraycopy(a, 0, tt, 0, m);
-//			for (int i = 0; i < m; i++) {
-//				for (int j = 0; j < n; j++) {
-//					boolean[] ZI = Z[i]; 
-//					if(ZI[j]){
-//						tt[i] = tt[i] - ((double) yy[j]) / R[i];
-//					}
-//				}
-//			}
-//			for (int k = 0; k < m; k++) {
-//				xx[k] = (int)Math.round(tt[k]);
-//			}
-//			if(previousXX == null){
-//				previousXX = xx;
-//			}else{
-//				boolean allEquals = true;
-//				for (int k = 0; k < m && allEquals; k++) {
-//					allEquals = (xx[k] == previousXX[k]);
-//				}
-//				stopX = allEquals;
-//				previousXX = xx;
-//			}
-//			
-//			tt = new double[n];
-//			System.arraycopy(b, 0, tt, 0, n);
-//			for (int i = 0; i < m; i++) {
-//				for (int j = 0; j < n; j++) {
-//					if(Z[i][j]){
-//						tt[j] = tt[j] - ((double) xx[i]) / C[j];
-//					}
-//				}
-//			}
-//			for (int k = 0; k < n; k++) {
-//				yy[k] = (int)Math.round(tt[k]);
-//			}
-//			if(previousYY == null){
-//				previousYY = yy;
-//			}else{
-//				boolean allEquals = true;
-//				for (int k = 0; k < n && allEquals; k++) {
-//					allEquals = (yy[k] == previousYY[k]);
-//				}
-//				stopY = allEquals;
-//				previousYY = yy;
-//			}
-//		}
-//		
-//		if(l == maxIteration){
-//			//@TODO: just for test, remove this
-//			throw new RuntimeException("max iterations reached");
-//		}
-//		
-//		log.debug("xx: " + ArrayUtils.toString(xx));
-//		log.debug("yy: " + ArrayUtils.toString(yy));
-//		
-//		DoubleMatrix1D u = new DenseDoubleMatrix1D(m);
-//		for (int k = 0; k < m; k++) {
-//			u.setQuick(k, Math.pow(base, xx[k]));
-//		}
-//		DoubleMatrix1D v = new DenseDoubleMatrix1D(n);
-//		for (int k = 0; k < n; k++) {
-//			v.setQuick(k, Math.pow(base, yy[k]));
-//		}
-//		DoubleMatrix1D[] ret = new DoubleMatrix1D[] { u, v };
-//		return ret;
-//	}
-	
-//	/**
-//	 * Gauss-Seidel scaling for a sparse symmetric matrix: 
-//	 * <br>AScaled = U.A.U, with A nxn matrix, U diagonal.
-//	 * Returns the scaling matrix
-//	 * <br>U[i,i] = base^x[i], i=0,...,n
-//	 * 
-//	 * Useful for Cholesky decomposition.
-//	 * 
-//	 * @see Gajulapalli, Lasdon "Scaling Sparse Matrices for Optimization Algorithms"
-//	 */
-//	public static DoubleMatrix1D getMatrixScalingFactorsSymm(SparseDoubleMatrix2D A, double base) {
-//		int n = A.rows();
-//		final double log10_b = Math.log10(base);
-//		
-//		final int[] x = new int[n];
-//		final double[] cHolder = new double[1];
-//		final double[] tHolder = new double[1];
-//		final int[] currentColumnIndexHolder = new int[] { -1 };
-//		IntIntDoubleFunction myFunct = new IntIntDoubleFunction() {
-//			public double apply(int i, int j, double pij) {
-//				int currentColumnIndex = currentColumnIndexHolder[0];
-//				// we take into account only the lower left subdiagonal part of Q (that is symmetric)
-//				if(i == currentColumnIndex){
-//				  //diagonal element
-//					//log.debug("i:" + i + ", j:" + currentColumnIndex + ": " + pij);
-//					tHolder[0] = tHolder[0] - 0.5 * (Math.log10(Math.abs(pij))/log10_b + 0.5);//log(b, x) = log(k, x) / log(k, b)
-//					cHolder[0] = cHolder[0] + 1;
-//				}else if (i > currentColumnIndex) {
-//				  //sub-diagonal elements
-//					//log.debug("i:" + i + ", j:" + currentColumnIndex + ": " + pij);
-//					tHolder[0] = tHolder[0] - 2 * (Math.log10(Math.abs(pij))/log10_b + 0.5) -2*x[i];//log(b, x) = log(k, x) / log(k, b)
-//					cHolder[0] = cHolder[0] + 2;//- 2*x[i]
-//				}
-//				return pij;
-//			}
-//		};
-//		
-//		//view A column by column
-//		for (int currentColumnIndex = n - 1; currentColumnIndex >= 0; currentColumnIndex--) {
-//			//log.debug("currentColumnIndex:" + currentColumnIndex);
-//			cHolder[0] = 0;//reset
-//			tHolder[0] = 0;//reset
-//			currentColumnIndexHolder[0] = currentColumnIndex;
-//			DoubleMatrix2D P = A.viewPart(0, currentColumnIndex, n, 1);
-//			P.forEachNonZero(myFunct);
-//			if(cHolder[0] > 0){
-//				x[currentColumnIndex] = (int)Math.round(tHolder[0] / cHolder[0]);
-//			}
-//		}
-//		
-//		//log.debug("x: " + ArrayUtils.toString(x));
-//		
-//		DoubleMatrix1D u = new DenseDoubleMatrix1D(n);
-//		for (int k = 0; k < n; k++) {
-//			u.setQuick(k, Math.pow(base, x[k]));
-//		}
-//		return u;
-//	}
-	
+	//	public static DoubleMatrix1D[] getMatrixScalingFactors(SparseDoubleMatrix2D A, double base) {
+	//		int m = A.rows();
+	//		int n = A.columns();
+	//		final double log10_b = Math.log10(base);
+	//
+	//		//Setup for Gauss-Seidel Iterations
+	//		final int[] R = new int[m];
+	//		final int[] C = new int[n];
+	//		final double[] t = new double[1];
+	//		final double[] a = new double[m];
+	//		final double[] b = new double[n];
+	//		final boolean[][] Z = new boolean[m][n];
+	//		A.forEachNonZero(new IntIntDoubleFunction() {
+	//			public double apply(int i, int j, double aij) {
+	//				R[i] = R[i] + 1;
+	//				C[j] = C[j] + 1;
+	//				Z[i][j] = true;
+	//				t[0] = -(Math.log10(Math.abs(aij)) / log10_b + 0.5);// log(b, x) = log(k, x) / log(k, b)
+	//				a[i] = a[i] + t[0];
+	//				b[j] = b[j] + t[0];
+	//				return aij;
+	//			}
+	//		});
+	//		
+	//		for(int i=0; i<m; i++){
+	//			a[i] = a[i] / R[i];
+	//		}
+	//		for(int j=0; j<n; j++){
+	//			b[j] = b[j] / C[j];
+	//		}
+	//		
+	////		log.debug("a: " + ArrayUtils.toString(a));
+	////		log.debug("b: " + ArrayUtils.toString(b));
+	////		log.debug("R: " + ArrayUtils.toString(R));
+	////		log.debug("C: " + ArrayUtils.toString(C));
+	//		
+	//		int[] xx = new int[m];
+	//		int[] yy = new int[n];
+	//		int[] previousXX = null;
+	//		int[] previousYY = null;
+	//		boolean stopX = false;
+	//		boolean stopY = false;
+	//		int maxIteration = 3;
+	//		int l=0;
+	//		for(l=0; l<=maxIteration && !(stopX && stopY); l++){
+	//			double[] tt = new double[m];
+	//			System.arraycopy(a, 0, tt, 0, m);
+	//			for (int i = 0; i < m; i++) {
+	//				for (int j = 0; j < n; j++) {
+	//					boolean[] ZI = Z[i]; 
+	//					if(ZI[j]){
+	//						tt[i] = tt[i] - ((double) yy[j]) / R[i];
+	//					}
+	//				}
+	//			}
+	//			for (int k = 0; k < m; k++) {
+	//				xx[k] = (int)Math.round(tt[k]);
+	//			}
+	//			if(previousXX == null){
+	//				previousXX = xx;
+	//			}else{
+	//				boolean allEquals = true;
+	//				for (int k = 0; k < m && allEquals; k++) {
+	//					allEquals = (xx[k] == previousXX[k]);
+	//				}
+	//				stopX = allEquals;
+	//				previousXX = xx;
+	//			}
+	//			
+	//			tt = new double[n];
+	//			System.arraycopy(b, 0, tt, 0, n);
+	//			for (int i = 0; i < m; i++) {
+	//				for (int j = 0; j < n; j++) {
+	//					if(Z[i][j]){
+	//						tt[j] = tt[j] - ((double) xx[i]) / C[j];
+	//					}
+	//				}
+	//			}
+	//			for (int k = 0; k < n; k++) {
+	//				yy[k] = (int)Math.round(tt[k]);
+	//			}
+	//			if(previousYY == null){
+	//				previousYY = yy;
+	//			}else{
+	//				boolean allEquals = true;
+	//				for (int k = 0; k < n && allEquals; k++) {
+	//					allEquals = (yy[k] == previousYY[k]);
+	//				}
+	//				stopY = allEquals;
+	//				previousYY = yy;
+	//			}
+	//		}
+	//		
+	//		if(l == maxIteration){
+	//			//@TODO: just for test, remove this
+	//			throw new RuntimeException("max iterations reached");
+	//		}
+	//		
+	//		log.debug("xx: " + ArrayUtils.toString(xx));
+	//		log.debug("yy: " + ArrayUtils.toString(yy));
+	//		
+	//		DoubleMatrix1D u = new DenseDoubleMatrix1D(m);
+	//		for (int k = 0; k < m; k++) {
+	//			u.setQuick(k, Math.pow(base, xx[k]));
+	//		}
+	//		DoubleMatrix1D v = new DenseDoubleMatrix1D(n);
+	//		for (int k = 0; k < n; k++) {
+	//			v.setQuick(k, Math.pow(base, yy[k]));
+	//		}
+	//		DoubleMatrix1D[] ret = new DoubleMatrix1D[] { u, v };
+	//		return ret;
+	//	}
+
+	//	/**
+	//	 * Gauss-Seidel scaling for a sparse symmetric matrix: 
+	//	 * <br>AScaled = U.A.U, with A nxn matrix, U diagonal.
+	//	 * Returns the scaling matrix
+	//	 * <br>U[i,i] = base^x[i], i=0,...,n
+	//	 * 
+	//	 * Useful for Cholesky decomposition.
+	//	 * 
+	//	 * @see Gajulapalli, Lasdon "Scaling Sparse Matrices for Optimization Algorithms"
+	//	 */
+	//	public static DoubleMatrix1D getMatrixScalingFactorsSymm(SparseDoubleMatrix2D A, double base) {
+	//		int n = A.rows();
+	//		final double log10_b = Math.log10(base);
+	//		
+	//		final int[] x = new int[n];
+	//		final double[] cHolder = new double[1];
+	//		final double[] tHolder = new double[1];
+	//		final int[] currentColumnIndexHolder = new int[] { -1 };
+	//		IntIntDoubleFunction myFunct = new IntIntDoubleFunction() {
+	//			public double apply(int i, int j, double pij) {
+	//				int currentColumnIndex = currentColumnIndexHolder[0];
+	//				// we take into account only the lower left subdiagonal part of Q (that is symmetric)
+	//				if(i == currentColumnIndex){
+	//				  //diagonal element
+	//					//log.debug("i:" + i + ", j:" + currentColumnIndex + ": " + pij);
+	//					tHolder[0] = tHolder[0] - 0.5 * (Math.log10(Math.abs(pij))/log10_b + 0.5);//log(b, x) = log(k, x) / log(k, b)
+	//					cHolder[0] = cHolder[0] + 1;
+	//				}else if (i > currentColumnIndex) {
+	//				  //sub-diagonal elements
+	//					//log.debug("i:" + i + ", j:" + currentColumnIndex + ": " + pij);
+	//					tHolder[0] = tHolder[0] - 2 * (Math.log10(Math.abs(pij))/log10_b + 0.5) -2*x[i];//log(b, x) = log(k, x) / log(k, b)
+	//					cHolder[0] = cHolder[0] + 2;//- 2*x[i]
+	//				}
+	//				return pij;
+	//			}
+	//		};
+	//		
+	//		//view A column by column
+	//		for (int currentColumnIndex = n - 1; currentColumnIndex >= 0; currentColumnIndex--) {
+	//			//log.debug("currentColumnIndex:" + currentColumnIndex);
+	//			cHolder[0] = 0;//reset
+	//			tHolder[0] = 0;//reset
+	//			currentColumnIndexHolder[0] = currentColumnIndex;
+	//			DoubleMatrix2D P = A.viewPart(0, currentColumnIndex, n, 1);
+	//			P.forEachNonZero(myFunct);
+	//			if(cHolder[0] > 0){
+	//				x[currentColumnIndex] = (int)Math.round(tHolder[0] / cHolder[0]);
+	//			}
+	//		}
+	//		
+	//		//log.debug("x: " + ArrayUtils.toString(x));
+	//		
+	//		DoubleMatrix1D u = new DenseDoubleMatrix1D(n);
+	//		for (int k = 0; k < n; k++) {
+	//			u.setQuick(k, Math.pow(base, x[k]));
+	//		}
+	//		return u;
+	//	}
+
 	/**
 	 * Check if the scaling algorithm returned proper results.
 	 * Note that the scaling algorithm is for minimizing a given objective function of the original matrix elements, and
@@ -888,38 +857,38 @@ public class ColtUtils {
 	 * @return
 	 * @see Gajulapalli, Lasdon "Scaling Sparse Matrices for Optimization Algorithms", Lemma 2.2
 	 */
-//	public static boolean checkScaling(final SparseDoubleMatrix2D A, 
-//			final DoubleMatrix1D U, final DoubleMatrix1D V, final double base){
-//		
-//		final double log10_2 = Math.log10(base);
-//		final double[] originalOFValue = {0};
-//		final double[] scaledOFValue = {0};
-//		final double[] x = new double[A.rows()];
-//		final double[] y = new double[A.columns()];
-//		
-//		A.forEachNonZero(new IntIntDoubleFunction() {
-//			public double apply(int i, int j, double aij) {
-//				double v = Math.log10(Math.abs(aij)) / log10_2 + 0.5;
-//				originalOFValue[0] = originalOFValue[0] + Math.pow(v, 2);
-//				double xi = Math.log10(U.getQuick(i)) / log10_2;
-//				double yj = Math.log10(V.getQuick(j)) / log10_2;
-//				scaledOFValue[0] = scaledOFValue[0] + Math.pow(xi + yj + v, 2);
-//				x[i] = xi;
-//				y[j] = yj;
-//				return aij;
-//			}
-//		});
-//		
-//		originalOFValue[0] = 0.5 * originalOFValue[0];
-//		scaledOFValue[0]   = 0.5 * scaledOFValue[0];
-//		
-//		log.debug("x: " + ArrayUtils.toString(x));
-//		log.debug("y: " + ArrayUtils.toString(y));
-//		log.debug("originalOFValue: " + originalOFValue[0]);
-//		log.debug("scaledOFValue  : " + scaledOFValue[0]);
-//		return (originalOFValue[0] > scaledOFValue[0]);
-//	}
-	
+	//	public static boolean checkScaling(final SparseDoubleMatrix2D A, 
+	//			final DoubleMatrix1D U, final DoubleMatrix1D V, final double base){
+	//		
+	//		final double log10_2 = Math.log10(base);
+	//		final double[] originalOFValue = {0};
+	//		final double[] scaledOFValue = {0};
+	//		final double[] x = new double[A.rows()];
+	//		final double[] y = new double[A.columns()];
+	//		
+	//		A.forEachNonZero(new IntIntDoubleFunction() {
+	//			public double apply(int i, int j, double aij) {
+	//				double v = Math.log10(Math.abs(aij)) / log10_2 + 0.5;
+	//				originalOFValue[0] = originalOFValue[0] + Math.pow(v, 2);
+	//				double xi = Math.log10(U.getQuick(i)) / log10_2;
+	//				double yj = Math.log10(V.getQuick(j)) / log10_2;
+	//				scaledOFValue[0] = scaledOFValue[0] + Math.pow(xi + yj + v, 2);
+	//				x[i] = xi;
+	//				y[j] = yj;
+	//				return aij;
+	//			}
+	//		});
+	//		
+	//		originalOFValue[0] = 0.5 * originalOFValue[0];
+	//		scaledOFValue[0]   = 0.5 * scaledOFValue[0];
+	//		
+	//		log.debug("x: " + ArrayUtils.toString(x));
+	//		log.debug("y: " + ArrayUtils.toString(y));
+	//		log.debug("originalOFValue: " + originalOFValue[0]);
+	//		log.debug("scaledOFValue  : " + scaledOFValue[0]);
+	//		return (originalOFValue[0] > scaledOFValue[0]);
+	//	}
+
 	/**
 	 * Returns a lower and an upper bound for the condition number
 	 * <br>kp(A) = Norm[A, p] / Norm[A^-1, p]   
@@ -973,15 +942,15 @@ public class ColtUtils {
 	 * @FIXME: evitare il doppio setQuick
 	 */
 	public static final DoubleMatrix2D fillSubdiagonalSymmetricMatrix(DoubleMatrix2D S){
-		
+
 		if(S.rows() != S.columns()){
 			throw new IllegalArgumentException("Not square matrix");
 		}
-		
+
 		boolean isSparse = S instanceof SparseDoubleMatrix2D;
 		DoubleFactory2D F2D = (isSparse)? DoubleFactory2D.sparse: DoubleFactory2D.dense;
 		final DoubleMatrix2D SFull = F2D.make(S.rows(), S.rows());
-		
+
 		if (isSparse) {
 			S.forEachNonZero(new IntIntDoubleFunction() {
 				public double apply(int i, int j, double hij) {
@@ -999,7 +968,7 @@ public class ColtUtils {
 				}
 			}
 		}
-		
+
 		return SFull;
 	}
 }
