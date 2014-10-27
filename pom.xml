@@ -80,6 +80,21 @@
 				</excludes>
 			</testResource>
 		</testResources>
+
+
+		<plugins>
+			<plugin>
+			<!-- 
+			Some of the tests are a little bit memory hungry, to the extent that the default max heap size (at times, only 128m) 
+			is insufficient. So provide custom override for heap size for sure fire / junit processes.
+			 -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<argLine>-Xms512m -Xmx512m</argLine>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
 	<dependencies>
 		<dependency>
@@ -167,4 +182,5 @@
 		<project.build.java.version>1.7</project.build.java.version>
 		<project.site.url>http://www.joptimizer.com</project.site.url>
 	</properties>
+
 </project>
