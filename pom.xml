@@ -63,6 +63,15 @@
 			<distribution>manual</distribution>
 		</license>
 	</licenses>
+	
+	
+<distributionManagement>
+    <repository>
+      <id>myMavenRepo</id>
+      <url>${myMavenRepo.write.url}</url>
+    </repository>
+  </distributionManagement>
+	
 	<build>
 		<!-- <filters> <filter>src/main/filters/filter.properties</filter> </filters> -->
 		<resources>
@@ -181,6 +190,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.build.java.version>1.7</project.build.java.version>
 		<project.site.url>http://www.joptimizer.com</project.site.url>
+                <!-- using github as maven repo, see http://stackoverflow.com/questions/14013644/hosting-a-maven-repository-on-github -->
+                <github.global.server>github</github.global.server>
 	</properties>
 
 </project>
