@@ -30,7 +30,6 @@
 			</roles>
 		</developer>
 		
-		 <developers>
     <developer>
       <name>Vincent Kraeutler</name>
       <email>vincent.kraeutler@gmail.com</email>
@@ -38,7 +37,6 @@
       <organizationUrl>https://github.com/vincentk</organizationUrl>
     </developer>
   </developers>
-	</developers>
 	<contributors>
 		<contributor>
 			<name>cristiana moriconi</name>
