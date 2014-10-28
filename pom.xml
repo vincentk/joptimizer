@@ -29,6 +29,15 @@
 				<role>developer</role>
 			</roles>
 		</developer>
+		
+		 <developers>
+    <developer>
+      <name>Vincent Kraeutler</name>
+      <email>vincent.kraeutler@gmail.com</email>
+      <organization>github</organization>
+      <organizationUrl>https://github.com/vincentk</organizationUrl>
+    </developer>
+  </developers>
 	</developers>
 	<contributors>
 		<contributor>
@@ -64,13 +73,16 @@
 		</license>
 	</licenses>
 	
-	
 <distributionManagement>
-    <repository>
-      <id>myMavenRepo</id>
-      <url>${myMavenRepo.write.url}</url>
-    </repository>
-  </distributionManagement>
+  <snapshotRepository>
+    <id>ossrh</id>
+    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+  </snapshotRepository>
+  <repository>
+    <id>ossrh</id>
+    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+  </repository>
+</distributionManagement>
 	
 	<build>
 		<!-- <filters> <filter>src/main/filters/filter.properties</filter> </filters> -->
@@ -103,6 +115,37 @@
 					<argLine>-Xms512m -Xmx512m</argLine>
 				</configuration>
 			</plugin>
+			
+			<!-- Nexus staging plugin for deployment to sonatype OSS hosting -->
+			<plugin>
+  <groupId>org.sonatype.plugins</groupId>
+  <artifactId>nexus-staging-maven-plugin</artifactId>
+  <version>1.6.3</version>
+  <extensions>true</extensions>
+  <configuration>
+     <serverId>ossrh</serverId>
+     <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+     <autoReleaseAfterClose>true</autoReleaseAfterClose>
+  </configuration>
+</plugin>
+			
+			<!-- GPG signing required for publishing via sonatype OSS hosting -->
+			    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-gpg-plugin</artifactId>
+      <version>1.5</version>
+      <executions>
+        <execution>
+          <id>sign-artifacts</id>
+          <phase>verify</phase>
+          <goals>
+            <goal>sign</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+			
+			
 		</plugins>
 	</build>
 	<dependencies>
@@ -194,4 +237,7 @@
                 <github.global.server>github</github.global.server>
 	</properties>
 
+	<scm>
+		<url>https://github.com/vincentk/joptimizer</url>
+	</scm>
 </project>
