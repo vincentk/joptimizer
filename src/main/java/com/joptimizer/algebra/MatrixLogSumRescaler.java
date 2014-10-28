@@ -16,7 +16,8 @@
 package com.joptimizer.algebra;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import cern.colt.function.IntIntDoubleFunction;
 import cern.colt.matrix.DoubleMatrix1D;
@@ -38,7 +39,9 @@ import cern.colt.matrix.impl.DenseDoubleMatrix1D;
 public class MatrixLogSumRescaler implements MatrixRescaler {
 
 	private double base = 10;
-	private Logger logger = Logger.getLogger(this.getClass().getName());
+	
+	private static final Log logger = LogFactory.getLog(MatrixLogSumRescaler.class);
+	
 	
 	public MatrixLogSumRescaler(){
 	}
