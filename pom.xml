@@ -29,14 +29,14 @@
 				<role>developer</role>
 			</roles>
 		</developer>
-		
-    <developer>
-      <name>Vincent Kraeutler</name>
-      <email>vincent.kraeutler@gmail.com</email>
-      <organization>github</organization>
-      <organizationUrl>https://github.com/vincentk</organizationUrl>
-    </developer>
-  </developers>
+
+		<developer>
+			<name>Vincent Kraeutler</name>
+			<email>vincent.kraeutler@gmail.com</email>
+			<organization>github</organization>
+			<organizationUrl>https://github.com/vincentk</organizationUrl>
+		</developer>
+	</developers>
 	<contributors>
 		<contributor>
 			<name>cristiana moriconi</name>
@@ -70,88 +70,88 @@
 			<distribution>manual</distribution>
 		</license>
 	</licenses>
-	
-<distributionManagement>
-  <snapshotRepository>
-    <id>ossrh</id>
-    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-  </snapshotRepository>
-  <repository>
-    <id>ossrh</id>
-    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-  </repository>
-</distributionManagement>
-	
-<profiles>
-  <profile>
-    <id>release</id>
-    <build>
-                <plugins>
 
-                        <!-- Nexus staging plugin for deployment to sonatype OSS hosting -->
-                        <plugin>
-  <groupId>org.sonatype.plugins</groupId>
-  <artifactId>nexus-staging-maven-plugin</artifactId>
-  <version>1.6.3</version>
-  <extensions>true</extensions>
-  <configuration>
-     <serverId>ossrh</serverId>
-     <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-     <autoReleaseAfterClose>true</autoReleaseAfterClose>
-  </configuration>
-</plugin>
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
+
+	<profiles>
+		<profile>
+			<id>release</id>
+			<build>
+				<plugins>
+
+					<!-- Nexus staging plugin for deployment to sonatype OSS hosting -->
+					<plugin>
+						<groupId>org.sonatype.plugins</groupId>
+						<artifactId>nexus-staging-maven-plugin</artifactId>
+						<version>1.6.3</version>
+						<extensions>true</extensions>
+						<configuration>
+							<serverId>ossrh</serverId>
+							<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+							<autoReleaseAfterClose>true</autoReleaseAfterClose>
+						</configuration>
+					</plugin>
 
 
-                        <!-- GPG signing required for publishing via sonatype OSS hosting -->
-                            <plugin>
-      <groupId>org.apache.maven.plugins</groupId>
-      <artifactId>maven-gpg-plugin</artifactId>
-      <version>1.5</version>
-      <executions>
-        <execution>
-          <id>sign-artifacts</id>
-          <phase>verify</phase>
-          <goals>
-            <goal>sign</goal>
-          </goals>
-        </execution>
-      </executions>
-    </plugin>
+					<!-- GPG signing required for publishing via sonatype OSS hosting -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.5</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
 
-    <!--  source and javadoc plugins for sonatype OSS -->
-        <plugin>
-      <groupId>org.apache.maven.plugins</groupId>
-      <artifactId>maven-source-plugin</artifactId>
-      <version>2.2.1</version>
-      <executions>
-        <execution>
-          <id>attach-sources</id>
-          <goals>
-            <goal>jar-no-fork</goal>
-          </goals>
-        </execution>
-      </executions>
-    </plugin>
+					<!-- source and javadoc plugins for sonatype OSS -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+						<version>2.2.1</version>
+						<executions>
+							<execution>
+								<id>attach-sources</id>
+								<goals>
+									<goal>jar-no-fork</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
 
-    <plugin>
-      <groupId>org.apache.maven.plugins</groupId>
-      <artifactId>maven-javadoc-plugin</artifactId>
-      <version>2.9.1</version>
-      <executions>
-        <execution>
-          <id>attach-javadocs</id>
-          <goals>
-            <goal>jar</goal>
-          </goals>
-        </execution>
-      </executions>
-    </plugin>
-    </plugins>
-    </build>
-</profile>
-</profiles>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>2.9.1</version>
+						<executions>
+							<execution>
+								<id>attach-javadocs</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
-	
+
 	<build>
 		<!-- <filters> <filter>src/main/filters/filter.properties</filter> </filters> -->
 		<resources>
@@ -169,23 +169,22 @@
 				</excludes>
 			</testResource>
 		</testResources>
-		
+
 
 
 		<plugins>
-		
+
 			<plugin>
-			<!-- 
-			Some of the tests are a little bit memory hungry, to the extent that the default max heap size (at times, only 128m) 
-			is insufficient. So provide custom override for heap size for sure fire / junit processes.
-			 -->
+				<!-- Some of the tests are a little bit memory hungry, to the extent 
+					that the default max heap size (at times, only 128m) is insufficient. So 
+					provide custom override for heap size for sure fire / junit processes. -->
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
 					<argLine>-Xms512m -Xmx512m</argLine>
 				</configuration>
 			</plugin>
-			
+
 		</plugins>
 	</build>
 	<dependencies>
@@ -273,10 +272,10 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.build.java.version>1.7</project.build.java.version>
 		<project.site.url>http://www.joptimizer.com</project.site.url>
-                <!-- using github as maven repo, see http://stackoverflow.com/questions/14013644/hosting-a-maven-repository-on-github -->
-                <github.global.server>github</github.global.server>
-                <maven.compiler.target>${project.build.java.version}</maven.compiler.target>
-                <maven.compiler.source>${project.build.java.version}</maven.compiler.source>
+		<!-- using github as maven repo, see http://stackoverflow.com/questions/14013644/hosting-a-maven-repository-on-github -->
+		<github.global.server>github</github.global.server>
+		<maven.compiler.target>${project.build.java.version}</maven.compiler.target>
+		<maven.compiler.source>${project.build.java.version}</maven.compiler.source>
 	</properties>
 
 	<scm>
