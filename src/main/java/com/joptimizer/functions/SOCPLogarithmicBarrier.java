@@ -42,6 +42,7 @@ public class SOCPLogarithmicBarrier implements BarrierFunction {
 		this.dim = dim;
 	}
 
+	@Override
 	public double value(double[] X) {
 		RealVector x = new ArrayRealVector(X);
 		
@@ -64,6 +65,7 @@ public class SOCPLogarithmicBarrier implements BarrierFunction {
 		return ret;
 	}
 
+	@Override
 	public double[] gradient(double[] X) {
 		RealVector x = new ArrayRealVector(X);
 		
@@ -85,6 +87,7 @@ public class SOCPLogarithmicBarrier implements BarrierFunction {
 		return ret.toArray();
 	}
 	
+	@Override
 	public double[][] hessian(double[] X) {
 		RealVector x = new ArrayRealVector(X);
 		
@@ -118,6 +121,7 @@ public class SOCPLogarithmicBarrier implements BarrierFunction {
 	 * <br>||Ai.x+bi|| < ci.x+di+t, i=1,...,m
 	 * @see "S.Boyd and L.Vandenberghe, Convex Optimization, 11.6.2"
 	 */
+	@Override
 	public BarrierFunction createPhase1BarrierFunction(){
 		
 		final int dimPh1 = dim +1;
@@ -151,6 +155,7 @@ public class SOCPLogarithmicBarrier implements BarrierFunction {
 	 * Return s = max(||Ai.x+bi|| - (ci.x+di))
 	 * @see "S.Boyd and L.Vandenberghe, Convex Optimization, 11.6.2"
 	 */
+	@Override
 	public double calculatePhase1InitialFeasiblePoint(double[] originalNotFeasiblePoint, double tolerance){
 		double s = -Double.MAX_VALUE;
 		RealVector x = new ArrayRealVector(originalNotFeasiblePoint); 
@@ -170,6 +175,7 @@ public class SOCPLogarithmicBarrier implements BarrierFunction {
 		return s;
 	}
 	
+	@Override
 	public int getDim() {
 		return this.dim;
 	}
@@ -243,6 +249,7 @@ public class SOCPLogarithmicBarrier implements BarrierFunction {
 		}
 	}
 
+	@Override
 	public double getDualityGap(double t) {
 		return ((double)this.socpConstraintParametersList.size()) / t;
 	}

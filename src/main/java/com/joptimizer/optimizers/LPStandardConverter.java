@@ -296,6 +296,7 @@ public class LPStandardConverter {
 			}
 			if(originalG instanceof SparseDoubleMatrix2D){
 				originalG.forEachNonZero(new IntIntDoubleFunction() {
+					@Override
 					public double apply(int i, int j, double gij) {
 						standardA.set(i, standardS + j, gij);
 						return gij;

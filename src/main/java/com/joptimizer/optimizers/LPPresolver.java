@@ -287,6 +287,7 @@ public class LPPresolver {
 				final int [] currentColumnIndexHolder = new int[]{column};
 				DoubleMatrix2D P = Q.viewPart(0, column, originalMeq, 1);
 				P.forEachNonZero(new IntIntDoubleFunction() {
+					@Override
 					public double apply(int i, int j, double qij) {
 						//log.debug("i:"+i+",j:"+currentColumnIndexHolder[0]+", qij="+qij);
 						cardinalityHolder[0] = cardinalityHolder[0] + 1;

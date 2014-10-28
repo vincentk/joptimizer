@@ -319,6 +319,7 @@ public abstract class OptimizationRequestHandler {
 		
 		if(AMatrix instanceof SparseDoubleMatrix2D){
 			((SparseDoubleMatrix2D)AMatrix).forEachNonZero(new IntIntDoubleFunction() {
+				@Override
 				public double apply(int i, int j, double aij) {
 					AT.setEntry(j, i, aij);
 					return aij;

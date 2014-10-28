@@ -49,6 +49,7 @@ public class LogarithmicBarrier implements BarrierFunction {
 		this.dim = dim;
 	}
 
+	@Override
 	public double value(double[] X) {
 		double psi = 0;
 		for(int j=0; j<fi.length; j++){
@@ -61,6 +62,7 @@ public class LogarithmicBarrier implements BarrierFunction {
 		return psi;
 	}
 
+	@Override
 	public double[] gradient(double[] X) {
 		DoubleMatrix1D gradFiSum = F1.make(getDim());
 		for(int j=0; j<fi.length; j++){
@@ -71,6 +73,7 @@ public class LogarithmicBarrier implements BarrierFunction {
 		return gradFiSum.toArray();
 	}
 	
+	@Override
 	public double[][] hessian(double[] X) {
 		DoubleMatrix2D HessSum = F2.make(new double[getDim()][getDim()]);
 		DoubleMatrix2D GradSum = F2.make(new double[getDim()][getDim()]);
@@ -87,10 +90,12 @@ public class LogarithmicBarrier implements BarrierFunction {
 		return HessSum.assign(GradSum, Functions.plus).toArray();
 	}
 	
+	@Override
 	public int getDim() {
 		return this.dim;
 	}
 	
+	@Override
 	public double getDualityGap(double t) {
 		return ((double)fi.length) / t;
 	}
@@ -100,6 +105,7 @@ public class LogarithmicBarrier implements BarrierFunction {
 	 * It is a LogarithmicBarrier for the constraints: 
 	 * <br>fi(X)-s, i=1,...,n
 	 */
+	@Override
 	public BarrierFunction createPhase1BarrierFunction(){
 		
 		final int dimPh1 = dim +1;
@@ -110,12 +116,14 @@ public class LogarithmicBarrier implements BarrierFunction {
 			
 			ConvexMultivariateRealFunction fi = new ConvexMultivariateRealFunction() {
 				
+				@Override
 				public double value(double[] Y) {
 					DoubleMatrix1D y = DoubleFactory1D.dense.make(Y);
 					DoubleMatrix1D X = y.viewPart(0, dim);
 					return originalFi.value(X.toArray()) - y.get(dimPh1-1);
 				}
 				
+				@Override
 				public double[] gradient(double[] Y) {
 					DoubleMatrix1D y = DoubleFactory1D.dense.make(Y);
 					DoubleMatrix1D X = y.viewPart(0, dim);
@@ -125,6 +133,7 @@ public class LogarithmicBarrier implements BarrierFunction {
 					return ret.toArray();
 				}
 				
+				@Override
 				public double[][] hessian(double[] Y) {
 					DoubleMatrix1D y = DoubleFactory1D.dense.make(Y);
 					DoubleMatrix1D X = y.viewPart(0, dim);
@@ -139,6 +148,7 @@ public class LogarithmicBarrier implements BarrierFunction {
 					}
 				}
 				
+				@Override
 				public int getDim() {
 					return dimPh1;
 				}
@@ -155,6 +165,7 @@ public class LogarithmicBarrier implements BarrierFunction {
 	 * Return s = max(fi(x))
 	 * @see "S.Boyd and L.Vandenberghe, Convex Optimization, 11.6.2"
 	 */
+	@Override
 	public double calculatePhase1InitialFeasiblePoint(double[] originalNotFeasiblePoint, double tolerance){
 		//DoubleMatrix1D X0NF = F1.make(originalNotFeasiblePoint);
 		DoubleMatrix1D fiX0NF = F1.make(fi.length);

@@ -56,6 +56,7 @@ public class FunctionsUtils {
 			/**
 			 * Sum[ (x[i]-center[i])^2 ] - radius^2.
 			 */
+			@Override
 			public double value(double[] X) {
 				DoubleMatrix1D x = DoubleFactory1D.dense.make(X);
 				DoubleMatrix1D D = x.assign(C, Functions.minus);
@@ -63,18 +64,21 @@ public class FunctionsUtils {
 				return d;
 			}
 
+			@Override
 			public double[] gradient(double[] X) {
 				DoubleMatrix1D x = DoubleFactory1D.dense.make(X);
 				DoubleMatrix1D D = x.assign(C, Functions.minus);
 				return D.assign(Mult.mult(2)).toArray();
 			}
 
+			@Override
 			public double[][] hessian(double[] X) {
 				double[] d = new double[dim];
 				Arrays.fill(d, 2);
 				return F2.diagonal(F1.make(d)).toArray();
 			}
 
+			@Override
 			public int getDim() {
 				return dim;
 			}

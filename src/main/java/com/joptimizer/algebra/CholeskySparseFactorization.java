@@ -120,6 +120,7 @@ public class CholeskySparseFactorization {
 		final int[] currentColumnIndexHolder = new int[] { -1 };
 		
 		IntIntDoubleFunction myFunct = new IntIntDoubleFunction() {
+			@Override
 			public double apply(int i, int s, double pis) {
 				int step = currentColumnIndexHolder[0];
 				//log.debug("i:" + i + ", step:" + step + ": " + pis);

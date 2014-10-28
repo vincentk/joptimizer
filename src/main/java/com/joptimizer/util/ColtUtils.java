@@ -65,6 +65,7 @@ public class ColtUtils {
 		if (A instanceof SparseDoubleMatrix2D) {
 			ret = DoubleFactory2D.sparse.make(r, c);
 			A.forEachNonZero(new IntIntDoubleFunction() {
+				@Override
 				public double apply(int i, int j, double aij) {
 					ret.setQuick(i, j, aij * diagonalU.getQuick(i));
 					return aij;
@@ -94,6 +95,7 @@ public class ColtUtils {
 		if (A instanceof SparseDoubleMatrix2D) {
 			ret = DoubleFactory2D.sparse.make(r, c);
 			A.forEachNonZero(new IntIntDoubleFunction() {
+				@Override
 				public double apply(int i, int j, double aij) {
 					ret.setQuick(i, j, aij * diagonalU.getQuick(j));
 					return aij;
@@ -124,6 +126,7 @@ public class ColtUtils {
 		if (A instanceof SparseDoubleMatrix2D) {
 			ret = DoubleFactory2D.sparse.make(r, c);
 			A.forEachNonZero(new IntIntDoubleFunction() {
+				@Override
 				public double apply(int i, int j, double aij) {
 					ret.setQuick(i, j, aij * diagonalU.getQuick(i) * diagonalV.getQuick(j));
 					return aij;
@@ -162,6 +165,7 @@ public class ColtUtils {
 
 		if(useSparsity){
 			IntIntDoubleFunction myFunct = new IntIntDoubleFunction() {
+				@Override
 				public double apply(int t, int s, double pts) {
 					int i = t;
 					for (int j = 0; j < i + 1; j++) {
@@ -201,6 +205,7 @@ public class ColtUtils {
 		if(A instanceof SparseDoubleMatrix2D){
 			//sparse matrix
 			A.forEachNonZero(new IntIntDoubleFunction() {
+				@Override
 				public double apply(int i, int j, double Aij) {
 					double vi = 0;
 					vi += Aij * b.getQuick(j);
@@ -241,6 +246,7 @@ public class ColtUtils {
 		if(A instanceof SparseDoubleMatrix2D){
 			//sparse matrix
 			A.forEachNonZero(new IntIntDoubleFunction() {
+				@Override
 				public double apply(int i, int j, double Aij) {
 					ret.setQuick(i, ret.getQuick(i) + Aij * a.getQuick(j));
 					return Aij;
@@ -276,6 +282,7 @@ public class ColtUtils {
 		if(A instanceof SparseDoubleMatrix2D){
 			//if(1==2){	
 			A.forEachNonZero(new IntIntDoubleFunction() {
+				@Override
 				public double apply(int i, int j, double Aij) {
 					ret.setQuick(j, ret.getQuick(j) + Aij * a.getQuick(i));
 					return Aij;
@@ -404,6 +411,7 @@ public class ColtUtils {
 
 		IntIntDoubleFunction myFunct = new IntIntDoubleFunction() {
 			int nzCounter = 0;
+			@Override
 			public double apply(int r, int c, double prc) {
 				//log.debug("r:" + r + ", c:" + currentColumnIndexHolder[0] + ": " + prc);
 
@@ -585,6 +593,7 @@ public class ColtUtils {
 
 		if (isSparse) {
 			S.forEachNonZero(new IntIntDoubleFunction() {
+				@Override
 				public double apply(int i, int j, double hij) {
 					SFull.setQuick(i, j, hij);
 					SFull.setQuick(j, i, hij);

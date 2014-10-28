@@ -69,6 +69,7 @@ public class MyTaskParallelTest extends TestCase {
 
 		private ThreadFactory innerFactory = Executors.defaultThreadFactory();
 		
+		@Override
 		public Thread newThread(Runnable arg0) {
 			return innerFactory.newThread(arg0);
 		}

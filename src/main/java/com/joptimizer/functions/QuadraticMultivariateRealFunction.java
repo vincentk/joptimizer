@@ -106,6 +106,7 @@ public class QuadraticMultivariateRealFunction implements TwiceDifferentiableMul
 		this(PMatrix, qVector, r, false);
 	}
 
+	@Override
 	public final double value(double[] X) {
 		DoubleMatrix1D x = DoubleFactory1D.dense.make(X);
 		double ret = r;
@@ -118,6 +119,7 @@ public class QuadraticMultivariateRealFunction implements TwiceDifferentiableMul
 		return ret;
 	}
 
+	@Override
 	public final double[] gradient(double[] X) {
 		DoubleMatrix1D x = DoubleFactory1D.dense.make(X);
 		DoubleMatrix1D ret = null;
@@ -136,6 +138,7 @@ public class QuadraticMultivariateRealFunction implements TwiceDifferentiableMul
 		
 	}
 
+	@Override
 	public final double[][] hessian(double[] X) {
 		DoubleMatrix2D ret = null;
 		if(P!=null){
@@ -159,6 +162,7 @@ public class QuadraticMultivariateRealFunction implements TwiceDifferentiableMul
 		return r;
 	}
 
+	@Override
 	public int getDim() {
 		return this.dim;
 	}

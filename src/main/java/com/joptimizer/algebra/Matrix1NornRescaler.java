@@ -53,6 +53,7 @@ public class Matrix1NornRescaler implements MatrixRescaler{
 	 * @see Daniel Ruiz, "A scaling algorithm to equilibrate both rows and columns norms in matrices"
 	 * @see Philip A. Knight, Daniel Ruiz, Bora Ucar "A Symmetry Preserving Algorithm for Matrix Scaling"
 	 */
+	@Override
 	public DoubleMatrix1D[] getMatrixScalingFactors(DoubleMatrix2D A){
 		DoubleFactory1D F1 = DoubleFactory1D.dense;
 		DoubleFactory2D F2 = DoubleFactory2D.sparse;
@@ -122,6 +123,7 @@ public class Matrix1NornRescaler implements MatrixRescaler{
 	 * @see Daniel Ruiz, "A scaling algorithm to equilibrate both rows and columns norms in matrices"
 	 * @see Philip A. Knight, Daniel Ruiz, Bora Ucar "A Symmetry Preserving Algorithm for Matrix Scaling"
 	 */
+	@Override
 	public DoubleMatrix1D getMatrixScalingFactorsSymm(DoubleMatrix2D A) {
 		DoubleFactory1D F1 = DoubleFactory1D.dense;
 		DoubleFactory2D F2 = DoubleFactory2D.sparse;
@@ -178,6 +180,7 @@ public class Matrix1NornRescaler implements MatrixRescaler{
 	 * @param base
 	 * @return
 	 */
+	@Override
 	public boolean checkScaling(final DoubleMatrix2D AOriginal, final DoubleMatrix1D U, final DoubleMatrix1D V){
 		
 		int c = AOriginal.columns();
@@ -185,6 +188,7 @@ public class Matrix1NornRescaler implements MatrixRescaler{
 		final double[] maxValueHolder = new double[]{-Double.MAX_VALUE}; 
 		
 		IntIntDoubleFunction myFunct = new IntIntDoubleFunction() {
+			@Override
 			public double apply(int i, int j, double pij) {
 				maxValueHolder[0] = Math.max(maxValueHolder[0], Math.abs(pij));
 				return pij;
@@ -222,6 +226,7 @@ public class Matrix1NornRescaler implements MatrixRescaler{
 		final double[] maxValueHolder = new double[]{-Double.MAX_VALUE}; 
 		
 		IntIntDoubleFunction myFunct = new IntIntDoubleFunction() {
+			@Override
 			public double apply(int i, int j, double pij) {
 				//logger.warn("(" + i + "," + j + ")=" + pij);
 				maxValueHolder[0] = Math.max(maxValueHolder[0], Math.abs(pij));

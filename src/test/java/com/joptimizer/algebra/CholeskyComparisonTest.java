@@ -249,6 +249,7 @@ public class CholeskyComparisonTest extends TestCase {
 		final double s = AMatrix.getQuick(dim-1, dim-1);
 		log.debug("A[dim-1][dim-1]: " + AMatrix.getQuick(dim-1, dim-1));
 		AMatrix.forEachNonZero(new IntIntDoubleFunction() {
+			@Override
 			public double apply(int i, int j, double aij) {
 				return aij / s;
 			}

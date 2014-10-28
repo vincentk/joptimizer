@@ -148,6 +148,7 @@ public class DiagonalHKKTSolver extends KKTSolver {
 	private DoubleMatrix2D calculateHAT(final DoubleMatrix2D HH,	final DoubleMatrix2D AA) {
 		final DoubleMatrix2D ret = DoubleFactory2D.sparse.make(AA.columns(), AA.rows());
 		AA.forEachNonZero(new IntIntDoubleFunction() {
+			@Override
 			public double apply(int i, int j, double aij) {
 				ret.setQuick(j, i, aij * HH.getQuick(j, j));
 				return aij;
@@ -166,6 +167,7 @@ public class DiagonalHKKTSolver extends KKTSolver {
 		final int[] colHolder = new int[] { -1 };
 		final double[] valueHolder = new double[] { Double.NaN };
 		final IntIntDoubleFunction myFunc = new IntIntDoubleFunction() {
+			@Override
 			public double apply(int r, int c, double AAColrc) {
 				if (c < rowHolder[0] + 1) {
 					//log.debug("sum " + AAColrc + "*" + HH.getQuick(colHolder[0], colHolder[0]) + " to AHAT(" + r + ","	+ rowHolder[0] + ")");
@@ -175,6 +177,7 @@ public class DiagonalHKKTSolver extends KKTSolver {
 			}
 		};
 		AA.forEachNonZero(new IntIntDoubleFunction() {
+			@Override
 			public double apply(final int i, final int j, final double aij) {
 				rowHolder[0] = i;
 				colHolder[0] = j;

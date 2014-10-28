@@ -62,12 +62,14 @@ public class LogTransformedPosynomial implements ConvexMultivariateRealFunction 
 		this.dim = A.columns();
 	}
 
+	@Override
 	public double value(double[] X) {
 		DoubleMatrix1D x = DoubleFactory1D.dense.make(X);
 		DoubleMatrix1D g = ALG.mult(A, x).assign(b, Functions.plus).assign(Functions.exp);
 		return Math.log(g.zSum());
 	}
 
+	@Override
 	public double[] gradient(double[] X) {
 		DoubleMatrix1D x = DoubleFactory1D.dense.make(X);
 		DoubleMatrix1D g = ALG.mult(A, x).assign(b, Functions.plus).assign(Functions.exp);
@@ -83,6 +85,7 @@ public class LogTransformedPosynomial implements ConvexMultivariateRealFunction 
 	    return R;
 	}
 
+	@Override
 	public double[][] hessian(double[] X) {
 		DoubleMatrix1D x = DoubleFactory1D.dense.make(X);
 		DoubleMatrix1D g = ALG.mult(A, x).assign(b, Functions.plus).assign(Functions.exp);
@@ -104,6 +107,7 @@ public class LogTransformedPosynomial implements ConvexMultivariateRealFunction 
 		return ret.toArray();
 	}
 
+	@Override
 	public int getDim() {
 		return this.dim;
 	}

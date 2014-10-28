@@ -1067,6 +1067,7 @@ public class JOptimizerTest extends TestCase {
 		ConvexMultivariateRealFunction[] inequalities = new ConvexMultivariateRealFunction[1];
 		inequalities[0] = new ConvexMultivariateRealFunction() {
 			
+			@Override
 			public double value(double[] X) {
 				double x = X[0];
 				double y = X[1];
@@ -1074,6 +1075,7 @@ public class JOptimizerTest extends TestCase {
 				return Math.pow(x+2, 2)+Math.pow(y+2, 2)-1.75-s;
 			}
 			
+			@Override
 			public double[] gradient(double[] X) {
 				double x = X[0];
 				double y = X[1];
@@ -1081,6 +1083,7 @@ public class JOptimizerTest extends TestCase {
 				return new double[]{2*(x+2), 2*(y+2), -1 };
 			}
 			
+			@Override
 			public double[][] hessian(double[] X) {
 				double x = X[0];
 				double y = X[1];
@@ -1091,6 +1094,7 @@ public class JOptimizerTest extends TestCase {
 				return ret;
 			}
 			
+			@Override
 			public int getDim() {
 				return 3;
 			}
@@ -1235,16 +1239,19 @@ public class JOptimizerTest extends TestCase {
 		//you can implement the function definition using whatever linear algebra library you want, you are not tied to Colt
 		StrictlyConvexMultivariateRealFunction objectiveFunction = new StrictlyConvexMultivariateRealFunction() {
 
+			@Override
 			public double value(double[] X) {
 				DoubleMatrix1D Z = F1.make(new double[] { X[0] - 1, X[1] - 2, });
 				return Math.exp(Z.zDotProduct(Z));
 			}
 
+			@Override
 			public double[] gradient(double[] X) {
 				DoubleMatrix1D Z = F1.make(new double[] { X[0] - 1, X[1] - 2, });
 				return Z.assign(Mult.mult(2 * Math.exp(Z.zDotProduct(Z)))).toArray();
 			}
 
+			@Override
 			public double[][] hessian(double[] X) {
 				DoubleMatrix1D Z = F1.make(new double[] { X[0] - 1, X[1] - 2, });
 				double d = Math.exp(Z.zDotProduct(Z));
@@ -1253,6 +1260,7 @@ public class JOptimizerTest extends TestCase {
 				return ret.toArray();
 			}
 
+			@Override
 			public int getDim() {
 				return 2;
 			}
@@ -1578,6 +1586,7 @@ public class JOptimizerTest extends TestCase {
 		final double R = 0.25;
 		inequalities[1] = new ConvexMultivariateRealFunction() {
 			
+			@Override
 			public double value(double[] X) {
 				double y0 = X[0];
 				double y1 = X[1];
@@ -1585,6 +1594,7 @@ public class JOptimizerTest extends TestCase {
 				return t * (Math.pow(y0 / t - c0, 2) + Math.pow(y1 / t - c1, 2) - Math.pow(R, 2));
 			}
 			
+			@Override
 			public double[] gradient(double[] X) {
 				double y0 = X[0];
 				double y1 = X[1];
@@ -1596,6 +1606,7 @@ public class JOptimizerTest extends TestCase {
 				return ret;
 			}
 			
+			@Override
 			public double[][] hessian(double[] X) {
 				double y0 = X[0];
 				double y1 = X[1];
@@ -1607,6 +1618,7 @@ public class JOptimizerTest extends TestCase {
 				return ret;
 			}
 			
+			@Override
 			public int getDim() {
 				return 3;
 			}

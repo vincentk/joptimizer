@@ -55,6 +55,7 @@ public class ColtUtilsTest extends TestCase {
 		SparseDoubleMatrix2D S2 = new SparseDoubleMatrix2D(A);
 		//ColtUtils.dumpSparseMatrix(S2);
 		S2.forEachNonZero(new IntIntDoubleFunction() {
+			@Override
 			public double apply(int i, int j, double sij) {
 				assertEquals(sij, A[i][j]);
 				return sij;
@@ -79,6 +80,7 @@ public class ColtUtilsTest extends TestCase {
 		
 		DoubleMatrix2D R = S2.viewPart(0, 0, 1, 4);
 		R.forEachNonZero(new IntIntDoubleFunction() {
+			@Override
 			public double apply(int i, int j, double sij) {
 				log.debug("i:" + i + ", j:" + j + ": " + sij);
 				return sij;

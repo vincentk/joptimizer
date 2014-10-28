@@ -73,6 +73,7 @@ public class SDPLogarithmicBarrier implements BarrierFunction {
 	/**
 	 * @see "S.Boyd and L.Vandenberghe, Convex Optimization, p. 618"
 	 */
+	@Override
 	public double value(double[] X) {
 		RealMatrix S = buildS(X);
 		try{
@@ -87,6 +88,7 @@ public class SDPLogarithmicBarrier implements BarrierFunction {
 	/**
 	 * @see "S.Boyd and L.Vandenberghe, Convex Optimization, p. 618"
 	 */
+	@Override
 	public double[] gradient(double[] X) {
 		double[] ret = new double[dim];
 		RealMatrix S = buildS(X);
@@ -101,6 +103,7 @@ public class SDPLogarithmicBarrier implements BarrierFunction {
 	/**
 	 * @see "S.Boyd and L.Vandenberghe, Convex Optimization, p. 618"
 	 */
+	@Override
 	public double[][] hessian(double[] X) {
 		RealMatrix S = buildS(X);
 		CholeskyDecomposition cFact = new CholeskyDecomposition(S);
@@ -123,6 +126,7 @@ public class SDPLogarithmicBarrier implements BarrierFunction {
 	 * <br>G + Sum[x_i * F_i(x),i] < t * I
 	 * @see "S.Boyd and L.Vandenberghe, Convex Optimization, 11.6.2"
 	 */
+	@Override
 	public BarrierFunction createPhase1BarrierFunction(){
 		List<double[][]> FiPh1MatrixList = new ArrayList<double[][]>();
 		for(int i=0; i<this.Fi.length; i++){
@@ -138,6 +142,7 @@ public class SDPLogarithmicBarrier implements BarrierFunction {
 	 * @see "S.Boyd and L.Vandenberghe, Convex Optimization, 11.6.2"
 	 * @see "S.Boyd and L.Vandenberghe, Semidefinite programming, 6.1"
 	 */
+	@Override
 	public double calculatePhase1InitialFeasiblePoint(double[] originalNotFeasiblePoint, double tolerance){
 		RealMatrix F = this.buildS(originalNotFeasiblePoint).scalarMultiply(-1);
 		RealMatrix S = F.scalarMultiply(-1);
@@ -188,10 +193,12 @@ public class SDPLogarithmicBarrier implements BarrierFunction {
 		return S;
 	}
 
+	@Override
 	public int getDim() {
 		return this.dim;
 	}
 	
+	@Override
 	public double getDualityGap(double t) {
 		return ((double)p)/t;
 	}

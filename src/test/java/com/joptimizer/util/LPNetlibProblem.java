@@ -80,6 +80,7 @@ public class LPNetlibProblem {
 		List<LPNetlibProblem> orderedList = new ArrayList<LPNetlibProblem>();
 		orderedList.addAll(resultsMap.values());
 		Collections.sort(orderedList, new Comparator<LPNetlibProblem>() {
+			@Override
 			public int compare(LPNetlibProblem arg0, LPNetlibProblem arg1) {
 				return arg0.name.compareTo(arg1.name);
 			}
@@ -91,6 +92,7 @@ public class LPNetlibProblem {
 		List<LPNetlibProblem> orderedList = new ArrayList<LPNetlibProblem>();
 		orderedList.addAll(resultsMap.values());
 		Collections.sort(orderedList, new Comparator<LPNetlibProblem>() {
+			@Override
 			public int compare(LPNetlibProblem arg0, LPNetlibProblem arg1) {
 				if(arg0.rows  > arg1.rows){
 					return 1;
@@ -108,6 +110,7 @@ public class LPNetlibProblem {
 		List<LPNetlibProblem> orderedList = new ArrayList<LPNetlibProblem>();
 		orderedList.addAll(resultsMap.values());
 		Collections.sort(orderedList, new Comparator<LPNetlibProblem>() {
+			@Override
 			public int compare(LPNetlibProblem arg0, LPNetlibProblem arg1) {
 				if(arg0.columns  > arg1.columns){
 					return 1;
@@ -125,6 +128,7 @@ public class LPNetlibProblem {
 		List<LPNetlibProblem> orderedList = new ArrayList<LPNetlibProblem>();
 		orderedList.addAll(resultsMap.values());
 		Collections.sort(orderedList, new Comparator<LPNetlibProblem>() {
+			@Override
 			public int compare(LPNetlibProblem arg0, LPNetlibProblem arg1) {
 				if(arg0.rows*arg0.columns  > arg1.rows*arg1.columns){
 					return 1;

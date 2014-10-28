@@ -570,16 +570,19 @@ public class BarrierMethodTest extends TestCase {
 		log.debug("testOptimize8");
 		StrictlyConvexMultivariateRealFunction objectiveFunction = new StrictlyConvexMultivariateRealFunction() {
 
+			@Override
 			public double value(double[] X) {
 				DoubleMatrix1D Z = F1.make(new double[] { X[0] - 1, X[1] - 2, });
 				return Math.exp(Z.zDotProduct(Z));
 			}
 
+			@Override
 			public double[] gradient(double[] X) {
 				DoubleMatrix1D Z = F1.make(new double[] { X[0] - 1, X[1] - 2, });
 				return Z.assign(Mult.mult(2 * Math.exp(Z.zDotProduct(Z)))).toArray();
 			}
 
+			@Override
 			public double[][] hessian(double[] X) {
 				DoubleMatrix1D Z = F1.make(new double[] { X[0] - 1, X[1] - 2, });
 				double d = Math.exp(Z.zDotProduct(Z));
@@ -588,6 +591,7 @@ public class BarrierMethodTest extends TestCase {
 				return ret.toArray();
 			}
 
+			@Override
 			public int getDim() {
 				return 2;
 			}

@@ -138,18 +138,21 @@ public class BarrierMethod extends OptimizationRequestHandler {
 			log.debug("t: "+tIter);
 			ConvexMultivariateRealFunction newObjectiveFunction = new ConvexMultivariateRealFunction() {
 				
+				@Override
 				public double value(double[] X) {
 					DoubleMatrix1D x = F1.make(X);
 					double phi = barrierFunction.value(X);
 					return tIter * getF0(x) + phi;
 				}
 				
+				@Override
 				public double[] gradient(double[] X) {
 					DoubleMatrix1D x = F1.make(X);
 					DoubleMatrix1D phiGrad = F1.make(barrierFunction.gradient(X));
 					return getGradF0(x).assign(Mult.mult(tIter)).assign(phiGrad, Functions.plus).toArray();
 				}
 				
+				@Override
 				public double[][] hessian(double[] X) {
 					DoubleMatrix1D x = F1.make(X);
 					DoubleMatrix2D hessF0X = getHessF0(x);
@@ -162,6 +165,7 @@ public class BarrierMethod extends OptimizationRequestHandler {
 					}
 				}
 
+				@Override
 				public int getDim() {
 					return dim;
 				}

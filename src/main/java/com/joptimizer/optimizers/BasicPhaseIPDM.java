@@ -78,12 +78,14 @@ public class BasicPhaseIPDM {
 			
 			ConvexMultivariateRealFunction fi = new ConvexMultivariateRealFunction() {
 				
+				@Override
 				public double value(double[] Y) {
 					DoubleMatrix1D y = DoubleFactory1D.dense.make(Y);
 					DoubleMatrix1D X = y.viewPart(0, originalDim);
 					return originalFi.value(X.toArray()) - y.get(dim-1);
 				}
 				
+				@Override
 				public double[] gradient(double[] Y) {
 					DoubleMatrix1D y = DoubleFactory1D.dense.make(Y);
 					DoubleMatrix1D X = y.viewPart(0, originalDim);
@@ -93,6 +95,7 @@ public class BasicPhaseIPDM {
 					return ret.toArray();
 				}
 				
+				@Override
 				public double[][] hessian(double[] Y) {
 					DoubleMatrix1D y = DoubleFactory1D.dense.make(Y);
 					DoubleMatrix1D X = y.viewPart(0, originalDim);
@@ -106,6 +109,7 @@ public class BasicPhaseIPDM {
 					}
 				}
 				
+				@Override
 				public int getDim() {
 					return dim;
 				}

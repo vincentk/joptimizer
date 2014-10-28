@@ -75,11 +75,13 @@ public class AugmentedKKTSolver extends KKTSolver {
 		// augmentation
 		final DoubleMatrix2D HAugm = ColtUtils.subdiagonalMultiply(AT, A);// H + ATQA
 		HAugm.forEachNonZero(new IntIntDoubleFunction() {
+			@Override
 			public double apply(int i, int j, double HAugmij) {
 				return s * HAugmij;
 			}
 		});
 		H.forEachNonZero(new IntIntDoubleFunction() {
+			@Override
 			public double apply(int i, int j, double Hij) {
 				if (i + 1 > j) {
 					// the subdiagonal elements

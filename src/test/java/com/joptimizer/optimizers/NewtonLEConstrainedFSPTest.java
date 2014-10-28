@@ -96,21 +96,25 @@ public class NewtonLEConstrainedFSPTest extends TestCase {
 		// Objective function
 		ConvexMultivariateRealFunction objectiveFunction = new ConvexMultivariateRealFunction() {
 			
+			@Override
 			public double value(double[] X) {
 				double x = X[0];
 				return x - Math.log(1-x*x);
 			}
 			
+			@Override
 			public double[] gradient(double[] X) {
 				double x = X[0];
 				return new double[]{1+2*x/(1-x*x)};
 			}
 			
+			@Override
 			public double[][] hessian(double[] X) {
 				double x = X[0];
 				return new double[][]{{4*Math.pow(x, 2)/Math.pow(1-x*x, 2)+2/(1-x*x)}};
 			}
 			
+			@Override
 			public int getDim() {
 				return 1;
 			}
@@ -158,24 +162,28 @@ public class NewtonLEConstrainedFSPTest extends TestCase {
 			// Objective function (linear)
 		ConvexMultivariateRealFunction objectiveFunction = new ConvexMultivariateRealFunction() {
 			
+			@Override
 			public double value(double[] X) {
 				double x = X[0];
 				double y = X[1];
 				return 100 * (2*x + y) - Math.log(x)- Math.log(y);
 			}
 			
+			@Override
 			public double[] gradient(double[] X) {
 				double x = X[0];
 				double y = X[1];
 				return new double[]{200-1./x, 100-1./y};
 			}
 			
+			@Override
 			public double[][] hessian(double[] X) {
 				double x = X[0];
 				double y = X[1];
 				return new double[][]{{1./Math.pow(x,2), 0},{0,1./Math.pow(y,2)}};
 			}
 			
+			@Override
 			public int getDim() {
 				return 2;
 			}

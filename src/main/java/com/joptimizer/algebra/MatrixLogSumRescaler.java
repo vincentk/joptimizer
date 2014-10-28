@@ -56,6 +56,7 @@ public class MatrixLogSumRescaler implements MatrixRescaler {
 	 * 
 	 * @see Gajulapalli, Lasdon "Scaling Sparse Matrices for Optimization Algorithms", algorithms 1 and 2
 	 */
+	@Override
 	public DoubleMatrix1D[] getMatrixScalingFactors(DoubleMatrix2D A) {
 		int m = A.rows();
 		int n = A.columns();
@@ -69,6 +70,7 @@ public class MatrixLogSumRescaler implements MatrixRescaler {
 		final double[] b = new double[n];
 		final boolean[][] Z = new boolean[m][n];
 		A.forEachNonZero(new IntIntDoubleFunction() {
+			@Override
 			public double apply(int i, int j, double aij) {
 				R[i] = R[i] + 1;
 				C[j] = C[j] + 1;
@@ -173,6 +175,7 @@ public class MatrixLogSumRescaler implements MatrixRescaler {
 	 * Symmetry preserving scale factors
 	 * @see Gajulapalli, Lasdon "Scaling Sparse Matrices for Optimization Algorithms", algorithm 3
 	 */
+	@Override
 	public DoubleMatrix1D getMatrixScalingFactorsSymm(DoubleMatrix2D A) {
 		int n = A.rows();
 		final double log10_b = Math.log10(base);
@@ -182,6 +185,7 @@ public class MatrixLogSumRescaler implements MatrixRescaler {
 		final double[] tHolder = new double[1];
 		final int[] currentColumnIndexHolder = new int[] { -1 };
 		IntIntDoubleFunction myFunct = new IntIntDoubleFunction() {
+			@Override
 			public double apply(int i, int j, double pij) {
 				int currentColumnIndex = currentColumnIndexHolder[0];
 				// we take into account only the lower left subdiagonal part of Q (that is symmetric)
@@ -232,6 +236,7 @@ public class MatrixLogSumRescaler implements MatrixRescaler {
 	 * @param base
 	 * @return
 	 */
+	@Override
 	public boolean checkScaling(final DoubleMatrix2D A, 
 			final DoubleMatrix1D U, final DoubleMatrix1D V){
 		
@@ -242,6 +247,7 @@ public class MatrixLogSumRescaler implements MatrixRescaler {
 		final double[] y = new double[A.columns()];
 		
 		A.forEachNonZero(new IntIntDoubleFunction() {
+			@Override
 			public double apply(int i, int j, double aij) {
 				double v = Math.log10(Math.abs(aij)) / log10_2 + 0.5;
 				originalOFValue[0] = originalOFValue[0] + Math.pow(v, 2);
