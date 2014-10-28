@@ -44,7 +44,7 @@ public class PrimalDualMethod extends OptimizationRequestHandler {
 
 	@Override
 	public int optimize() throws Exception {
-		log.info("optimize");
+		log.debug("optimize");
 		final long tStart = System.currentTimeMillis();
 		final OptimizationResponse response = new OptimizationResponse();
 
