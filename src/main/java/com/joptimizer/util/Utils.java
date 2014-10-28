@@ -43,7 +43,7 @@ import cern.jet.math.Functions;
 public class Utils {
 	
 	private static Double RELATIVE_MACHINE_PRECISION = Double.NaN;
-	public static Log log = LogFactory.getLog(Utils.class);
+	private static final Log log = LogFactory.getLog(Utils.class);
 	
 	public static File getClasspathResourceAsFile(String resourceName) throws Exception{
     return new File(new URI(Thread.currentThread().getContextClassLoader().getResource(resourceName).toString()));
