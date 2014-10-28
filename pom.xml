@@ -82,6 +82,8 @@
   </repository>
 </distributionManagement>
 	
+	
+	
 	<build>
 		<!-- <filters> <filter>src/main/filters/filter.properties</filter> </filters> -->
 		<resources>
@@ -99,21 +101,11 @@
 				</excludes>
 			</testResource>
 		</testResources>
+		
 
 
 		<plugins>
-			<plugin>
-			<!-- 
-			Some of the tests are a little bit memory hungry, to the extent that the default max heap size (at times, only 128m) 
-			is insufficient. So provide custom override for heap size for sure fire / junit processes.
-			 -->
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<configuration>
-					<argLine>-Xms512m -Xmx512m</argLine>
-				</configuration>
-			</plugin>
-			
+
 			<!-- Nexus staging plugin for deployment to sonatype OSS hosting -->
 			<plugin>
   <groupId>org.sonatype.plugins</groupId>
@@ -126,7 +118,8 @@
      <autoReleaseAfterClose>true</autoReleaseAfterClose>
   </configuration>
 </plugin>
-			
+
+
 			<!-- GPG signing required for publishing via sonatype OSS hosting -->
 			    <plugin>
       <groupId>org.apache.maven.plugins</groupId>
@@ -142,6 +135,50 @@
         </execution>
       </executions>
     </plugin>
+    
+    <!--  source and javadoc plugins for sonatype OSS -->
+        <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-source-plugin</artifactId>
+      <version>2.2.1</version>
+      <executions>
+        <execution>
+          <id>attach-sources</id>
+          <goals>
+            <goal>jar-no-fork</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-javadoc-plugin</artifactId>
+      <version>2.9.1</version>
+      <executions>
+        <execution>
+          <id>attach-javadocs</id>
+          <goals>
+            <goal>jar</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+    
+
+
+		
+			<plugin>
+			<!-- 
+			Some of the tests are a little bit memory hungry, to the extent that the default max heap size (at times, only 128m) 
+			is insufficient. So provide custom override for heap size for sure fire / junit processes.
+			 -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<argLine>-Xms512m -Xmx512m</argLine>
+				</configuration>
+			</plugin>
+
 			
 			
 		</plugins>
@@ -236,6 +273,8 @@
 	</properties>
 
 	<scm>
-		<url>https://github.com/vincentk/joptimizer</url>
+		<url>git@github.com:vincentk/joptimizer.git</url>
+		<connection>scm:git:git@github.com:vincentk/joptimizer.git</connection>
+		<developerConnection>scm:git:git@github.com:vincentk/joptimizer.git</developerConnection>
 	</scm>
 </project>
