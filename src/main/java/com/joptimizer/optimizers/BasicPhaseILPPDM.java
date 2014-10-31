@@ -442,30 +442,6 @@ public class BasicPhaseILPPDM {
 		protected DoubleMatrix1D getUb() {
 			return null;
 		}
-		
-		/**
-		 * {@inheritDoc}
-		 */
-		protected boolean checkDualityConditions(DoubleMatrix1D X, DoubleMatrix1D L, DoubleMatrix1D V){
-			//return true because the Phase I solution does not have to give a convergence (a real minimum of its objective function)
-			return true;
-		}
-		
-		/**
-		 * {@inheritDoc}
-		 */
-		protected boolean checkEqConstraintsLagrangianBounds(DoubleMatrix1D V){
-			//return true because the Phase I solution does not have to be a convergence (a real minimum of its objective function)
-			return true;
-		}
-		
-		/**
-		 * {@inheritDoc}
-		 */
-		protected boolean checkIneqConstraintsLagrangianBounds(DoubleMatrix1D X, DoubleMatrix1D L){
-			//return true because the Phase I solution does not have to be a convergence (a real minimum of its objective function)
-			return true;
-		}
 	}
 	
 	/**
