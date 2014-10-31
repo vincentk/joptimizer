@@ -18,15 +18,14 @@ package com.joptimizer.optimizers;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.joptimizer.util.ColtUtils;
-
 import cern.colt.function.IntIntDoubleFunction;
 import cern.colt.matrix.DoubleFactory1D;
 import cern.colt.matrix.DoubleFactory2D;
 import cern.colt.matrix.DoubleMatrix1D;
 import cern.colt.matrix.DoubleMatrix2D;
 import cern.colt.matrix.impl.SparseDoubleMatrix2D;
-import cern.colt.matrix.linalg.Algebra;
+
+import com.joptimizer.util.ColtUtils;
 
 
 /**
