@@ -20,14 +20,14 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 
-import com.joptimizer.util.ColtUtils;
-
 import cern.colt.matrix.DoubleFactory1D;
 import cern.colt.matrix.DoubleFactory2D;
 import cern.colt.matrix.DoubleMatrix1D;
 import cern.colt.matrix.DoubleMatrix2D;
 import cern.colt.matrix.linalg.Algebra;
 import cern.colt.matrix.linalg.Property;
+
+import com.joptimizer.util.ColtUtils;
 
 
 /**
@@ -46,7 +46,6 @@ public class LDLTPermutedFactorization {
 	private DoubleMatrix2D Q;
 	private int mode;
 	private MatrixRescaler rescaler = null;
-	private DoubleMatrix1D U;//the rescaling factor
 	public static final int DIAGONAL_PIVOLTING = 0;
 	public static final int DIAGONAL_PIVOLTING_WITH_PARTIAL_PIVOTING = 1;
 	protected Algebra ALG = Algebra.DEFAULT;
@@ -110,7 +109,6 @@ public class LDLTPermutedFactorization {
 					log.warn("Scaling failed (checkScaling = false)");
 				}
 			}
-			this.U = Uv;
 			this.Q = ColtUtils.diagonalMatrixMult(Uv, Q, Uv);
 			if(log.isDebugEnabled()){
 				cn_00_scaled = ColtUtils.getConditionNumberRange(new Array2DRowRealMatrix(ColtUtils.fillSubdiagonalSymmetricMatrix(Q).toArray()), Integer.MAX_VALUE);
@@ -265,7 +263,6 @@ public class LDLTPermutedFactorization {
 			} else {
 				//Determine largest off-diagonal element in row/column r
 				double sigma = -1;
-				int p = -1;
 				for(int rr = 0; rr<n; rr++){
 					if(rr==r){
 						continue;
@@ -273,7 +270,6 @@ public class LDLTPermutedFactorization {
 					double d = Math.abs(A.getQuick(rr, r)); 
 					if(d > sigma){
 						sigma = d;
-						p = rr;
 					}
 				}
 				if(sigma * Math.abs(ajj) > mu*lambda*lambda){

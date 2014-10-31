@@ -59,8 +59,6 @@ public class LPStandardConverterTest extends TestCase {
 		double[] lb = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"standardization"+File.separator+"lb"+problemId+".txt");
 		double[] ub = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"standardization"+File.separator+"ub"+problemId+".txt");
 		double[] expectedSol = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"standardization"+File.separator+"sol"+problemId+".txt");
-		double expectedValue = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"standardization"+File.separator+"value"+problemId+".txt")[0];
-		//double expectedTolerance = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"standardization"+File.separator+"tolerance"+problemId+".txt")[0];
 		double expectedTolerance = MatrixUtils.createRealMatrix(A).operate(MatrixUtils.createRealVector(expectedSol)).subtract(MatrixUtils.createRealVector(b)).getNorm(); 
 			
 		//standard form conversion
@@ -135,7 +133,6 @@ public class LPStandardConverterTest extends TestCase {
 		double[] lb = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"standardization"+File.separator+"lb"+problemId+".txt");
 		double[] ub = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"standardization"+File.separator+"ub"+problemId+".txt");
 		double[] expectedSol = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"standardization"+File.separator+"sol"+problemId+".txt");
-		double expectedValue = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"standardization"+File.separator+"value"+problemId+".txt")[0];
 		double expectedTolerance = MatrixUtils.createRealMatrix(A).operate(MatrixUtils.createRealVector(expectedSol)).subtract(MatrixUtils.createRealVector(b)).getNorm();
 		
 		int nOfSlackVariables = 0;
@@ -177,11 +174,8 @@ public class LPStandardConverterTest extends TestCase {
 		assertTrue(ub == null);
 		
 		//check constraints
-		RealMatrix GOrig = new Array2DRowRealMatrix(G);
-		RealVector hOrig = new ArrayRealVector(h);
 		RealMatrix AStandard = new Array2DRowRealMatrix(A);
 		RealVector bStandard = new ArrayRealVector(b);
-		RealVector expectedSolVector = new ArrayRealVector(expectedSol);
 		double[] expectedStandardSol = lpConverter.getStandardComponents(expectedSol);
 		RealVector expectedStandardSolVector = new ArrayRealVector(expectedStandardSol);
 		
@@ -217,7 +211,6 @@ public class LPStandardConverterTest extends TestCase {
 		double[][] A = TestUtils.loadDoubleMatrixFromFile("lp"+File.separator+"standardization"+File.separator+"A"+problemId+".txt", " ".charAt(0));
 		double[] b = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"standardization"+File.separator+"b"+problemId+".txt");
 		double[] expectedSol = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"standardization"+File.separator+"sol"+problemId+".txt");
-		double expectedValue = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"standardization"+File.separator+"value"+problemId+".txt")[0];
 		double expectedTolerance = MatrixUtils.createRealMatrix(A).operate(MatrixUtils.createRealVector(expectedSol)).subtract(MatrixUtils.createRealVector(b)).getNorm();
 		
 		//standard form conversion
@@ -289,7 +282,6 @@ public class LPStandardConverterTest extends TestCase {
 		double[][] A = TestUtils.loadDoubleMatrixFromFile("lp"+File.separator+"standardization"+File.separator+"A"+problemId+".txt", " ".charAt(0));
 		double[] b = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"standardization"+File.separator+"b"+problemId+".txt");
 		double[] expectedSol = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"standardization"+File.separator+"sol"+problemId+".txt");
-		double expectedValue = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"standardization"+File.separator+"value"+problemId+".txt")[0];
 		double expectedTolerance = MatrixUtils.createRealMatrix(A).operate(MatrixUtils.createRealVector(expectedSol)).subtract(MatrixUtils.createRealVector(b)).getNorm();
 		
 		//standard form conversion
@@ -357,7 +349,6 @@ public class LPStandardConverterTest extends TestCase {
 		double[] lb = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"standardization"+File.separator+"lb"+problemId+".txt");
 		double[] ub = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"standardization"+File.separator+"ub"+problemId+".txt");
 		double[] expectedSol = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"standardization"+File.separator+"sol"+problemId+".txt");
-		double expectedValue = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"standardization"+File.separator+"value"+problemId+".txt")[0];
 		double expectedTolerance = MatrixUtils.createRealMatrix(A).operate(MatrixUtils.createRealVector(expectedSol)).subtract(MatrixUtils.createRealVector(b)).getNorm();
 		
 		int nOsSplittingVariables = 0;
@@ -433,7 +424,6 @@ public class LPStandardConverterTest extends TestCase {
 		double[] lb = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"standardization"+File.separator+"lb"+problemId+".txt");
 		double[] ub = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"standardization"+File.separator+"ub"+problemId+".txt");
 		double[] expectedSol = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"standardization"+File.separator+"sol"+problemId+".txt");
-		double expectedValue = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"standardization"+File.separator+"value"+problemId+".txt")[0];
 		double expectedTol = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"standardization"+File.separator+"tolerance"+problemId+".txt")[0];
 		
 		int nOfSlackVariables = 0;

@@ -346,7 +346,7 @@ public class QRSparseFactorization {
 		}
 	}
 
-	private double getQuick(Dcs dcs, int row, int column) {
+	private static double getQuick(Dcs dcs, int row, int column) {
 		int k = searchFromTo(dcs.i, row, dcs.p[column], dcs.p[column + 1] - 1);
 		double v = 0;
 		if (k >= 0) {
@@ -355,7 +355,7 @@ public class QRSparseFactorization {
 		return v;
 	}
 
-	private int searchFromTo(int[] list, int key, int from, int to) {
+	private static int searchFromTo(int[] list, int key, int from, int to) {
 		while (from <= to) {
 			if (list[from] == key) {
 				return from;

@@ -135,7 +135,6 @@ public class ColtUtilsTest extends TestCase {
 				{2, 3, 0, 0},
 				{0, 0, 4, 4}
 		};
-		SparseDoubleMatrix2D S2 = new SparseDoubleMatrix2D(A);
 		
 		//expected representation edu.emory.mathcs.csparsej.tdouble.Dcs_common.Dcs
 		//i (row indices, size nzmax):

@@ -84,7 +84,7 @@ public class MPSParser {
 	private static final int SECTION_ROWS = 1;
 	private static final int SECTION_COLUMNS = 2;
 	private static final int SECTION_RHS = 3;
-	private static final int SECTION_RANGES = 4;
+	//private static final int SECTION_RANGES = 4;
 	private static final int SECTION_BOUNDS = 5;
 
 	public static final double DEFAULT_UNBOUNDED_LOWER_BOUND = Double.NaN;
@@ -172,9 +172,7 @@ public class MPSParser {
 		//read the file and set the problem dimensions
 		try {
 			String line = new String();
-			int lineNumber = 0;
 			while ((line = in.readLine()) != null){
-				lineNumber++;
 				line = line.trim();
 				if(log.isDebugEnabled()){
 					//log.debug("line "+lineNumber+": "+line);

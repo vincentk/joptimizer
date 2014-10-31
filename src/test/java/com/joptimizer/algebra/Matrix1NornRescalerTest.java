@@ -34,7 +34,6 @@ import cern.colt.matrix.linalg.SingularValueDecomposition;
 
 import com.joptimizer.util.ColtUtils;
 import com.joptimizer.util.TestUtils;
-import com.joptimizer.util.Utils;
 
 public class Matrix1NornRescalerTest extends TestCase {
 
@@ -43,7 +42,6 @@ public class Matrix1NornRescalerTest extends TestCase {
 	public void testSimpleScalingNoSymm() throws Exception {
 		log.debug("testSimpleScalingNoSymm");
 		DoubleFactory2D F2 = DoubleFactory2D.sparse;
-		DoubleFactory1D F1 = DoubleFactory1D.sparse;
 		Algebra ALG = Algebra.DEFAULT;
 		final double[][] A = new double[][]{
 				{1, 0, 0},
@@ -166,7 +164,6 @@ public class Matrix1NornRescalerTest extends TestCase {
 	public void testPathologicalScalingNoSymm() throws Exception {
 		log.debug("testPathologicalScalingNoSymm");
 		DoubleFactory2D F2 = DoubleFactory2D.sparse;
-		DoubleFactory1D F1 = DoubleFactory1D.sparse;
 		Algebra ALG = Algebra.DEFAULT;
 		double[][] A = new double[][] { 
 				{ 1.e0, 1.e10, 1.e20 }, 
@@ -200,7 +197,6 @@ public class Matrix1NornRescalerTest extends TestCase {
 	public void testPathologicalScalingSymm() throws Exception {
 		log.debug("testPathologicalScalingSymm");
 		DoubleFactory2D F2 = DoubleFactory2D.sparse;
-		DoubleFactory1D F1 = DoubleFactory1D.sparse;
 		Algebra ALG = Algebra.DEFAULT;
 		double[][] A = new double[][] { 
 				{ 1.e0,  1.e20, 1.e10, 1.e0  }, 
@@ -233,7 +229,6 @@ public class Matrix1NornRescalerTest extends TestCase {
 	 */
 	public void testMatrixNormScaling7() throws Exception {
 		log.debug("testMatrixNormScaling7");
-		DoubleFactory1D F1 = DoubleFactory1D.sparse;
 		DoubleFactory2D F2 = DoubleFactory2D.sparse;
 		Algebra ALG = Algebra.DEFAULT;
 		
@@ -263,10 +258,8 @@ public class Matrix1NornRescalerTest extends TestCase {
 		log.debug("testGetConditionNumberDiagonal");
 		DoubleFactory2D F2 = DoubleFactory2D.sparse;
 		DoubleFactory1D F1 = DoubleFactory1D.sparse;
-		Algebra ALG = Algebra.DEFAULT;
 		
 		double[] A = new double[] {1.E-17,168148.06378241107,5.333317404302006E-11,9.724301428859958E-11,4.343924031677448E-10,53042.618161481514,1.2550281021203455E-12,55714.086057404944,16564.267914476874,1.6265469281243343E-12,7.228925943265697E-11,19486.564364392565,315531.47099006834,236523.83171379057,202769.6735227342,2.4925304834427544E-13,2.7996276724404553E-13,2.069135405949759E-12,2530058.817281487,4.663208124742273E-15,2.5926311225234777E-12,2454865.060218241,7.564594931528804E-14,2.944935006524965E-13,7.938509176903875E-13,2546775.969599124,4.36659839706981E-15,3.772728220251383E-9,985020.987902404,971715.0611851265,1941150.6250316042,3.3787344131154E-10,2.8903135775881254E-11,1263.9864262585922,873899.9914494107,153097.08545910483,3.738245318154646E-11,1267390.1117847422,6.50494734416794E-10,3.588511203703992E-11,1231.6604599987518,3.772810869560189E-9,85338.92515278656,3.7382488244903144E-11,437165.36165859725,9.954549425029816E-11,1.8376434881340742E-9,86069.90894488744,1.2087907925307217E11,1.1990761432334067E11,1.163424797835085E11,1.1205515861349094E11,1.2004378300642543E11,8.219259112337953E8,1.1244633984805448E-11,1.1373907469271675E-12,1.9743774924311214E-12,6.301661187526759E-16,6.249382377266375E-16,8.298198098742164E-16,6.447686765999485E-16,1.742229837554675E-16,1.663041351618635E-16};
-		DoubleMatrix1D b = Utils.randomValuesVector(A.length, -1, 1, 12345L);
 		
 		SparseDoubleMatrix2D AMatrix = (SparseDoubleMatrix2D)F2.diagonal(F1.make(A));
 		MatrixRescaler rescaler = new Matrix1NornRescaler();
@@ -298,8 +291,6 @@ public class Matrix1NornRescalerTest extends TestCase {
 	public void testGetConditionNumberFromFile7() throws Exception {
 		log.debug("testGetConditionNumberFromFile7");
 		DoubleFactory2D F2 = DoubleFactory2D.sparse;
-		DoubleFactory1D F1 = DoubleFactory1D.sparse;
-		Algebra ALG = Algebra.DEFAULT;
 		
 		String matrixId = "7";
 		double[][] A = TestUtils.loadDoubleMatrixFromFile("factorization" + File.separator + "matrix" + matrixId + ".txt", " ".charAt(0));
@@ -334,8 +325,6 @@ public class Matrix1NornRescalerTest extends TestCase {
 	public void testGetConditionNumberFromFile13() throws Exception {
 		log.debug("testGetConditionNumberFromFile13");
 		DoubleFactory2D F2 = DoubleFactory2D.sparse;
-		DoubleFactory1D F1 = DoubleFactory1D.sparse;
-		Algebra ALG = Algebra.DEFAULT;
 		
 		String matrixId = "13";
 		double[][] A = TestUtils.loadDoubleMatrixFromFile("factorization" + File.separator + "matrix" + matrixId + ".csv");

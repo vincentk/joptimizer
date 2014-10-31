@@ -92,7 +92,6 @@ public class NewtonLEConstrainedISP extends OptimizationRequestHandler {
 		DoubleMatrix2D hessX = null;
 		DoubleMatrix1D rDualXV = null;
 		DoubleMatrix1D rPriX = null;
-		double previousF0X = Double.NaN;
 		double previousRPriXNorm = Double.NaN;
 		double previousRXVNorm = Double.NaN;
 		int iteration = 0;

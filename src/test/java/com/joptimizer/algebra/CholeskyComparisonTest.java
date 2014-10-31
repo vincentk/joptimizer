@@ -172,7 +172,6 @@ public class CholeskyComparisonTest extends TestCase {
 		int dim = m*m;
 		
 		DoubleMatrix2D QMatrix = DoubleFactory2D.sparse.diagonal(DoubleFactory1D.sparse.make(m, 1.));
-		double[][] QMatrixData = QMatrix.toArray();
 		//log.debug("QMatrix: " + Utils.toString(QMatrix.toArray()));
 		RealMatrix A  = MatrixUtils.createRealMatrix(QMatrix.toArray());
 		log.debug("cardinality: " + QMatrix.cardinality());
@@ -198,7 +197,6 @@ public class CholeskyComparisonTest extends TestCase {
 			myc1.getInverse();
 		}
 		log.debug("Cholesky standard inversion time    : " + (System.currentTimeMillis()-t1I));
-		RealMatrix AInv1 = MatrixUtils.createRealMatrix(myc1.getInverse().toArray());
 		
 		//try Cholesky 5
 		long t5 = System.currentTimeMillis();

@@ -69,13 +69,7 @@ public class LPPrimalDualMethod extends LPOptimizationRequestHandler {
 	 * Upper bounds with max value limited to the value of the field <i>maxUBValue</i>.
 	 */
 	private DoubleMatrix1D limitedUb;
-	private LPPresolver testPresolver;//just for (internal) testing purpose 
-//	protected boolean[] boundedLb;
-//	protected boolean[] boundedUb;
-//	protected int nOfBoundedLb=0;
-//	protected int nOfBoundedUb=0;
-//	protected DoubleMatrix1D relaxedLb = null;
-//	protected DoubleMatrix1D relaxedUb = null;
+
 	private KKTSolver kktSolver;
 	private Log log = LogFactory.getLog(this.getClass().getName());
 	
@@ -195,7 +189,6 @@ public class LPPrimalDualMethod extends LPOptimizationRequestHandler {
 			lpPresolver.setAvoidScaling(lpRequest.isRescalingDisabled());
 			lpPresolver.setAvoidFillIn(lpRequest.isAvoidPresolvingFillIn());
 			lpPresolver.setAvoidIncreaseSparsity(lpRequest.isAvoidPresolvingIncreaseSparsity());
-			testPresolver = lpPresolver;//just for testing
 			lpPresolver.setNOfSlackVariables((short)nOfSlackVariables);
 			lpPresolver.presolve(getC(), getA(), getB(), getLb(), getUb());
 			int presolvedDim = lpPresolver.getPresolvedN();
@@ -440,14 +433,11 @@ public class LPPrimalDualMethod extends LPOptimizationRequestHandler {
 		DoubleMatrix1D X = X0;
 		DoubleMatrix1D V = V0;
 		DoubleMatrix1D L = L0;
-		double previousF0X = Double.NaN;
 		double previousRPriXNorm = Double.NaN;
 		double previousRDualXLVNorm = Double.NaN;
 		double previousSurrDG = Double.NaN;
 		double t;
 		int iteration = 0;
-		//List<DoubleMatrix1D> XList = new ArrayList<DoubleMatrix1D>();
-		//List<double[]> SList = new ArrayList<double[]>();
 		while (true) {
 			
 			iteration++;

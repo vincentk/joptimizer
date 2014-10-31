@@ -25,7 +25,6 @@ import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 
-import cern.colt.matrix.DoubleFactory1D;
 import cern.colt.matrix.DoubleFactory2D;
 import cern.colt.matrix.DoubleMatrix1D;
 import cern.colt.matrix.DoubleMatrix2D;
@@ -51,7 +50,6 @@ public class LDLTFactorizationTest extends TestCase {
 				{ .13, .23, 3, 0, 0 },
 				{ .14, .24, 0, 4, 0 }, 
 				{ .15, .25, 0, 0, 5 } };
-		double[] eev = new double[] { 5.02797, 4.0358, 3.05585, 1.90821, 0.972163 };
 		RealMatrix Q = MatrixUtils.createRealMatrix(QData);
 
 		LDLTFactorization myc = new LDLTFactorization(new DenseDoubleMatrix2D(QData));
@@ -99,7 +97,6 @@ public class LDLTFactorizationTest extends TestCase {
 				{ 1, 0, 1 }, 
 				{ 0, -1, 0 },
 				{ 1, 0, 1 } };
-		RealMatrix Q = MatrixUtils.createRealMatrix(QData);
 
 		try{
 			LDLTFactorization myc = new LDLTFactorization(new DenseDoubleMatrix2D(QData));
@@ -118,7 +115,6 @@ public class LDLTFactorizationTest extends TestCase {
 	public void testScale6() throws Exception {
 		log.debug("testScale6");
 		DoubleFactory2D F2 = DoubleFactory2D.sparse;
-		DoubleFactory1D F1 = DoubleFactory1D.sparse;
 		Algebra ALG = Algebra.DEFAULT;
 		
 		String matrixId = "6";

@@ -145,7 +145,7 @@ public class DiagonalHKKTSolver extends KKTSolver {
 		return ret;
 	}
 	
-	private DoubleMatrix2D calculateHAT(final DoubleMatrix2D HH,	final DoubleMatrix2D AA) {
+	private static DoubleMatrix2D calculateHAT(final DoubleMatrix2D HH,	final DoubleMatrix2D AA) {
 		final DoubleMatrix2D ret = DoubleFactory2D.sparse.make(AA.columns(), AA.rows());
 		AA.forEachNonZero(new IntIntDoubleFunction() {
 			@Override
@@ -161,7 +161,7 @@ public class DiagonalHKKTSolver extends KKTSolver {
 	 * @FIXME: fix this method (wrong return)
 	 * try for example with H and A of the first iteration of the afiro netlib problem 
 	 */
-	private DoubleMatrix2D calculateSubdiagonalAHAT(final DoubleMatrix2D AA, final DoubleMatrix2D HH) {
+	private static DoubleMatrix2D calculateSubdiagonalAHAT(final DoubleMatrix2D AA, final DoubleMatrix2D HH) {
 		final DoubleMatrix2D ret = DoubleFactory2D.sparse.make(AA.rows(), AA.rows());
 		final int[] rowHolder = new int[] { -1 };
 		final int[] colHolder = new int[] { -1 };

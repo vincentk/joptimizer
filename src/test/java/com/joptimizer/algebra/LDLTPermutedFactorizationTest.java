@@ -289,7 +289,6 @@ public class LDLTPermutedFactorizationTest extends TestCase {
 	public void testPldltpt6() throws Exception {
 		logger.debug("testPldltpt6");
 		DoubleFactory2D F2 = DoubleFactory2D.dense;
-		Algebra ALG = Algebra.DEFAULT;
 		double[][] A = new double[][] { 
 				{ 1,  0, 1 }, 
 				{ 0, -1, 0 },
@@ -310,7 +309,6 @@ public class LDLTPermutedFactorizationTest extends TestCase {
 	public void testPldltpt6BK() throws Exception {
 		logger.debug("testPldltpt6BK");
 		DoubleFactory2D F2 = DoubleFactory2D.dense;
-		Algebra ALG = Algebra.DEFAULT;
 		double[][] A = new double[][] { 
 				{ 1,  0, 1 }, 
 				{ 0, -1, 0 },

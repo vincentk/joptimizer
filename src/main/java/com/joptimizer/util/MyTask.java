@@ -35,7 +35,6 @@ public class MyTask implements Callable<Integer> {
 
 	@Override
 	public Integer call() {
-		String str = "";
 		long begTest = new java.util.Date().getTime();
 		System.out.println("start - Task " + seq);
 		try {

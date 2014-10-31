@@ -1079,15 +1079,11 @@ public class JOptimizerTest extends TestCase {
 			public double[] gradient(double[] X) {
 				double x = X[0];
 				double y = X[1];
-				double s = X[2];
 				return new double[]{2*(x+2), 2*(y+2), -1 };
 			}
 			
 			@Override
 			public double[][] hessian(double[] X) {
-				double x = X[0];
-				double y = X[1];
-				double s = X[2];
 				double[][] ret = new double[3][3];
 				ret[0][0] = 2;
 				ret[1][1] = 2;
@@ -1408,7 +1404,6 @@ public class JOptimizerTest extends TestCase {
 
 	    double[][] A = new double[1][2];
 	    A[0] = new double[]{1.0, 1.0};
-	    double[] b = new double[]{1.0};
 
 	    ConvexMultivariateRealFunction[] inequalities = new ConvexMultivariateRealFunction[6];
 	    inequalities[0] = new LinearMultivariateRealFunction(new double[]{1, 1, 1, 1}, -10000);// x1+x2+x3+x4+1000 < 0

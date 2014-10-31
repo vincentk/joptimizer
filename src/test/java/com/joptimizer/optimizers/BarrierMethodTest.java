@@ -703,10 +703,6 @@ public class BarrierMethodTest extends TestCase {
 		// START SNIPPET: SDProgramming-3
 		
 		//definition of the standard form entities
-		int p = 2;
-		double[][] C = new double[][]{{2, 1}, {1, 3}};
-		double[][] A1 = new double[][]{{2, 1}, {1, 2}};
-		double[][] A2 = new double[][]{{5, 2}, {2, 5}};
 		double[] b = new double[]{4, 10};
 		
 		//JOptimizer formulation: the variables are the 3 distinctive elements of the symmetric 2x2 matrix X:

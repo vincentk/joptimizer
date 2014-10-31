@@ -25,7 +25,6 @@ import cern.colt.matrix.DoubleFactory1D;
 import cern.colt.matrix.DoubleFactory2D;
 import cern.colt.matrix.DoubleMatrix1D;
 import cern.colt.matrix.DoubleMatrix2D;
-import cern.colt.matrix.linalg.Algebra;
 import cern.jet.math.Mult;
 
 import com.joptimizer.functions.ConvexMultivariateRealFunction;
@@ -35,7 +34,7 @@ import com.joptimizer.functions.PDQuadraticMultivariateRealFunction;
  * @author alberto trivellato (alberto.trivellato@gmail.com)
  */
 public class NewtonLEConstrainedFSPTest extends TestCase {
-	private Algebra ALG = Algebra.DEFAULT;
+	
 	private DoubleFactory1D F1 = DoubleFactory1D.dense;
 	private DoubleFactory2D F2 = DoubleFactory2D.dense;
 	private Log log = LogFactory.getLog(this.getClass().getName());

@@ -47,12 +47,7 @@ public class QRSparseFactorizationTest extends TestCase {
 				{2, 3, 0, 0},
 				{0, 0, 4, 4}
 		};
-		
-		double[][] EQ = { 
-				{ 0.447214, -0.894427, 0., 0. },
-				{ 0., 0., 0.447214, -0.894427 }, 
-				{ 0.894427, 0.447214, 0., 0. },
-				{ 0., 0., 0.894427, 0.447214 } };
+
 		double[][] ER = { 
 				{ 2.23607, 2.68328, 0., 0.894427 },
 				{ 0., 1.34164, 0., -1.78885 }, 
@@ -62,10 +57,8 @@ public class QRSparseFactorizationTest extends TestCase {
 		QRDecomposition dFact = new QRDecomposition(new Array2DRowRealMatrix(A));
 		RealMatrix Q = dFact.getQ();
 		RealMatrix R = dFact.getR();
-		RealMatrix H = dFact.getH();
 		log.debug("Q: " + ArrayUtils.toString(Q.getData()));
 		log.debug("R: " + ArrayUtils.toString(R.getData()));
-		//log.debug("H: " + ArrayUtils.toString(H.getData()));
 		
 		SparseDoubleMatrix2D S = new SparseDoubleMatrix2D(A);
 		QRSparseFactorization qr = new QRSparseFactorization(S);
@@ -147,7 +140,6 @@ public class QRSparseFactorizationTest extends TestCase {
 	public void testSolve16() throws Exception {
 		log.debug("testSolve16");
 		double[][] A = TestUtils.loadDoubleMatrixFromFile("factorization" + File.separator	+ "matrix16.txt", " ".charAt(0));
-		double[] b = TestUtils.loadDoubleArrayFromFile("factorization" + File.separator	+ "vector16.txt");
 		
 		//JAMA
 //		Matrix M1 = new Matrix(A);

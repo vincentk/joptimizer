@@ -56,7 +56,6 @@ public class Matrix1NornRescaler implements MatrixRescaler{
 	@Override
 	public DoubleMatrix1D[] getMatrixScalingFactors(DoubleMatrix2D A){
 		DoubleFactory1D F1 = DoubleFactory1D.dense;
-		DoubleFactory2D F2 = DoubleFactory2D.sparse;
 		Algebra ALG = Algebra.DEFAULT;
 		int r = A.rows();
 		int c = A.columns();
@@ -127,7 +126,6 @@ public class Matrix1NornRescaler implements MatrixRescaler{
 	public DoubleMatrix1D getMatrixScalingFactorsSymm(DoubleMatrix2D A) {
 		DoubleFactory1D F1 = DoubleFactory1D.dense;
 		DoubleFactory2D F2 = DoubleFactory2D.sparse;
-		Algebra ALG = Algebra.DEFAULT;
 		int dim = A.columns();
 		DoubleMatrix1D D1 = F1.make(dim, 1);
 		DoubleMatrix2D AK = A.copy();

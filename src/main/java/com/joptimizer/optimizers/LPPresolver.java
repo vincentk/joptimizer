@@ -35,7 +35,6 @@ import cern.colt.matrix.DoubleFactory2D;
 import cern.colt.matrix.DoubleMatrix1D;
 import cern.colt.matrix.DoubleMatrix2D;
 import cern.colt.matrix.impl.SparseDoubleMatrix2D;
-import cern.colt.matrix.linalg.Algebra;
 
 import com.joptimizer.algebra.Matrix1NornRescaler;
 import com.joptimizer.algebra.MatrixRescaler;
@@ -73,10 +72,7 @@ public class LPPresolver {
 
 	public static final double DEFAULT_UNBOUNDED_LOWER_BOUND = Double.NaN;
 	public static final double DEFAULT_UNBOUNDED_UPPER_BOUND = Double.NaN;
-//	public static final double DEFAULT_UNSPECIFIED_LOWER_BOUND = DEFAULT_UNBOUNDED_LOWER_BOUND;
-//	public static final double DEFAULT_UNSPECIFIED_UPPER_BOUND = DEFAULT_UNBOUNDED_UPPER_BOUND;
 	
-	private Algebra ALG = Algebra.DEFAULT;
 	private DoubleFactory1D F1 = null;
 	private DoubleFactory2D F2 = null; 
 	
@@ -900,14 +896,11 @@ public class LPPresolver {
 						log.debug("all lb positive and ub of variables with positive coeff finite at row " + i);
 						//we have SM < SP(ub) - b[i]
 						//so ub[j] < (SP(ub) - b[i]) / -Aij, for each j in P
-						int cntAijPositive = 0;
-						int cntAijNegative = 0;
 						double spub = 0;
 						for (short nz = 0; nz < vRowPositionsI.length; nz++) {
 							short j = vRowPositionsI[nz];
 							double aij = A.getQuick(i, j);
 							if(aij >= 0){
-								cntAijPositive++;
 								spub += aij * ub.getQuick(j);
 							}
 						}
@@ -915,7 +908,6 @@ public class LPPresolver {
 							short j = vRowPositionsI[nz];
 							double aij = A.getQuick(i, j);
 							if(aij < 0){
-								cntAijNegative++;
 								if(isUBUnbounded(ub.getQuick(j)) || ub.getQuick(j) > -(spub - b.getQuick(i)) / aij){
 									log.debug("old ub: " + ub.getQuick(j));
 									log.debug("new ub: " + -(spub - b.getQuick(i)) / aij);
@@ -1967,7 +1959,7 @@ public class LPPresolver {
 	 * Removes the first occurrence of the specified element from the
    * specified array. All subsequent elements are shifted to the left.
 	 */
-	private short[] removeElementFromSortedArray(short[] array, short element){
+	private static short[] removeElementFromSortedArray(short[] array, short element){
 		if(array.length < 2){
 			return new short[]{};
 		}

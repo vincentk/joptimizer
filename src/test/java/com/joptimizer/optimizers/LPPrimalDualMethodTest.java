@@ -265,7 +265,6 @@ public class LPPrimalDualMethodTest extends TestCase {
 		double[] h =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"h"+problemId+".txt");;
 		double[][] A =TestUtils.loadDoubleMatrixFromFile("lp"+File.separator+"A"+problemId+".txt", " ".charAt(0));
 		double[] b =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"b"+problemId+".txt");
-		double[] expectedSol =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"sol"+problemId+".txt");
 		double expectedvalue =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"value"+problemId+".txt")[0];
 		
 		//double norm = MatrixUtils.createRealMatrix(A).operate(MatrixUtils.createRealVector(expectedSol)).subtract(MatrixUtils.createRealVector(b)).getNorm();
@@ -513,7 +512,6 @@ public class LPPrimalDualMethodTest extends TestCase {
 		double[] b =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"b"+problemId+".txt");
 		double[] lb =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"lb"+problemId+".txt");
 		double[] ub =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"ub"+problemId+".txt");
-		double[] expectedSol =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"sol"+problemId+".txt");
 		double expectedvalue =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"value"+problemId+".txt")[0];
 		
 		LPOptimizationRequest or = new LPOptimizationRequest();
@@ -587,7 +585,6 @@ public class LPPrimalDualMethodTest extends TestCase {
 		double[] b =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"b"+problemId+".txt");
 		double[] lb =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"lb"+problemId+".txt");
 		double[] ub =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"ub"+problemId+".txt");
-		double[] expectedSol =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"sol"+problemId+".txt");
 		double expectedvalue =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"value"+problemId+".txt")[0];
 		
 		LPOptimizationRequest or = new LPOptimizationRequest();
@@ -751,7 +748,6 @@ public class LPPrimalDualMethodTest extends TestCase {
 		double[] b =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"b"+problemId+".txt");
 		double[] lb =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"lb"+problemId+".txt");
 		double[] ub =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"ub"+problemId+".txt");
-		double[] expectedSol =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"sol"+problemId+".txt");
 		double expectedvalue =TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"value"+problemId+".txt")[0];
 		
 		//the unbounded bounds are saved on the files with NaN values, so substitute them with acceptable values

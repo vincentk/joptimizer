@@ -171,7 +171,6 @@ public class CholeskySparseFactorizationTest extends TestCase {
 		log.debug("testScaledResidual");
 		double[][] A = TestUtils.loadDoubleMatrixFromFile("factorization" + File.separator	+ "matrix1.csv");
 		RealMatrix Q = MatrixUtils.createRealMatrix(A);
-		int dim = Q.getRowDimension();
 	
 		RealVector b = new ArrayRealVector(new double[]{1,2,3,4,5,6,7,8,9,10});
 		
@@ -237,7 +236,6 @@ public class CholeskySparseFactorizationTest extends TestCase {
 	public void testScale6() throws Exception {
 		log.debug("testScale6");
 		DoubleFactory2D F2 = DoubleFactory2D.sparse;
-		DoubleFactory1D F1 = DoubleFactory1D.sparse;
 		Algebra ALG = Algebra.DEFAULT;
 		
 		String matrixId = "6";
@@ -285,8 +283,6 @@ public class CholeskySparseFactorizationTest extends TestCase {
 	public void testSolve10() throws Exception {
 		log.debug("testSolve");
 		DoubleFactory2D F2 = DoubleFactory2D.sparse;
-		DoubleFactory1D F1 = DoubleFactory1D.sparse;
-		Algebra ALG = Algebra.DEFAULT;
 		
 		String matrixId = "10";
 		double[][] A = TestUtils.loadDoubleMatrixFromFile("factorization" + File.separator + "matrix" + matrixId + ".txt", " ".charAt(0));

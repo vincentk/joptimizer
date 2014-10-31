@@ -26,11 +26,9 @@ import org.apache.commons.math3.linear.CholeskyDecomposition;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 
-import cern.colt.matrix.DoubleFactory1D;
 import cern.colt.matrix.DoubleFactory2D;
 import cern.colt.matrix.DoubleMatrix1D;
 import cern.colt.matrix.DoubleMatrix2D;
-import cern.colt.matrix.linalg.Algebra;
 import cern.jet.math.Mult;
 
 import com.joptimizer.functions.PDQuadraticMultivariateRealFunction;
@@ -40,8 +38,6 @@ import com.joptimizer.util.Utils;
  * @author alberto trivellato (alberto.trivellato@gmail.com)
  */
 public class NewtonUnconstrainedTest extends TestCase {
-	private Algebra ALG = Algebra.DEFAULT;
-	private DoubleFactory1D F1 = DoubleFactory1D.dense;
 	private DoubleFactory2D F2 = DoubleFactory2D.dense;
 	private Log log = LogFactory.getLog(this.getClass().getName());
 

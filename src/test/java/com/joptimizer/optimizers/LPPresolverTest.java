@@ -79,8 +79,6 @@ public class LPPresolverTest extends TestCase {
 			s = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"s"+problemId+".txt")[0];
 		}catch(Exception e){}
 		double[] expectedSolution = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"sol"+problemId+".txt");
-		double expectedValue = TestUtils.loadDoubleArrayFromFile("lp"+File.separator+"presolving"+File.separator+"value"+problemId+".txt")[0];
-		double expectedTolerance = MatrixUtils.createRealMatrix(A).operate(MatrixUtils.createRealVector(expectedSolution)).subtract(MatrixUtils.createRealVector(b)).getNorm(); 
 		
 		//must be: A pXn with rank(A)=p < n
 		RealMatrix AMatrix = MatrixUtils.createRealMatrix(A);

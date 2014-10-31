@@ -102,10 +102,8 @@ public class LPStandardConverter {
 	 * lb <= x <= ub
 	 */
 	private boolean strictlyStandardForm = false;
-	private Algebra ALG = Algebra.DEFAULT;
 	private DoubleFactory1D F1 = null;
 	private DoubleFactory2D F2 = null;
-	//private double[] postconvertedX; 
 	
 	public LPStandardConverter(){
 		 this(false);
