@@ -133,9 +133,8 @@ public class PrimalDualMethod extends OptimizationRequestHandler {
 			iteration++;
 			// iteration limit condition
 			if (iteration == getMaxIteration()+1) {
-				response.setReturnCode(OptimizationResponse.WARN);
-				log.warn("Max iterations limit reached");
-				break;
+				response.setReturnCode(OptimizationResponse.FAILED);
+				throw new Exception("Max iterations limit reached");
 			}
 
 			// determine functions evaluations
