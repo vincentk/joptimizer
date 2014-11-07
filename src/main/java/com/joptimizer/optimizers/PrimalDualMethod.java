@@ -389,9 +389,4 @@ public class PrimalDualMethod extends OptimizationRequestHandler {
 		}
 		return ret;
 	}
-	
-	public void setKKTSolver(KKTSolver kktSolver) {
-		this.kktSolver = kktSolver;
-	}
-
 }
