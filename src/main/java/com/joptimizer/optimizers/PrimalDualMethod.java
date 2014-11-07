@@ -133,9 +133,9 @@ public class PrimalDualMethod extends OptimizationRequestHandler {
 			iteration++;
 		    // iteration limit condition
 			if (iteration == getMaxIteration()+1) {
-				response.setReturnCode(OptimizationResponse.FAILED);
-				log.error("Max iterations limit reached");
-				throw new Exception("Max iterations limit reached");
+				response.setReturnCode(OptimizationResponse.WARN);
+				log.warn("Max iterations limit reached");
+				break;
 			}
 			
 		    double F0X = getF0(X);
@@ -146,13 +146,6 @@ public class PrimalDualMethod extends OptimizationRequestHandler {
 				log.debug("V=" + ArrayUtils.toString(V.toArray()));
 				log.debug("f0(X)=" + F0X);
 			}
-			
-//			if(!Double.isNaN(previousF0X)){
-//				if (previousF0X < F0X) {
-//					throw new Exception("critical minimization problem");
-//				}
-//			}
-//			previousF0X = F0X;
 			
 			// determine functions evaluations
 			DoubleMatrix1D gradF0X = getGradF0(X);
@@ -212,43 +205,27 @@ public class PrimalDualMethod extends OptimizationRequestHandler {
 			DoubleMatrix2D HessSum = getHessF0(X);
 			for (int j = 0; j < getMieq(); j++) {
 				if(HessFiX[j] != FunctionsUtils.ZEROES_MATRIX_PLACEHOLDER){
-					//HessSum += L[i]*HessFiX[j]
-					//HessSum.assign(HessFiX[j].copy().assign(Mult.mult(L.get(j))), Functions.plus);
 					HessSum = ColtUtils.add(HessSum, HessFiX[j], L.get(j));
 				}
-				//log.debug("HessSum    : " + ArrayUtils.toString(HessSum.toArray()));
 			}
-			
-//			DoubleMatrix2D GradSum = F2.make(getDim(), getDim());
-//			for (int j = 0; j < getFi().length; j++) {
-//				DoubleMatrix1D g = GradFiX.viewRow(j);
-//				GradSum.assign(ALG.multOuter(g, g, null).assign(Mult.mult(-L.get(j) / fiX.get(j))), Functions.plus);
-//				//log.debug("GradSum    : " + ArrayUtils.toString(GradSum.toArray()));
-//			}
+
 			DoubleMatrix2D GradSum = F2.make(getDim(), getDim());
 			for (int j = 0; j < getMieq(); j++) {
 				final double c = -L.getQuick(j) / fiX.getQuick(j);
 				DoubleMatrix1D g = GradFiX.viewRow(j);
 				SeqBlas.seqBlas.dger(c, g, g, GradSum);
-				//log.debug("GradSum    : " + ArrayUtils.toString(GradSum.toArray()));
 			}
 
 			DoubleMatrix2D Hpd = HessSum.assign(GradSum, Functions.plus);
-			//DoubleMatrix2D Hpd = getHessF0(X).assign(HessSum, Functions.plus).assign(GradSum, Functions.plus);
 
 			DoubleMatrix1D gradSum = F1.make(getDim());
 			for (int j = 0; j < getMieq(); j++) {
-				//gradSum += GradFiX.viewRow(j)/(-t * fiX.get(j));
-				//gradSum.assign(GradFiX.viewRow(j).copy().assign(Mult.div(-t * fiX.get(j))), Functions.plus);
 				gradSum = ColtUtils.add(gradSum, GradFiX.viewRow(j), 1./(-t * fiX.get(j)));
-				//log.debug("gradSum    : " + ArrayUtils.toString(gradSum.toArray()));
 			}
 			DoubleMatrix1D g = null;
 			if(getAT()==null){
-				//g = gradF0X.copy().assign(gradSum, Functions.plus);
 				g = ColtUtils.add(gradF0X, gradSum);
 			}else{
-				//g = gradF0X.copy().assign(gradSum, Functions.plus).assign(ALG.mult(getAT(), V), Functions.plus);
 				g = ColtUtils.add(ColtUtils.add(gradF0X, gradSum), ALG.mult(getAT(), V));
 			}
 			
@@ -256,7 +233,6 @@ public class PrimalDualMethod extends OptimizationRequestHandler {
 			if(this.kktSolver==null){
 				this.kktSolver = new BasicKKTSolver();
 			}
-			//KKTSolver solver = new DiagonalKKTSolver();
 			if(isCheckKKTSolutionAccuracy()){
 				kktSolver.setCheckKKTSolutionAccuracy(true);
 				kktSolver.setToleranceKKT(getToleranceKKT());
@@ -325,7 +301,7 @@ public class PrimalDualMethod extends OptimizationRequestHandler {
 			
 			if(!areAllNegative){
 				//exited from the feasible region
-				throw new Exception("Optimization failed: impossible to remain within the faesible region");
+				throw new Exception("Optimization failed: impossible to remain within the feasible region");
 			}
 			
 			log.debug("s: " + s);
@@ -346,9 +322,6 @@ public class PrimalDualMethod extends OptimizationRequestHandler {
 					rPriX1 = rPri(X1);
 					rCentX1L1t = rCent(fiX1, L1, t);
 					rDualX1L1V1 = rDual(GradFiX1, gradF0X1, L1, V1);
-					//log.debug("rPriX1     : "+ArrayUtils.toString(rPriX1.toArray()));
-					//log.debug("rCentX1L1t : "+ArrayUtils.toString(rCentX1L1t.toArray()));
-					//log.debug("rDualX1L1V1: "+ArrayUtils.toString(rDualX1L1V1.toArray()));
 					double normRX1L1V1t = Math.sqrt(ALG.norm2(rPriX1)
 							                          + ALG.norm2(rCentX1L1t)
 							                          + ALG.norm2(rDualX1L1V1));
@@ -359,7 +332,7 @@ public class PrimalDualMethod extends OptimizationRequestHandler {
 					
 					if (!Double.isNaN(previousNormRX1L1V1t)) {
 						if (previousNormRX1L1V1t <= normRX1L1V1t) {
-							log.warn("No progress achieved in backtracking with norm");
+							log.debug("No progress achieved in backtracking with norm");
 							break;
 						}
 					}
@@ -374,24 +347,6 @@ public class PrimalDualMethod extends OptimizationRequestHandler {
 			X = X1;
 			V = V1;
 			L = L1;
-			
-//			fiX     = fiX1;
-//			gradF0X = gradF0X1;
-//			GradFiX  = GradFiX1;
-//			
-//			rPriX    = rPriX1;
-//			rCentXLt = rCentX1L1t;
-//			rDualXLV = rDualX1L1V1;
-//			rPriXNorm    = Math.sqrt(ALG.norm2(rPriX));
-//			rCentXLtNorm = Math.sqrt(ALG.norm2(rCentXLt));
-//			rDualXLVNorm = Math.sqrt(ALG.norm2(rDualXLV));
-//			normRXLVt = Math.sqrt(Math.pow(rPriXNorm, 2) + Math.pow(rCentXLtNorm, 2) + Math.pow(rDualXLVNorm, 2));
-//			if(log.isDebugEnabled()){
-//				log.debug("rPri  norm: " + rPriXNorm);
-//				log.debug("rCent norm: " + rCentXLtNorm);
-//				log.debug("rDual norm: " + rDualXLVNorm);
-//				log.debug("surrDG    : " + surrDG);
-//			}
 		}
 
 		long tStop = System.currentTimeMillis();
