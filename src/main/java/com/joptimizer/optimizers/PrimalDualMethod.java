@@ -49,12 +49,12 @@ public class PrimalDualMethod extends OptimizationRequestHandler {
 		final OptimizationResponse response = new OptimizationResponse();
 
 		// @TODO: check assumptions!!!
-//		if(getA()!=null){
-//			if(ALG.rank(getA())>=getA().rows()){
-//				throw new IllegalArgumentException("A-rank must be less than A-rows");
-//			}
-//		}
-		
+		//		if(getA()!=null){
+		//			if(ALG.rank(getA())>=getA().rows()){
+		//				throw new IllegalArgumentException("A-rank must be less than A-rows");
+		//			}
+		//		}
+
 		DoubleMatrix1D X0 = getInitialPoint();
 		if(X0==null){
 			DoubleMatrix1D X0NF = getNotFeasibleInitialPoint();
@@ -79,7 +79,7 @@ public class PrimalDualMethod extends OptimizationRequestHandler {
 				X0 = bf1.findFeasibleInitialPoint();
 			}
 		}
-		
+
 		//check X0 feasibility
 		final DoubleMatrix1D fiX0 = getFi(X0);
 		final int maxIndex = Utils.getMaxIndex(fiX0);
@@ -89,7 +89,7 @@ public class PrimalDualMethod extends OptimizationRequestHandler {
 			log.debug("max ineq value: " + maxValue);
 			throw new Exception("Initial point must be strictly feasible. Found maxValue: " + maxValue);
 		}
-		
+
 		final double rPriX0Norm = Math.sqrt(ALG.norm2(rPri(X0)));
 		if(rPriX0Norm > getToleranceFeas()){
 			log.debug("rPriX0Norm  : " + rPriX0Norm);
@@ -99,7 +99,7 @@ public class PrimalDualMethod extends OptimizationRequestHandler {
 		}
 
 		DoubleMatrix1D V0 = (getA()!=null)? F1.make(getA().rows()) : F1.make(0);
-		
+
 		DoubleMatrix1D L0 = getInitialLagrangian();
 		if(L0!=null){
 			for (int j = 0; j < L0.size(); j++) {
@@ -126,70 +126,57 @@ public class PrimalDualMethod extends OptimizationRequestHandler {
 		double previousRPriXNorm = Double.NaN;
 		double previousRDualXLVNorm = Double.NaN;
 		double previousSurrDG = Double.NaN;
-		double t;
+		
 		int iteration = 0;
 		while (true) {
-			
+
 			iteration++;
-		    // iteration limit condition
+			// iteration limit condition
 			if (iteration == getMaxIteration()+1) {
 				response.setReturnCode(OptimizationResponse.WARN);
 				log.warn("Max iterations limit reached");
 				break;
 			}
-			
-		    double F0X = getF0(X);
-			if(log.isDebugEnabled()){
-				log.debug("iteration: " + iteration);
-				log.debug("X=" + ArrayUtils.toString(X.toArray()));
-				log.debug("L=" + ArrayUtils.toString(L.toArray()));
-				log.debug("V=" + ArrayUtils.toString(V.toArray()));
-				log.debug("f0(X)=" + F0X);
-			}
-			
+
 			// determine functions evaluations
-			DoubleMatrix1D gradF0X = getGradF0(X);
-			DoubleMatrix1D fiX     = getFi(X);
-			DoubleMatrix2D GradFiX = getGradFi(X);
-			DoubleMatrix2D[] HessFiX = getHessFi(X);
-			
+			final DoubleMatrix1D gradF0X = getGradF0(X);
+			final DoubleMatrix1D fiX     = getFi(X);
+			final DoubleMatrix2D GradFiX = getGradFi(X);
+			final DoubleMatrix2D[] HessFiX = getHessFi(X);
+
 			// determine t
-			double surrDG = getSurrogateDualityGap(fiX, L);
-			t = getMu() * getMieq() / surrDG;
-			log.debug("t:  " + t);
-						
-			// determine residuals
-			DoubleMatrix1D rPriX    = rPri(X);
-			DoubleMatrix1D rCentXLt = rCent(fiX, L, t);
-			DoubleMatrix1D rDualXLV = rDual(GradFiX, gradF0X, L, V);
-			double rPriXNorm    = Math.sqrt(ALG.norm2(rPriX));
-			double rCentXLtNorm = Math.sqrt(ALG.norm2(rCentXLt));
-			double rDualXLVNorm = Math.sqrt(ALG.norm2(rDualXLV));
-			double normRXLVt    = Math.sqrt(Math.pow(rPriXNorm, 2) + Math.pow(rCentXLtNorm, 2) + Math.pow(rDualXLVNorm, 2));
-			log.debug("rPri  norm: " + rPriXNorm);
-			log.debug("rCent norm: " + rCentXLtNorm);
-			log.debug("rDual norm: " + rDualXLVNorm);
-			log.debug("surrDG    : " + surrDG);
-			
+			final double surrDG = getSurrogateDualityGap(fiX, L);
+			final double t = getMu() * getMieq() / surrDG;
+
 			// custom exit condition
 			if(checkCustomExitConditions(X)){
 				response.setReturnCode(OptimizationResponse.SUCCESS);
 				break;
 			}
-			
+
+			// determine residuals
+			final DoubleMatrix1D rPriX    = rPri(X);
+			final DoubleMatrix1D rCentXLt = rCent(fiX, L, t);
+			final DoubleMatrix1D rDualXLV = rDual(GradFiX, gradF0X, L, V);
+
+			final double rPriXNorm    = Math.sqrt(ALG.norm2(rPriX));
+			final double rCentXLtNorm = Math.sqrt(ALG.norm2(rCentXLt));
+			final double rDualXLVNorm = Math.sqrt(ALG.norm2(rDualXLV));
+			final double normRXLVt    = Math.sqrt(Math.pow(rPriXNorm, 2) + Math.pow(rCentXLtNorm, 2) + Math.pow(rDualXLVNorm, 2));
+
 			// exit condition
 			if (rPriXNorm <= getToleranceFeas() && rDualXLVNorm <= getToleranceFeas() && surrDG <= getTolerance()) {
 				response.setReturnCode(OptimizationResponse.SUCCESS);
 				break;
 			}
-			
-		  // progress conditions
+
+			// progress conditions
 			if(isCheckProgressConditions()){
 				if (!Double.isNaN(previousRPriXNorm)
-					&& !Double.isNaN(previousRDualXLVNorm)
-					&& !Double.isNaN(previousSurrDG)) {
+						&& !Double.isNaN(previousRDualXLVNorm)
+						&& !Double.isNaN(previousSurrDG)) {
 					if (  (previousRPriXNorm <= rPriXNorm && rPriXNorm >= getToleranceFeas())
-						|| (previousRDualXLVNorm <= rDualXLVNorm && rDualXLVNorm >= getToleranceFeas())) {
+							|| (previousRDualXLVNorm <= rDualXLVNorm && rDualXLVNorm >= getToleranceFeas())) {
 						log.error("No progress achieved, exit iterations loop without desired accuracy");
 						response.setReturnCode(OptimizationResponse.FAILED);
 						throw new Exception("No progress achieved, exit iterations loop without desired accuracy");
@@ -228,7 +215,7 @@ public class PrimalDualMethod extends OptimizationRequestHandler {
 			}else{
 				g = ColtUtils.add(ColtUtils.add(gradF0X, gradSum), ALG.mult(getAT(), V));
 			}
-			
+
 			// b) solving 11.55 system
 			if(this.kktSolver==null){
 				this.kktSolver = new BasicKKTSolver();
@@ -298,12 +285,12 @@ public class PrimalDualMethod extends OptimizationRequestHandler {
 				}
 				s = getBeta() * s;
 			}
-			
+
 			if(!areAllNegative){
 				//exited from the feasible region
 				throw new Exception("Optimization failed: impossible to remain within the feasible region");
 			}
-			
+
 			log.debug("s: " + s);
 			// c) backtracking with norm
 			double previousNormRX1L1V1t = Double.NaN;
@@ -313,23 +300,23 @@ public class PrimalDualMethod extends OptimizationRequestHandler {
 				X1 = ColtUtils.add(X, stepX, s);
 				L1 = ColtUtils.add(L, stepL, s);
 				V1 = ColtUtils.add(V, stepV, s);
-				
+
 				if (isInDomainF0(X1)) {
 					fiX1 = getFi(X1);
 					gradF0X1 = getGradF0(X1);
 					GradFiX1 = getGradFi(X1);
-					
+
 					rPriX1 = rPri(X1);
 					rCentX1L1t = rCent(fiX1, L1, t);
 					rDualX1L1V1 = rDual(GradFiX1, gradF0X1, L1, V1);
 					double normRX1L1V1t = Math.sqrt(ALG.norm2(rPriX1)
-							                          + ALG.norm2(rCentX1L1t)
-							                          + ALG.norm2(rDualX1L1V1));
+							+ ALG.norm2(rCentX1L1t)
+							+ ALG.norm2(rDualX1L1V1));
 					//log.debug("normRX1L1V1t: "+normRX1L1V1t);
 					if (normRX1L1V1t <= (1 - getAlpha() * s) * normRXLVt) {
 						break;
 					}
-					
+
 					if (!Double.isNaN(previousNormRX1L1V1t)) {
 						if (previousNormRX1L1V1t <= normRX1L1V1t) {
 							log.debug("No progress achieved in backtracking with norm");
@@ -338,7 +325,7 @@ public class PrimalDualMethod extends OptimizationRequestHandler {
 					}
 					previousNormRX1L1V1t = normRX1L1V1t;
 				}
-				
+
 				s = getBeta() * s;
 				//log.debug("s: " + s);
 			}
