@@ -111,14 +111,7 @@ public class PrimalDualMethod extends OptimizationRequestHandler {
 		}else{
 			L0 = F1.make(getMieq(), Math.min(1,(double)getDim()/getMieq()));// must be >0
 		}
-		if(log.isDebugEnabled()){
-			log.debug("X0:  " + ArrayUtils.toString(X0.toArray()));
-			log.debug("V0:  " + ArrayUtils.toString(V0.toArray()));
-			log.debug("L0:  " + ArrayUtils.toString(L0.toArray()));
-			log.debug("toleranceFeas:  " + getToleranceFeas());
-			log.debug("tolerance    :  " + getTolerance());
-		}
-
+		
 		DoubleMatrix1D X = X0;
 		DoubleMatrix1D V = V0;
 		DoubleMatrix1D L = L0;
