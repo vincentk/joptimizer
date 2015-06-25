@@ -11,7 +11,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.vincentk</groupId>
 	<artifactId>joptimizer</artifactId>
-	<version>3.4.1-SNAPSHOT</version>
+	<version>3.4.1</version>
 	<packaging>jar</packaging>
 	<name>JOptimizer</name>
 	<description>JOptimizer is a java library for solving general convex optimization problems, like for example LP, QP, QCQP, SOCP, SDP, GP and many more.
