@@ -131,13 +131,11 @@ public final class Matrix1NornRescaler implements MatrixRescaler{
 		DoubleMatrix2D AK = A.copy();
 		DoubleMatrix2D DR = F2.identity(dim);
 		DoubleMatrix1D DRInv = F1.make(dim);
-		//log.debug("eps  : " + eps);
 		int maxIteration = 50;
 		for(int k=0; k<=maxIteration; k++){
 			double normR = -Double.MAX_VALUE;
 			for(int i=0; i<dim; i++){
-				//double dri = ALG.normInfinity(AK.viewRow(i));
-				double dri = this.getRowInfinityNorm(AK, i);
+				double dri = getRowInfinityNorm(AK, i);
 				DR.setQuick(i, i, Math.sqrt(dri));
 				DRInv.setQuick(i, 1./Math.sqrt(dri));
 				normR = Math.max(normR, Math.abs(1-dri));
@@ -146,7 +144,6 @@ public final class Matrix1NornRescaler implements MatrixRescaler{
 				}
 			}
 			
-			//log.debug("normR: " + normR);
 			if(normR < eps){
 				break;
 			}
@@ -156,7 +153,6 @@ public final class Matrix1NornRescaler implements MatrixRescaler{
 				double newD1I = prevD1I * DRInv.getQuick(i);
 				D1.setQuick(i, newD1I);
 			}
-			//logger.debug("D1: " + ArrayUtils.toString(D1.toArray()));
 			
 			if(k==maxIteration){
 				log.warn("max iteration reached");
@@ -226,7 +222,6 @@ public final class Matrix1NornRescaler implements MatrixRescaler{
 		IntIntDoubleFunction myFunct = new IntIntDoubleFunction() {
 			@Override
 			public double apply(int i, int j, double pij) {
-				//logger.warn("(" + i + "," + j + ")=" + pij);
 				maxValueHolder[0] = Math.max(maxValueHolder[0], Math.abs(pij));
 				return pij;
 			}

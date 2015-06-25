@@ -62,24 +62,30 @@ public class QuadraticMultivariateRealFunction implements TwiceDifferentiableMul
 	/**
 	 * Dimension of the function argument.
 	 */
-	protected int dim = -1;
+	private final int dim;
 
 	/**
 	 * Quadratic factor.
 	 */
-	protected DoubleMatrix2D P = null;
+	protected final DoubleMatrix2D P;
 
 	/**
 	 * Linear factor.
 	 */
-	protected DoubleMatrix1D q = null;
+	private final DoubleMatrix1D q;
 
 	/**
 	 * Constant factor.
 	 */
-	protected double r = 0;
+	private final double r;
 	
-	private Algebra ALG = Algebra.DEFAULT;
+	/**
+	 * For the special case of a quadratic form, the Hessian is independent of X, namely it is P.
+	 */
+	private final double[][] hessian; 
+	
+	
+	private static final Algebra ALG = Algebra.DEFAULT;
 	
 	public QuadraticMultivariateRealFunction(double[][] PMatrix, double[] qVector, double r, boolean checkSymmetry){
 		this.P = (PMatrix!=null)? DoubleFactory2D.dense.make(PMatrix) : null;
@@ -100,6 +106,8 @@ public class QuadraticMultivariateRealFunction implements TwiceDifferentiableMul
 		if (this.dim < 0) {
 			throw new IllegalArgumentException("Impossible to create the function");
 		}
+		
+		hessian = hessianSlow();
   }
 
 	public QuadraticMultivariateRealFunction(double[][] PMatrix, double[] qVector, double r) {
@@ -139,27 +147,16 @@ public class QuadraticMultivariateRealFunction implements TwiceDifferentiableMul
 	}
 
 	@Override
-	public final double[][] hessian(double[] X) {
+	public final double[][] hessian(double[] X) { return hessian; }
+	    
+	private final double[][] hessianSlow() {
 		DoubleMatrix2D ret = null;
 		if(P!=null){
 			ret = P;
 		}else{
-			//ret = DoubleFactory2D.dense.make(dim, dim);
 			return FunctionsUtils.ZEROES_2D_ARRAY_PLACEHOLDER;
 		}
 		return ret.toArray();
-	}
-
-	public DoubleMatrix2D getP() {
-		return P;
-	}
-
-	public DoubleMatrix1D getQ() {
-		return q;
-	}
-
-	public double getR() {
-		return r;
 	}
 
 	@Override

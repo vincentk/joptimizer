@@ -15,7 +15,6 @@
  */
 package com.joptimizer.solvers;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -39,34 +38,23 @@ public final class BasicKKTSolver extends KKTSolver {
 
 	private static final Log log = LogFactory.getLog(BasicKKTSolver.class.getName());
 
-	public BasicKKTSolver(){ }
-
 	/**
 	 * Returns the two vectors v and w.
 	 */
 	@Override
 	public DoubleMatrix1D[] solve() throws Exception {
 
-		DoubleMatrix1D v = null;// dim equals cols of A
-		DoubleMatrix1D w = null;// dim equals rank of A
-
-		if (log.isDebugEnabled()) {
-			log.debug("H: " + ArrayUtils.toString(H.toArray()));
-			log.debug("g: " + ArrayUtils.toString(g.toArray()));
-			if (A != null) {
-				log.debug("A: " + ArrayUtils.toString(A.toArray()));
-			}
-			if (h != null) {
-				log.debug("h: " + ArrayUtils.toString(h.toArray()));
-			}
-		}
-		CholeskyFactorization HFact = new CholeskyFactorization(H, new Matrix1NornRescaler());
+		final CholeskyFactorization HFact = new CholeskyFactorization(H, new Matrix1NornRescaler());
 		boolean isHReducible = true;
 		try{
 			HFact.factorize();
 		}catch(Exception e){
 			isHReducible = false;
 		}
+
+
+        final DoubleMatrix1D v;// dim equals cols of A
+        final DoubleMatrix1D w;// dim equals rank of A
 
 		if (isHReducible) {
 			// Solving KKT system via elimination
@@ -81,7 +69,6 @@ public final class BasicKKTSolver extends KKTSolver {
 				if(h == null){
 					w = MSFact.solve(ColtUtils.scalarMult(AHInvg, -1));
 				}else{
-					//w = MSFact.solve(h.copy().assign(AHInvg, Functions.minus));
 					w = MSFact.solve(ColtUtils.add(h, AHInvg, -1));
 				}
 				
@@ -94,8 +81,6 @@ public final class BasicKKTSolver extends KKTSolver {
 			// H is singular
 			// Solving the full KKT system
 			if(A!=null){
-//				KKTSolver kktSolver = new BasicKKTSolver();
-//				kktSolver.setCheckKKTSolutionAccuracy(false);
 				DoubleMatrix1D[] fullSol =  this.solveAugmentedKKT();
 				v = fullSol[0];
 				w = fullSol[1];
