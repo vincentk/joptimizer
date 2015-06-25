@@ -36,10 +36,10 @@ import cern.colt.matrix.linalg.Algebra;
  * @see Daniel Ruiz, "A scaling algorithm to equilibrate both rows and columns norms in matrices"
  * @see Philip A. Knight, Daniel Ruiz, Bora Ucar "A Symmetry Preserving Algorithm for Matrix Scaling"
  */
-public class Matrix1NornRescaler implements MatrixRescaler{
+public final class Matrix1NornRescaler implements MatrixRescaler{
 	
 	private double eps = 1.e-3;
-	private Log log = LogFactory.getLog(this.getClass().getName());
+	private static final Log log = LogFactory.getLog(Matrix1NornRescaler.class.getName());
 
 	public Matrix1NornRescaler(){
 	}
@@ -219,7 +219,7 @@ public class Matrix1NornRescaler implements MatrixRescaler{
 	 * @param r the index of the row
 	 * @return
 	 */
-	public double getRowInfinityNorm(final DoubleMatrix2D ASymm, final int r){
+	public static double getRowInfinityNorm(final DoubleMatrix2D ASymm, final int r){
 		
 		final double[] maxValueHolder = new double[]{-Double.MAX_VALUE}; 
 		

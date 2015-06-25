@@ -15,9 +15,6 @@
  */
 package com.joptimizer.solvers;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import cern.colt.matrix.DoubleFactory1D;
 import cern.colt.matrix.DoubleFactory2D;
 import cern.colt.matrix.DoubleMatrix1D;
@@ -53,7 +50,6 @@ public abstract class KKTSolver {
 	protected DoubleFactory2D F2 = DoubleFactory2D.dense;
 	protected DoubleFactory1D F1 = DoubleFactory1D.dense;
 	protected double defaultScalar = 1.e-6;
-	private Log log = LogFactory.getLog(this.getClass().getName());
 
 	/**
 	 * Returns two vectors v and w solutions of the KKT system.
@@ -89,7 +85,6 @@ public abstract class KKTSolver {
 	}
 	
 	protected DoubleMatrix1D[] solveAugmentedKKT() throws Exception{
-		log.info("solveAugmentedKKT");
 		if(A==null){
 			throw new Exception("KKT solution failed");
 		}
@@ -103,7 +98,6 @@ public abstract class KKTSolver {
 	}
 	
 	protected DoubleMatrix1D[] solveFullKKT() throws Exception{
-		log.info("solveFullKKT");
 		KKTSolver kktSolver = new FullKKTSolver();
 		kktSolver.setCheckKKTSolutionAccuracy(false);//if the caller has true, then it will make the check, otherwise no check at all
 		kktSolver.setHMatrix(H);
@@ -172,7 +166,6 @@ public abstract class KKTSolver {
 		
 		//checking residual
 		double scaledResidual = Utils.calculateScaledResidual(KKT, x, b);
-		log.debug("KKT inversion scaled residual: " + scaledResidual);
 		return scaledResidual < toleranceKKT;
 	}
 	

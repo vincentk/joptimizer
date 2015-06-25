@@ -35,9 +35,9 @@ import com.joptimizer.util.ColtUtils;
  * @see "S.Boyd and L.Vandenberghe, Convex Optimization, p. 542"
  * @author alberto trivellato (alberto.trivellato@gmail.com)
  */
-public class BasicKKTSolver extends KKTSolver {
+public final class BasicKKTSolver extends KKTSolver {
 
-	private Log log = LogFactory.getLog(this.getClass().getName());
+	private static final Log log = LogFactory.getLog(BasicKKTSolver.class.getName());
 
 	public BasicKKTSolver(){ }
 

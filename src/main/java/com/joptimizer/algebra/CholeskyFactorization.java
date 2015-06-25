@@ -39,7 +39,7 @@ import com.joptimizer.util.Utils;
  * 
  * @author <a href="mailto:alberto.trivellato@gmail.com">alberto trivellato</a>
  */
-public class CholeskyFactorization {
+public final class CholeskyFactorization {
 
 	private int dim;
 	private DoubleMatrix2D Q;
@@ -51,7 +51,7 @@ public class CholeskyFactorization {
 	private double[][] LData;
 	private DoubleMatrix2D L;
 	private DoubleMatrix2D LT;
-	private Log log = LogFactory.getLog(this.getClass().getName());
+	private static final Log log = LogFactory.getLog(CholeskyFactorization.class.getName());
 	
 	public CholeskyFactorization(DoubleMatrix2D Q) throws Exception{
 		//this(Q, new ResponseFilter());
