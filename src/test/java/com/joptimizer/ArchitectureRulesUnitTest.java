@@ -18,7 +18,7 @@ package com.joptimizer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.seventytwomiles.architecturerules.AbstractArchitectureRulesConfigurationTest;
+import org.architecturerules.AbstractArchitectureRulesConfigurationTest;
 
 public class ArchitectureRulesUnitTest extends AbstractArchitectureRulesConfigurationTest {
 
