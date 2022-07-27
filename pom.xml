@@ -194,9 +194,9 @@
 			<version>1.2.0</version>
 		</dependency>
 		<dependency>
-			<groupId>com.seventytwomiles</groupId>
+			<groupId>org.architecturerules</groupId>
 			<artifactId>architecture-rules</artifactId>
-			<version>2.1.1</version>
+			<version>3.0.0-rc1</version>
 			<scope>test</scope>
 			<exclusions>
 				<exclusion>
@@ -256,15 +256,9 @@
 
 	<repositories>
 		<repository>
-			<id>architecture-rules-repo</id>
-			<name>architecture-rules repository hosted by code.google.com</name>
-			<url>http://architecturerules.googlecode.com/svn/maven2/</url>
-			<releases>
-				<checksumPolicy>ignore</checksumPolicy>
-			</releases>
-			<snapshots>
-				<checksumPolicy>ignore</checksumPolicy>
-			</snapshots>
+			<id>smartics</id>
+			<name>smartics</name>
+			<url>https://www.smartics.eu/nexus/content/groups/public-group/</url>
 		</repository>
 	</repositories>
 
